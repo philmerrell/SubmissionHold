@@ -1,0 +1,7 @@
+{
+  "name": "SubmissionHold.Client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
