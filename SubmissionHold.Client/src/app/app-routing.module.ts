@@ -10,6 +10,26 @@ const routes: Routes = [
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+  },
+  {
+    path: 'admin/users',
+    loadChildren: () => import('./admin/pages/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'admin/submissions',
+    loadChildren: () => import('./admin/pages/submissions/submissions.module').then( m => m.SubmissionsPageModule)
+  },
+  {
+    path: 'admin/settings',
+    loadChildren: () => import('./admin/pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'admin/submission-detail',
+    loadChildren: () => import('./admin/pages/submission-detail/submission-detail.module').then( m => m.SubmissionDetailPageModule)
+  },
+  {
+    path: 'my-votes',
+    loadChildren: () => import('./admin/pages/my-votes/my-votes.module').then( m => m.MyVotesPageModule)
   }
 ];
 

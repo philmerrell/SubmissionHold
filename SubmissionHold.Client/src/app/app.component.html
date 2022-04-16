@@ -3,8 +3,10 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-list-header>
+            <span style="font-weight: 900; font-size: 1.5em;">Submission Hold</span>
+          </ion-list-header>
+          <ion-note>gilbert@theduckclub.com</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -15,10 +17,13 @@
         </ion-list>
 
         <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
+          <ion-list-header>
+            <ion-label>Submission Labels</ion-label>
+            <ion-button fill="outline">Add</ion-button>
+          </ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-icon slot="start" name="bookmark-outline"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list>
