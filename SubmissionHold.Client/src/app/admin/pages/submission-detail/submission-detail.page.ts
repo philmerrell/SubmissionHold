@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./submission-detail.page.scss'],
 })
 export class SubmissionDetailPage implements OnInit {
-
+  labels = ['bacon', 'pineapple']
   constructor() { }
 
   ngOnInit() {

@@ -19,4 +19,19 @@ export class SettingService {
       { name: 'Treefort 2020', archived: true, active: false },
     ]
   }
+
+  getLabels(): any[] {
+    return [
+      "Bacon",
+      "Black Olives",
+      "Extra Cheese",
+      "Green Peppers",
+      "Mushrooms",
+      "Onions",
+      "Pepperoni",
+      "Pineapple",
+      "Sausage",
+      "Spinach",
+    ]
+  }
 }

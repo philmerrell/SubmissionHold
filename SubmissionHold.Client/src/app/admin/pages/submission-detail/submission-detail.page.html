@@ -39,6 +39,27 @@
             </p>
           </div>
           <div>
+            <h3>Labels</h3>
+            <ion-item>
+              <ion-label>Labels</ion-label>
+              <ion-select multiple="true" cancelText="Nah" okText="Okay!" [value]="labels">
+                <ion-select-option value="bacon">Bacon</ion-select-option>
+                <ion-select-option value="olives">Black Olives</ion-select-option>
+                <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+                <ion-select-option value="peppers">Green Peppers</ion-select-option>
+                <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+                <ion-select-option value="onions">Onions</ion-select-option>
+                <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+                <ion-select-option value="pineapple">Pineapple</ion-select-option>
+                <ion-select-option value="sausage">Sausage</ion-select-option>
+                <ion-select-option value="Spinach">Spinach</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-chip *ngFor="let label of labels">
+              <ion-icon name="fast-food"></ion-icon>
+              <ion-label>{{ label }}</ion-label>
+              <!-- <ion-icon name="close-circle"></ion-icon> -->
+            </ion-chip>
           </div>
         </ion-col>
         <ion-col size="4">
@@ -48,6 +69,7 @@
                 Media
               </ion-card-title>
             </ion-card-header>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6mmM9OOJ0sDmdrFVcNALTZ?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
             <iframe width="100%" height="315" src="https://www.youtube.com/embed/kKwPo8Ko7eE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </ion-card>
         </ion-col>

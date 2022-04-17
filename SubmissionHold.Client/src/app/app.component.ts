@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SettingService } from './admin/services/setting.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -13,6 +14,13 @@ export class AppComponent {
     { title: 'Users', url: '/admin/users', icon: 'people' },
     { title: 'Settings', url: '/admin/settings', icon: 'settings' },
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  public labels = [];
+
+  constructor(private settingService: SettingService) {
+    this.getLabels();
+  }
+
+  getLabels() {
+    this.labels = this.settingService.getLabels();
+  }
 }
