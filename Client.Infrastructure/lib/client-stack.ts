@@ -81,7 +81,7 @@ export class ClientStack extends Stack {
 
     // Deploy site contents to S3 bucket
     new s3Deploy.BucketDeployment(this, 'DeployWithInvalidation', {
-      sources: [s3Deploy.Source.asset('../client/www')],
+      sources: [s3Deploy.Source.asset('../SubmissionHold.Client/www')],
       destinationBucket: siteBucket,
       distribution,
       memoryLimit: 512,
