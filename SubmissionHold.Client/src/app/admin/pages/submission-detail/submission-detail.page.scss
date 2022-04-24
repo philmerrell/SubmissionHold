@@ -1,0 +1,34 @@
+.background-texture-image {
+    min-width: 110%;
+    min-height: 100vh;
+    margin: 0;
+    background: none;
+    position: absolute;
+    
+  }
+  
+  .background-texture-image img {
+
+    display: block;
+    max-width: none;
+    max-height: none;
+    min-width: 100%;
+    min-height: 100vh;
+    opacity: 0.3;
+    -ms-filter: blur(20px);
+    -webkit-filter: blur(20px);
+    filter: blur(20px);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
+  }
+
+  ion-header {
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+    
+  }
