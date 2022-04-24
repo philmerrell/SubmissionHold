@@ -1,9 +1,47 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>my-votes</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Votes</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-header mode="ios" collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Votes</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="outline">
+          Filter
+          <ion-icon slot="end" name="caret-down-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <p>&nbsp;</p>
+
+  <ion-list>
+    <ion-item *ngFor="let submission of submissions">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="submission.image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ submission.name }}</h2>
+      </ion-label>
+      <ion-select placeholder="Select One" [value]="10">
+        <ion-select-option [value]="10">10</ion-select-option>
+        <ion-select-option [value]="9">9</ion-select-option>
+        <ion-select-option [value]="10">8</ion-select-option>
+        <ion-select-option [value]="9">7</ion-select-option>
+        <ion-select-option [value]="10">6</ion-select-option>
+        <ion-select-option [value]="9">5</ion-select-option>
+        <ion-select-option [value]="10">4</ion-select-option>
+        <ion-select-option [value]="9">3</ion-select-option>
+        <ion-select-option [value]="10">2</ion-select-option>
+        <ion-select-option [value]="9">1</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SubmissionService } from '../../services/submission.service';
 
 @Component({
   selector: 'app-my-votes',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-votes.page.scss'],
 })
 export class MyVotesPage implements OnInit {
-
-  constructor() { }
+  submissions = [];
+  constructor(private submissionService: SubmissionService) { }
 
   ngOnInit() {
+    this.getSubmissions();
+  }
+
+  getSubmissions() {
+    this.submissions = this.submissionService.getSubmissions();
   }
 
 }

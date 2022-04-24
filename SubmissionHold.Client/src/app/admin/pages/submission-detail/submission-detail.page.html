@@ -14,11 +14,11 @@
       <ion-title size="large">The French Tips</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div class="background-texture">
+  <!-- <div class="background-texture">
     <div class="background-texture-image">
       <img [src]="'/assets/the-french-tips.jpeg'">
     </div>
-  </div>
+  </div> -->
   <div class="ion-padding">
     <div>
       <ion-badge style="font-size: 1.em;">Boise, Idaho</ion-badge>
@@ -88,8 +88,25 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button>Vote</ion-button>
-    </ion-buttons>
+    <ion-item color="light">
+      <ion-thumbnail slot="start">
+        <ion-img src="/assets/the-french-tips.jpeg"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>My Vote</h2>
+      </ion-label>
+      <ion-select placeholder="Select One">
+        <ion-select-option [value]="10">10</ion-select-option>
+        <ion-select-option [value]="9">9</ion-select-option>
+        <ion-select-option [value]="10">8</ion-select-option>
+        <ion-select-option [value]="9">7</ion-select-option>
+        <ion-select-option [value]="10">6</ion-select-option>
+        <ion-select-option [value]="9">5</ion-select-option>
+        <ion-select-option [value]="10">4</ion-select-option>
+        <ion-select-option [value]="9">3</ion-select-option>
+        <ion-select-option [value]="10">2</ion-select-option>
+        <ion-select-option [value]="9">1</ion-select-option>
+      </ion-select>
+    </ion-item>
   </ion-toolbar>
 </ion-footer>

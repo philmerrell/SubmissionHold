@@ -9,7 +9,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Submissions', url: '/admin/submissions', icon: 'folder' },
     { title: 'My Votes', url: '/admin/my-votes', icon: 'ticket' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
+    { title: 'Ignored', url: '/admin/ignored', icon: 'skull' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     { title: 'Users', url: '/admin/users', icon: 'people' },
     { title: 'Settings', url: '/admin/settings', icon: 'settings' },
