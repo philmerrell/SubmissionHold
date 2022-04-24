@@ -64,5 +64,5 @@ jobs:
 
       - name: cdk deploy
         run: |
-          cd infrastructure
+          cd Client.Infrastructure
           cdk deploy SubmissionHoldClientStack
