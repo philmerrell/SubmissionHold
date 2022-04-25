@@ -30,6 +30,14 @@ const routes: Routes = [
   {
     path: 'admin/my-votes',
     loadChildren: () => import('./admin/pages/my-votes/my-votes.module').then( m => m.MyVotesPageModule)
+  },
+  {
+    path: 'submission',
+    loadChildren: () => import('./submission/submission.module').then( m => m.SubmissionPageModule)
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
   }
 ];
 

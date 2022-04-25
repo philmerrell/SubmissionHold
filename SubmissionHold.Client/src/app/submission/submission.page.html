@@ -1,0 +1,130 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Submission</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <ion-header mode="ios" collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Submission</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div [formGroup]="submissionForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>General</ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'primary'" position="floating">Artist Name</ion-label>
+              <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateControl('name', 'required')" color="danger">
+              Artist Name is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('statement', 'required') ? 'danger' : 'primary'" position="floating">Why do you want to play Treefort?</ion-label>
+              <ion-textarea formControlName="statement"></ion-textarea>
+            </ion-item>
+            <ion-text *ngIf="validateControl('statement', 'required')" color="danger">
+              Artist Statement is required.
+            </ion-text>
+            <ion-item>
+              <ion-label [color]="validateControl('bio', 'required') ? 'danger' : 'primary'" color="primary" position="floating">Bio</ion-label>
+              <ion-textarea formControlName="bio" rows="5"></ion-textarea>
+            </ion-item>
+            <ion-text *ngIf="validateControl('bio', 'required')" color="danger">
+              Artist Bio is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+
+        <ion-card formGroupName="location">
+          <ion-card-header>
+            <ion-card-title>
+              Location
+            </ion-card-title>
+          </ion-card-header>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label [color]="validateLocationControl('city', 'required') ? 'danger' : 'primary'" position="floating">City</ion-label>
+                  <ion-input formControlName="city"></ion-input>
+                </ion-item>
+                <ion-text *ngIf="validateLocationControl('city', 'required')" color="danger">
+                  City is required.
+                </ion-text>
+              </ion-col>
+              <ion-col>
+
+                <ion-item *ngIf="!getIsInternational()" class="state-select">
+                  <ion-label [color]="validateLocationControl('state', 'required') ? 'danger' : 'primary'" >Select a State</ion-label>
+                  <ion-select formControlName="state">
+                    <ion-select-option value="idaho">Idaho</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-text *ngIf="validateLocationControl('state', 'required') && !submissionForm.get('location').get('isInternational').value" color="danger">
+                  State is required.
+                </ion-text>
+
+                <ion-item *ngIf="getIsInternational()">
+                  <ion-label [color]="validateLocationControl('country', 'required') ? 'danger' : 'primary'" position="floating">Country</ion-label>
+                  <ion-input formControlName="country"></ion-input>
+                </ion-item>
+                <ion-text *ngIf="validateLocationControl('country', 'required')" color="danger">
+                  Country is required.
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Is This a Non U.S. Based Artist?</ion-label>
+                  <ion-checkbox formControlName="isInternational" (ionChange)="handleIsInternational($event)"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+      </ion-grid>
+    </ion-card>
+    <ion-card formGroupName="media">
+      <ion-card-header>
+        <ion-card-title>
+          Media
+        </ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="primary" position="floating">Apple Music Artist Url</ion-label>
+              <ion-input formControlName="appleMusic"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary" position="floating">Spotify Artist Url</ion-label>
+              <ion-input formControlName="spotify"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-card>
+  </div>
+
+  <div class="ion-padding">
+    <ion-button (click)="submitForm()" expand="block">Submit</ion-button>
+  </div>
+
+</ion-content>
