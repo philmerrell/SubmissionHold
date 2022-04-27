@@ -18,14 +18,22 @@ export class CognitoStack extends Stack {
                 emailStyle: VerificationEmailStyle.CODE,
             },
             signInAliases: {
-                email: true
-            },
+                username: true,
+                email: true,
+              },
             autoVerify: { email: true },
-            signInCaseSensitive: false
+            signInCaseSensitive: false,
+            standardAttributes: {
+                email: {
+                    mutable: true,
+                    required: true
+                }
+            }
         });
 
         userPool.addClient('app-client', {
             generateSecret: true,
+            userPoolClientName: 'TFT-SBMT-CLIENT',
             oAuth: {
                 flows: {
                     authorizationCodeGrant: true
