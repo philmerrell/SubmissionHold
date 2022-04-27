@@ -66,3 +66,4 @@ jobs:
         run: |
           cd Client.Infrastructure
           cdk deploy SubmissionHoldClientStack
+          cdk deploy SubmissionHoldCognitoStack
