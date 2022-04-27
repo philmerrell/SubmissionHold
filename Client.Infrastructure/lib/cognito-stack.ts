@@ -18,7 +18,6 @@ export class CognitoStack extends Stack {
                 emailStyle: VerificationEmailStyle.CODE,
             },
             signInAliases: {
-                username: true,
                 email: true
             },
             autoVerify: { email: true },
@@ -42,6 +41,12 @@ export class CognitoStack extends Stack {
             supportedIdentityProviders: [
                 cognito.UserPoolClientIdentityProvider.COGNITO
             ]
+        });
+
+        userPool.addDomain('CognitoDomain', {
+            cognitoDomain: {
+                domainPrefix: 'trft-sbmt',
+            },
         });
 
         const sslCertArn = process.env.SSL_CERT_ARN || '';
