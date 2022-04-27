@@ -47,19 +47,16 @@ export class CognitoStack extends Stack {
         const sslCertArn = process.env.SSL_CERT_ARN || '';
         const domainCert = certificatemanager.Certificate.fromCertificateArn(this, 'domainCert', sslCertArn);
 
-        userPool.addDomain('TrfrtSbmtUserPoolDomain', {
-            customDomain: {
-                domainName: 'submission-auth.philmerrell.com',
-                certificate: domainCert
-            }
-        })
+        // userPool.addDomain('TrfrtSbmtUserPoolDomain', {
+        //     customDomain: {
+        //         domainName: 'submission-auth.philmerrell.com',
+        //         certificate: domainCert
+        //     }
+        // })
 
         // COGNITO PRODUCTION EMAIL INFO ****************************
         // https://docs.aws.amazon.com/cdk/api/v1/docs/aws-cognito-readme.html#Emails
         // By default, user pools are configured to use Cognito's built in email capability, which will send emails from no-reply@verificationemail.com. If you want to use a custom email address you can configure Cognito to send emails through Amazon SES, which is detailed below.
         // For typical production environments, the default email limit is below the required delivery volume. To enable a higher delivery volume, you can configure the UserPool to send emails through Amazon SES. To do so, follow the steps in the Cognito Developer Guide to verify an email address, move the account out of the 
-
-
-
     }
 }
