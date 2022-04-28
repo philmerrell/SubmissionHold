@@ -31,7 +31,7 @@ export class CognitoStack extends Stack {
             }
         });
 
-        userPool.addClient('app-client', {
+        const client = userPool.addClient('app-client', {
             generateSecret: true,
             userPoolClientName: 'TFT-SBMT-CLIENT',
             oAuth: {
@@ -43,13 +43,27 @@ export class CognitoStack extends Stack {
                 logoutUrls: [`https://submission.philmerrell.com/logout`, `http://localhost:8100/logout`],
 
             },
+            preventUserExistenceErrors: true,
             accessTokenValidity: Duration.hours(8),
             idTokenValidity: Duration.hours(8),
             refreshTokenValidity: Duration.days(365),
             supportedIdentityProviders: [
-                cognito.UserPoolClientIdentityProvider.COGNITO
+                cognito.UserPoolClientIdentityProvider.COGNITO,
+                cognito.UserPoolClientIdentityProvider.GOOGLE
             ]
         });
+
+        const googleOAuthClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
+        const googleProvider = new cognito.UserPoolIdentityProviderGoogle(this, 'Google', {
+            userPool: userPool,
+            clientId: '657685692425-3pr8avr0ui876r3pq68l7nq0lp3116it.apps.googleusercontent.com',
+            clientSecret: googleOAuthClientSecret,
+            attributeMapping: {
+                email: cognito.ProviderAttribute.GOOGLE_EMAIL
+            }
+          });
+
+        client.node.addDependency(googleProvider)
 
         userPool.addDomain('CognitoDomain', {
             cognitoDomain: {
@@ -60,6 +74,7 @@ export class CognitoStack extends Stack {
         const sslCertArn = process.env.SSL_CERT_ARN || '';
         const domainCert = certificatemanager.Certificate.fromCertificateArn(this, 'domainCert', sslCertArn);
 
+        // /login?response_type=code&client_id=u8pu17415f3gg1oit3kf53bif&redirect_uri=http%3A%2F%2Flocalhost%3A8100&scope=openid`;
         // userPool.addDomain('TrfrtSbmtUserPoolDomain', {
         //     customDomain: {
         //         domainName: 'submission-auth.philmerrell.com',
