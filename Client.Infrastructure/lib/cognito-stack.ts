@@ -48,8 +48,7 @@ export class CognitoStack extends Stack {
             idTokenValidity: Duration.hours(8),
             refreshTokenValidity: Duration.days(365),
             supportedIdentityProviders: [
-                cognito.UserPoolClientIdentityProvider.COGNITO,
-                cognito.UserPoolClientIdentityProvider.GOOGLE
+                cognito.UserPoolClientIdentityProvider.COGNITO
             ]
         });
 
