@@ -53,18 +53,18 @@ export class CognitoStack extends Stack {
             ]
         });
 
-        const googleOAuthClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
-        const googleProvider = new cognito.UserPoolIdentityProviderGoogle(this, 'Google', {
-            userPool: userPool,
-            clientId: '657685692425-3pr8avr0ui876r3pq68l7nq0lp3116it.apps.googleusercontent.com',
-            clientSecret: googleOAuthClientSecret,
-            attributeMapping: {
-                email: cognito.ProviderAttribute.GOOGLE_EMAIL
-            },
-            scopes: ['profile', 'email', 'openid']
-          });
+        // const googleOAuthClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
+        // const googleProvider = new cognito.UserPoolIdentityProviderGoogle(this, 'Google', {
+        //     userPool: userPool,
+        //     clientId: '657685692425-3pr8avr0ui876r3pq68l7nq0lp3116it.apps.googleusercontent.com',
+        //     clientSecret: googleOAuthClientSecret,
+        //     attributeMapping: {
+        //         email: cognito.ProviderAttribute.GOOGLE_EMAIL
+        //     },
+        //     scopes: ['profile', 'email', 'openid']
+        //   });
 
-        client.node.addDependency(googleProvider)
+        // client.node.addDependency(googleProvider)
 
         userPool.addDomain('CognitoDomain', {
             cognitoDomain: {
