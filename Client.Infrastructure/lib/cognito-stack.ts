@@ -60,7 +60,8 @@ export class CognitoStack extends Stack {
             clientSecret: googleOAuthClientSecret,
             attributeMapping: {
                 email: cognito.ProviderAttribute.GOOGLE_EMAIL
-            }
+            },
+            scopes: ['profile', 'email', 'openid']
           });
 
         client.node.addDependency(googleProvider)
