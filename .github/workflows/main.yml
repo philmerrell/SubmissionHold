@@ -37,13 +37,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install Client Dependencies
         run: |
-          cd SubmissionHold.Client
+          cd client
           sudo npm install -g @angular/cli > /dev/null
           sudo npm install 
 
       - name: Build Client
         run: |
-          cd SubmissionHold.Client && ng build --configuration=production
+          cd client && ng build --configuration=production
 
       - name: Install cdk
         run: |
@@ -53,11 +53,11 @@ jobs:
 
       - name: Install Infrastructure Dependencies
         run: |
-          cd Client.Infrastructure
+          cd infrastructure
           sudo npm install
 
       - name: cdk deploy
         run: |
-          cd Client.Infrastructure
+          cd infrastructure
           cdk deploy SubmissionHoldClientStack
           cdk deploy SubmissionHoldCognitoStack

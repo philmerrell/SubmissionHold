@@ -42,10 +42,10 @@ export class SubmissionPage implements OnInit {
     return this.submissionForm.get('location').get(controlName).hasError(error) && this.submissionForm.get('location').get(controlName).touched;
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
-      this.submissionService.createSubmission(submission);
+      await this.submissionService.createSubmission(submission);
       // TODO: submit form values
     } else {
       validateAllFormFields(this.submissionForm);
