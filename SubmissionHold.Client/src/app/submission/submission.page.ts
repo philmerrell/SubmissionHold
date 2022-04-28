@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateAllFormFields } from '../form-utils';
+import { SubmissionService } from './submission.service';
 
 @Component({
   selector: 'app-submission',
@@ -10,7 +11,7 @@ import { validateAllFormFields } from '../form-utils';
 export class SubmissionPage implements OnInit {
   submissionForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
   ngOnInit() {
     this.createSubmissionForm();
@@ -43,8 +44,8 @@ export class SubmissionPage implements OnInit {
 
   submitForm() {
     if (this.submissionForm.valid) {
-      const values = this.submissionForm.value;
-      console.log('Valid: ', values);
+      const submission = this.submissionForm.value;
+      this.submissionService.createSubmission(submission);
       // TODO: submit form values
     } else {
       validateAllFormFields(this.submissionForm);
