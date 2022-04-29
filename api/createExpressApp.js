@@ -5,7 +5,7 @@ const router = require('./routes/createRouter.js')()
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var { expressjwt: jwt } = require("express-jwt");
 const jwksRsa = require('jwks-rsa');
-const { client_domain_name, cognito_client_id, cognito_userpool_id, aws_region } = require('./config')
+const { client_domain_name, cognito_userpool_id, aws_region } = require('./config')
 
 module.exports = () => express()
   .use(bodyParser.urlencoded({ extended: true }))
