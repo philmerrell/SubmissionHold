@@ -14,7 +14,7 @@ export class WelcomePage implements OnInit {
   async ngOnInit() {
     const tokens = await this.authService.getAuthTokens();
     this.accessToken = tokens.access_token;
-    this.user = this.authService.decodeAccessToken(tokens.access_token);
+    this.user = this.authService.decodeAccessToken(tokens);
   }
 
   login() {

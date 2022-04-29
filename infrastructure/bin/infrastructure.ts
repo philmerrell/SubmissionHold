@@ -10,7 +10,7 @@ new ClientStack(app, 'SubmissionHoldClientStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
 
-new CognitoStack(app, 'SubmissionHoldCognitoStack', {
+new CognitoStack(app, 'TestSubmissionHoldCognitoStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });
 

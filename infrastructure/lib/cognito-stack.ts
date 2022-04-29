@@ -11,11 +11,11 @@ export class CognitoStack extends Stack {
         super(scope, id, props);
 
         const userPool = new cognito.UserPool(this, 'TrfrtSbmtUserPool', {
-            userPoolName: 'Trfrt-Sbmt-UserPool',
+            userPoolName: 'TST-Trfrt-Sbmt-UserPool',
             selfSignUpEnabled: true,
             userVerification: {
                 emailSubject: 'Verify your email for the Treefort Artist Submit App!',
-                emailBody: 'Hello {username}, Thanks for registering for the Treefort Music Fest submission app! Your verification code is {####}',
+                emailBody: 'Hello {email}, Thanks for registering for the Treefort Music Fest submission app! Your verification code is {####}',
                 emailStyle: VerificationEmailStyle.CODE,
             },
             signInAliases: {
@@ -37,14 +37,11 @@ export class CognitoStack extends Stack {
          * COGNITO USER GROUPS
          */
 
-        //  const cfnUserPoolGroup = new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
-        //    userPoolId: 'userPoolId',
-         
-        //    // the properties below are optional
-        //    description: 'Admins of Treefort ',
-        //    groupName: 'Admin',
-        //    precedence: 1
-        //  });
+         const cfnUserPoolGroup = new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
+           userPoolId: userPool.userPoolId,
+           description: 'Admins of Treefort ',
+           groupName: 'admin'
+         });
 
 
         /*******
@@ -53,7 +50,7 @@ export class CognitoStack extends Stack {
 
         const client = userPool.addClient('app-client', {
             generateSecret: true,
-            userPoolClientName: 'TFT-SBMT-CLIENT',
+            userPoolClientName: 'TST-TFT-SBMT-CLIENT',
             oAuth: {
                 flows: {
                     authorizationCodeGrant: true
@@ -92,7 +89,7 @@ export class CognitoStack extends Stack {
 
         userPool.addDomain('CognitoDomain', {
             cognitoDomain: {
-                domainPrefix: 'trft-sbmt',
+                domainPrefix: 'test-trft-sbmt',
             },
         });
 
