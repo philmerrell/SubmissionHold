@@ -46,7 +46,7 @@ jobs:
         run: |
           cd client && ng build --configuration=production
 
-      - name: Build Api
+      - name: Install Api
         run: |
           cd api && npm install
 

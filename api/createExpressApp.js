@@ -34,23 +34,23 @@ module.exports = () => express()
     next()
   })
   .use(express.static('./public'))
-  .use(
-    jwt({ 
-      secret: jwksRsa.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}/.well-known/jwks.json`
-      }),
-      // audience: cognito_client_id,
-      issuer: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}`,
-      algorithms: [ 'RS256' ]
-    }).unless({path: [
-      '/api/v1/auth/token',
-      '/api/v1/auth/refresh',
-      '/api/v1/auth/login',
-      '/api/v1/auth/signup',
-      '/api/v1/auth/logout']}))
+  // .use(
+  //   jwt({ 
+  //     secret: jwksRsa.expressJwtSecret({
+  //       cache: true,
+  //       rateLimit: true,
+  //       jwksRequestsPerMinute: 5,
+  //       jwksUri: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}/.well-known/jwks.json`
+  //     }),
+  //     // audience: cognito_client_id,
+  //     issuer: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}`,
+  //     algorithms: [ 'RS256' ]
+  //   }).unless({path: [
+  //     '/api/v1/auth/token',
+  //     '/api/v1/auth/refresh',
+  //     '/api/v1/auth/login',
+  //     '/api/v1/auth/signup',
+  //     '/api/v1/auth/logout']}))
   .use('/api', router)
   .use((error, req, res, next) => {
     console.log('Error: ', error)
