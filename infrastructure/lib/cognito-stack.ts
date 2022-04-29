@@ -37,10 +37,16 @@ export class CognitoStack extends Stack {
          * COGNITO USER GROUPS
          */
 
-         const cfnUserPoolGroup = new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
+         new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
            userPoolId: userPool.userPoolId,
            description: 'Admins of Treefort ',
            groupName: 'admin'
+         });
+
+         new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
+           userPoolId: userPool.userPoolId,
+           description: 'Admins of Treefort ',
+           groupName: 'voter'
          });
 
 
