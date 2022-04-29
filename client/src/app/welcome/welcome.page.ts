@@ -23,12 +23,13 @@ export class WelcomePage implements OnInit {
 
   async copyAccessToken() {
     await Clipboard.write({
-      string: "Hello World!"
+      string: this.accessToken
     });
 
     const toast = await this.toastController.create({
       message: 'Access token copied.',
-      duration: 3000
+      duration: 3000,
+      color: 'dark'
     });
     toast.present();
   }
