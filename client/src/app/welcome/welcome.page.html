@@ -8,9 +8,14 @@
   <div *ngIf="accessToken" class="ion-padding">
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
-    <h2>User:</h2>
+    <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
+    <h2>Decoded Access Token:</h2>
     <pre>
-      {{ user | json }}
+      {{ decodedAccessToken | json }}
+    </pre>
+    <h2>Decoded Id Token:</h2>
+    <pre>
+      {{ decodedIdToken | json }}
     </pre>
   </div>
   <div *ngIf="!accessToken" class="ion-padding">
