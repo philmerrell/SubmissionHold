@@ -39,13 +39,13 @@ export class CognitoStack extends Stack {
 
          new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
            userPoolId: userPool.userPoolId,
-           description: 'Admins of Treefort ',
+           description: 'Admins of Treefort submissions',
            groupName: 'admin'
          });
 
-         new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
+         new cognito.CfnUserPoolGroup(this, 'VoterUserPoolGroup', {
            userPoolId: userPool.userPoolId,
-           description: 'Admins of Treefort ',
+           description: 'Voters of Treefort submissions',
            groupName: 'voter'
          });
 
