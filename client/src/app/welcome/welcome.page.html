@@ -5,8 +5,16 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
+  <div *ngIf="accessToken" class="ion-padding">
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
+    <h2>User:</h2>
+    <pre>
+      {{ user | json }}
+    </pre>
+  </div>
+  <div *ngIf="!accessToken" class="ion-padding">
+    <ion-button (click)="login()">Sign In</ion-button>
+    <ion-button (click)="logout()">Sign Up</ion-button>
   </div>
 </ion-content>

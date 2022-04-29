@@ -17,4 +17,12 @@ export class WelcomePage implements OnInit {
     this.user = this.authService.decodeAccessToken(tokens.access_token);
   }
 
+  login() {
+    this.authService.login();
+  }
+
+  signup() {
+    this.authService.signUp();
+  }
+
 }
