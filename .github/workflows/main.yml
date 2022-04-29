@@ -61,3 +61,4 @@ jobs:
           cd infrastructure
           cdk deploy SubmissionHoldClientStack
           cdk deploy SubmissionHoldCognitoStack
+          cdk deploy SubmissionHoldApiStack

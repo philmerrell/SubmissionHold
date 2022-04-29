@@ -5,6 +5,7 @@ import * as certificatemanager from 'aws-cdk-lib/aws-certificatemanager';
 import { VerificationEmailStyle } from "aws-cdk-lib/aws-cognito";
 
 
+
 export class CognitoStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
@@ -31,6 +32,25 @@ export class CognitoStack extends Stack {
             }
         });
 
+
+        /**
+         * COGNITO USER GROUPS
+         */
+
+        //  const cfnUserPoolGroup = new cognito.CfnUserPoolGroup(this, 'AdminUserPoolGroup', {
+        //    userPoolId: 'userPoolId',
+         
+        //    // the properties below are optional
+        //    description: 'Admins of Treefort ',
+        //    groupName: 'Admin',
+        //    precedence: 1
+        //  });
+
+
+        /*******
+         * COGNTIO CLIENT
+         */
+
         const client = userPool.addClient('app-client', {
             generateSecret: true,
             userPoolClientName: 'TFT-SBMT-CLIENT',
@@ -51,6 +71,11 @@ export class CognitoStack extends Stack {
                 cognito.UserPoolClientIdentityProvider.COGNITO
             ]
         });
+
+        /*****
+         * COGNITO PROVIDERS
+         * 
+         */
 
         // const googleOAuthClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
         // const googleProvider = new cognito.UserPoolIdentityProviderGoogle(this, 'Google', {
