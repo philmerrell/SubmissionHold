@@ -65,5 +65,5 @@ jobs:
         run: |
           cd infrastructure
           cdk deploy SubmissionHoldClientStack
-          cdk deploy SubmissionHoldCognitoStack
+          cdk deploy TestSubmissionHoldCognitoStack
           cdk deploy SubmissionHoldApiStack
