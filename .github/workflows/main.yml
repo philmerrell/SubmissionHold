@@ -46,6 +46,10 @@ jobs:
         run: |
           cd client && ng build --configuration=production
 
+      - name: Build Api
+        run: |
+          cd api && npm install
+
       - name: Install cdk
         run: |
           npm install -g aws-cdk
