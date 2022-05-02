@@ -1,6 +1,6 @@
 const Router = require('express').Router
 const axios = require('axios')
-const { cognito_client_id, cognito_base_url } = require('../../../../config');
+const { cognito_client_id, cognito_base_url, cognito_client_secret } = require('../../../../config');
 
 
 module.exports = Router({ mergeParams: true })
