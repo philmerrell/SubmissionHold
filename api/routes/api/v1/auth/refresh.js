@@ -13,7 +13,7 @@ module.exports = Router({ mergeParams: true })
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: 'Basic ' + Buffer.from(`${cognito_client_id}:${cognito_client_secret}`).toString('base64')
         },
-        data: { grant_type: 'refresh_token', client_id: cognito_client_id, refresh_token }
+        data: { grant_type: 'refresh_token', client_id: cognito_client_id, refresh_token: refresh_token }
       });
       res.json(response.data);
     } catch (error) {
