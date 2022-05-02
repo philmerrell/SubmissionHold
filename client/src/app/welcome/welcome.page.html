@@ -10,11 +10,11 @@
     <pre>{{ accessToken }}</pre>
     <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
     <ion-accordion-group>
-      <ion-accordion value="colors">
+      <ion-accordion value="accessToken">
         <ion-item slot="header">
           <ion-label>Decoded Access Token</ion-label>
         </ion-item>
-        <ion-list>
+        <ion-list slot="content">
           <ion-item>
             <pre>
               {{ decodedAccessToken | json }}
@@ -22,11 +22,11 @@
           </ion-item>
         </ion-list>
       </ion-accordion>
-      <ion-accordion value="shapes">
+      <ion-accordion value="idToken">
         <ion-item slot="header">
           <ion-label>Decoded Id Token</ion-label>
         </ion-item>
-        <ion-list>
+        <ion-list slot="content">
           <ion-item>
             <pre>
               {{ decodedIdToken | json }}
