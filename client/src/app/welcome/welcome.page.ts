@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
+import { SubmissionService } from '../submission/submission.service';
 
 @Component({
   selector: 'app-welcome',
@@ -12,7 +13,12 @@ export class WelcomePage implements OnInit {
   decodedAccessToken;
   decodedIdToken;
   accessToken;
-  constructor(private authService: AuthService, private toastController: ToastController) { }
+  healthCheck;
+
+  constructor(
+    private authService: AuthService,
+    private submissionService: SubmissionService,
+    private toastController: ToastController) { }
 
   async ngOnInit() {
     const tokens = await this.authService.getAuthTokens();
@@ -32,6 +38,10 @@ export class WelcomePage implements OnInit {
       color: 'dark'
     });
     toast.present();
+  }
+
+  async getHealthCheck() {
+    this.healthCheck = await this.submissionService.getHealthCheck();
   }
 
   login() {

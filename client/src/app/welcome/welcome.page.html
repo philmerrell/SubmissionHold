@@ -9,13 +9,31 @@
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
     <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
-    <h2>Decoded Access Token:</h2>
+    <ion-accordion-group>
+      <ion-accordion value="colors">
+        <ion-item slot="header">
+          <ion-label>Decoded Access Token</ion-label>
+        </ion-item>
+        <pre>
+          {{ decodedAccessToken | json }}
+        </pre> 
+      </ion-accordion>
+      <ion-accordion value="shapes">
+        <ion-item slot="header">
+          <ion-label>Decoded Id Token</ion-label>
+        </ion-item>
+        <pre>
+          {{ decodedIdToken | json }}
+        </pre>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <ion-button (click)="getHealthCheck()">
+      Get Health Check
+    </ion-button>
+    <h2>HealthCheck</h2>
     <pre>
-      {{ decodedAccessToken | json }}
-    </pre>
-    <h2>Decoded Id Token:</h2>
-    <pre>
-      {{ decodedIdToken | json }}
+      {{ healthCheck }}
     </pre>
   </div>
   <div *ngIf="!accessToken" class="ion-padding">

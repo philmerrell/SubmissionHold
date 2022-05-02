@@ -12,4 +12,8 @@ export class SubmissionService {
   createSubmission(submission: any) {
     return this.http.post(`${environment.apiUrl}`, submission).toPromise();
   }
+
+  getHealthCheck() {
+    return this.http.get(`${environment.apiUrl}/healthcheck`).toPromise();
+  }
 }
