@@ -41,9 +41,19 @@ export class AuthService {
     return this.authClient.post(`${environment.authUrl}/v1/auth/refresh`, { refresh_token: tokens.refresh_token}).toPromise();
   }
 
-  saveTokensToLocalStorage(tokens) {
-    this.tokensSubject.next(tokens);
-    return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokens) });
+  async saveTokensToLocalStorage(tokensResponse) {
+    if (tokensResponse.access_token) {
+      this.tokensSubject.next(tokensResponse);
+      return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokensResponse) });
+    } else {
+      const tokens = await this.getAuthTokens();
+      tokens.access_token = tokensResponse.access_token;
+      tokens.id_token = tokensResponse.id_token;
+      tokens.expires_in = tokensResponse.expires_in;
+      tokens.token_type = tokensResponse.token_type;
+      this.tokensSubject.next(tokens);
+      return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokens) });
+    }
   }
 
   async getAuthTokens() {
