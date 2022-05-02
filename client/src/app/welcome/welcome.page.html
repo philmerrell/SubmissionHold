@@ -14,17 +14,26 @@
         <ion-item slot="header">
           <ion-label>Decoded Access Token</ion-label>
         </ion-item>
-        <pre>
-          {{ decodedAccessToken | json }}
-        </pre> 
+        <ion-list>
+          <ion-item>
+            <pre>
+              {{ decodedAccessToken | json }}
+            </pre> 
+          </ion-item>
+        </ion-list>
       </ion-accordion>
       <ion-accordion value="shapes">
         <ion-item slot="header">
           <ion-label>Decoded Id Token</ion-label>
         </ion-item>
-        <pre>
-          {{ decodedIdToken | json }}
-        </pre>
+        <ion-list>
+          <ion-item>
+            <pre>
+              {{ decodedIdToken | json }}
+            </pre>
+          </ion-item>
+        </ion-list>
+        
       </ion-accordion>
     </ion-accordion-group>
 
@@ -33,7 +42,7 @@
     </ion-button>
     <h2>HealthCheck</h2>
     <pre>
-      {{ healthCheck }}
+      {{ healthCheck | json }}
     </pre>
   </div>
   <div *ngIf="!accessToken" class="ion-padding">
