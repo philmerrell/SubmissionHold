@@ -4,6 +4,15 @@ import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@capacitor/storage';
+import { UserService } from './user.service';
+
+export interface Tokens {
+  access_token: string;
+  id_token: string;
+  token_type: string;
+  expires_in: number;
+  refresh_token: string;
+}
 
 
 @Injectable({
@@ -14,7 +23,7 @@ export class AuthService {
   tokensSubject: BehaviorSubject<any> = new BehaviorSubject({});
   authClient: HttpClient;
   
-  constructor(private http: HttpClient, private handler: HttpBackend) {
+  constructor(private http: HttpClient, private handler: HttpBackend, private userService: UserService) {
     this.authClient = new HttpClient(handler);
   }
 
@@ -31,9 +40,8 @@ export class AuthService {
     window.open(`${environment.authUrl}/v1/auth/logout`, '_SELF' );
   }
 
-  getTokensFromCognito(postObj: { code: string; state: string;}) {
-
-    return this.authClient.post(`${environment.authUrl}/v1/auth/token`, postObj, { withCredentials: true });
+  getTokensFromCognito(postObj: { code: string; state: string;}): Promise<Tokens> {
+    return this.authClient.post<Tokens>(`${environment.authUrl}/v1/auth/token`, postObj, { withCredentials: true }).toPromise();
   }
 
   async refreshToken() {
@@ -41,9 +49,10 @@ export class AuthService {
     return this.authClient.post(`${environment.authUrl}/v1/auth/refresh`, { refresh_token: tokens.refresh_token}).toPromise();
   }
 
-  async saveTokensToLocalStorage(tokensResponse) {
+  async saveTokensToLocalStorage(tokensResponse: Tokens) {
     if (tokensResponse.access_token) {
       this.tokensSubject.next(tokensResponse);
+      this.userService.setUser(tokensResponse);
       return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokensResponse) });
     } else {
       const tokens = await this.getAuthTokens();
@@ -52,20 +61,23 @@ export class AuthService {
       tokens.expires_in = tokensResponse.expires_in;
       tokens.token_type = tokensResponse.token_type;
       this.tokensSubject.next(tokens);
+      this.userService.setUser(tokensResponse);
       return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokens) });
     }
   }
 
-  async getAuthTokens() {
+  async getAuthTokens(): Promise<Tokens> {
     const token = await Storage.get({ key: `${environment.localStoragePrefix}-TOKENS`});
     return JSON.parse(token.value);
   }
 
   async isAuthenticated() {
-    const token = await this.getAuthTokens();
-    if (token) {
-      const isExpired = this.jwtHelperService.isTokenExpired(token.access_token);
-      return !isExpired;
+    const tokens = await this.getAuthTokens();
+    if (tokens) {
+      // const isExpired = this.jwtHelperService.isTokenExpired(tokens.access_token);
+      // return !isExpired;
+      this.userService.setUser(tokens);
+
     } else {
       return false;
     }
@@ -86,6 +98,8 @@ export class AuthService {
   getTokenObservable() {
     return this.tokensSubject.asObservable();
   }
+
+
 
   
 

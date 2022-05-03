@@ -1,12 +1,17 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+    <ion-menu contentId="main-content" type="overlay" [hidden]="!user.authenticated">
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>
             <span style="font-weight: 900; font-size: 1.5em;">Submission Hold</span>
           </ion-list-header>
-          <ion-note>gilbert@theduckclub.com</ion-note>
+          <ion-item lines="none">
+            <ion-label>
+              <ion-text color="medium">{{ user.claims?.email }}</ion-text>
+            </ion-label>
+            <ion-button (click)="logout()">Logout</ion-button>
+          </ion-item>
 
           <ion-searchbar></ion-searchbar>
 

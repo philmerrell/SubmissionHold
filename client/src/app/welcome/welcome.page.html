@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>welcome</ion-title>
+    <ion-title>Welcome</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="accessToken" class="ion-padding">
+  <div *ngIf="user.authenticated" class="ion-padding">
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
     <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
@@ -45,7 +45,7 @@
       {{ healthCheck | json }}
     </pre>
   </div>
-  <div *ngIf="!accessToken" class="ion-padding">
+  <div *ngIf="!user.authenticated" class="ion-padding">
     <ion-button (click)="login()">Sign In</ion-button>
     <ion-button (click)="signup()">Sign Up</ion-button>
   </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService, Tokens } from '../auth/auth.service';
 import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
 import { SubmissionService } from '../submission/submission.service';
+import { User, UserService } from '../auth/user.service';
 
 @Component({
   selector: 'app-welcome',
@@ -10,6 +11,8 @@ import { SubmissionService } from '../submission/submission.service';
   styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
+  tokens: Tokens;
+  user: User;
   decodedAccessToken;
   decodedIdToken;
   accessToken;
@@ -18,13 +21,20 @@ export class WelcomePage implements OnInit {
   constructor(
     private authService: AuthService,
     private submissionService: SubmissionService,
-    private toastController: ToastController) { }
+    private toastController: ToastController,
+    private userService: UserService) { }
 
   async ngOnInit() {
-    const tokens = await this.authService.getAuthTokens();
-    this.accessToken = tokens.access_token;
-    this.decodedAccessToken = this.authService.decodeAccessToken(tokens);
-    this.decodedIdToken = this.authService.decodeIdToken(tokens);
+    this.userService.getUserObservable()
+      .subscribe(async (user: User) => {
+        this.user = user;
+        if (user.authenticated) {
+          const tokens = await this.authService.getAuthTokens();
+          this.accessToken = tokens.access_token;
+          this.decodedAccessToken = this.authService.decodeAccessToken(tokens);
+          this.decodedIdToken = this.authService.decodeIdToken(tokens);
+        }
+      })
   }
 
   async copyAccessToken() {

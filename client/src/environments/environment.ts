@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://lgd39ua5xd.execute-api.us-west-2.amazonaws.com/v1',
-  authUrl: 'https://submissions-api.philmerrell.com/api',
+  apiUrl: 'https://sbmt-api.com',
+  authUrl: 'http://localhost:3000/api',
   localStoragePrefix: 'SubmissionHold'
 };
 

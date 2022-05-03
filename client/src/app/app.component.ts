@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SettingService } from './admin/services/setting.service';
+import { AuthService } from './auth/auth.service';
+import { User, UserService } from './auth/user.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,12 +19,22 @@ export class AppComponent {
     { title: 'Settings', url: '/admin/settings', icon: 'settings' },
   ];
   public labels = [];
+  user: User;
 
-  constructor(private settingService: SettingService) {
+  constructor(private settingService: SettingService, private authService: AuthService, private userService: UserService) {
     this.getLabels();
+    this.userService.getUserObservable().subscribe((user: User ) => this.user = user);
+    this.authService.isAuthenticated();
   }
 
   getLabels() {
     this.labels = this.settingService.getLabels();
   }
+
+  
+
+  logout() {
+    this.authService.logout();
+  }
+  
 }

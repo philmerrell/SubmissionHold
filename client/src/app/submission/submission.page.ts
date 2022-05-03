@@ -45,6 +45,7 @@ export class SubmissionPage implements OnInit {
   async submitForm() {
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
+      console.log(submission);
       await this.submissionService.createSubmission(submission);
       // TODO: submit form values
     } else {
