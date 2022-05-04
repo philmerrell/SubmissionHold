@@ -21,7 +21,7 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'primary'" position="floating">Artist Name</ion-label>
+              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'primary'" position="stacked">Artist Name</ion-label>
               <ion-input formControlName="name"></ion-input>
             </ion-item>
             <ion-text *ngIf="validateControl('name', 'required')" color="danger">
@@ -32,18 +32,40 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('statement', 'required') ? 'danger' : 'primary'" position="floating">Why do you want to play Treefort?</ion-label>
+              <ion-label [color]="validateControl('statement', 'required') ? 'danger' : 'primary'" position="stacked">Why do you want to play Treefort?</ion-label>
               <ion-textarea formControlName="statement"></ion-textarea>
             </ion-item>
             <ion-text *ngIf="validateControl('statement', 'required')" color="danger">
               Artist Statement is required.
             </ion-text>
             <ion-item>
-              <ion-label [color]="validateControl('bio', 'required') ? 'danger' : 'primary'" color="primary" position="floating">Bio</ion-label>
+              <ion-label [color]="validateControl('bio', 'required') ? 'danger' : 'primary'" color="primary" position="stacked">Bio</ion-label>
               <ion-textarea formControlName="bio" rows="5"></ion-textarea>
             </ion-item>
             <ion-text *ngIf="validateControl('bio', 'required')" color="danger">
               Artist Bio is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('genres', 'minLength') ? 'danger' : 'primary'" color="primary" position="stacked">Genre</ion-label>
+              <ion-select formControlName="genres" multiple="true" cancelText="Nah" okText="Okay!">
+                <ion-select-option value="bacon">Bacon</ion-select-option>
+                <ion-select-option value="olives">Black Olives</ion-select-option>
+                <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+                <ion-select-option value="peppers">Green Peppers</ion-select-option>
+                <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+                <ion-select-option value="onions">Onions</ion-select-option>
+                <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+                <ion-select-option value="pineapple">Pineapple</ion-select-option>
+                <ion-select-option value="sausage">Sausage</ion-select-option>
+                <ion-select-option value="Spinach">Spinach</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-text *ngIf="validateControl('genres', 'required')" color="danger">
+              Please choose 3 - 5 genres.
             </ion-text>
           </ion-col>
         </ion-row>
@@ -61,7 +83,7 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label [color]="validateLocationControl('city', 'required') ? 'danger' : 'primary'" position="floating">City</ion-label>
+                  <ion-label [color]="validateLocationControl('city', 'required') ? 'danger' : 'primary'" position="stacked">City</ion-label>
                   <ion-input formControlName="city"></ion-input>
                 </ion-item>
                 <ion-text *ngIf="validateLocationControl('city', 'required')" color="danger">
@@ -81,7 +103,7 @@
                 </ion-text>
 
                 <ion-item *ngIf="getIsInternational()">
-                  <ion-label [color]="validateLocationControl('country', 'required') ? 'danger' : 'primary'" position="floating">Country</ion-label>
+                  <ion-label [color]="validateLocationControl('country', 'required') ? 'danger' : 'primary'" position="stacked">Country</ion-label>
                   <ion-input formControlName="country"></ion-input>
                 </ion-item>
                 <ion-text *ngIf="validateLocationControl('country', 'required')" color="danger">
@@ -99,28 +121,83 @@
             </ion-row>
       </ion-grid>
     </ion-card>
-    <ion-card formGroupName="media">
-      <ion-card-header>
-        <ion-card-title>
-          Media
-        </ion-card-title>
-      </ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label color="primary" position="floating">Apple Music Artist Url</ion-label>
-              <ion-input formControlName="appleMusic"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary" position="floating">Spotify Artist Url</ion-label>
-              <ion-input formControlName="spotify"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      
-    </ion-card>
+    <div formGroupName="links">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Links
+          </ion-card-title>
+        </ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Website</ion-label>
+                <ion-input formControlName="website" placeholder="Enter primary web link"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Apple Music</ion-label>
+                <ion-input formControlName="appleMusic"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Spotify</ion-label>
+                <ion-input formControlName="spotify"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Bandcamp</ion-label>
+                <ion-input formControlName="bandcamp"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Soundcloud</ion-label>
+                <ion-input formControlName="soundcloud"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Facebook</ion-label>
+                <ion-input formControlName="facebook"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Twitter</ion-label>
+                <ion-input formControlName="twitter"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">Tik-Tok</ion-label>
+                <ion-input formControlName="tiktok"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Youtube
+          </ion-card-title>
+        </ion-card-header>
+        <ion-grid>
+          <ion-row *ngFor="let videos of getYoutubeFormArray(submissionForm); let i = index" formArrayName="youtube">
+            <ion-col [formGroupName]="i">
+              <ion-item>
+                <ion-label position="stacked" color="primary">Youtube Video Url</ion-label>
+                <ion-input formControlName="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-button (click)="addYoutubeFormControl()" size="small" fill="clear" [disabled]="getYoutubeFormArray(submissionForm).length >= 3">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+              <ion-button (click)="removeYoutubeFormControl(i)" size="small" fill="clear" color="danger" [disabled]="getYoutubeFormArray(submissionForm).length === 1">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+
   </div>
 
   <div class="ion-padding">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateAllFormFields } from '../form-utils';
 import { SubmissionService } from './submission.service';
 
@@ -43,6 +43,7 @@ export class SubmissionPage implements OnInit {
   }
 
   async submitForm() {
+    console.log(this.submissionForm);
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
       console.log(submission);
@@ -53,22 +54,52 @@ export class SubmissionPage implements OnInit {
     }
   }
 
+  addYoutubeFormControl() {
+    const youtubeFormArray = this.submissionForm.get('links.youtube') as FormArray;
+    youtubeFormArray.push(this.createYoutubeFormControl());
+  }
+
+  removeYoutubeFormControl(i: number) {
+    const youtubeFormArray = this.submissionForm.get('links.youtube') as FormArray;
+    youtubeFormArray.removeAt(i);
+  }
+
+  getYoutubeFormArray(form: FormGroup) {
+    const control =  form.get('links.youtube')['controls']
+    return control;
+  }
+
+  private createYoutubeFormControl() {
+    return this.formBuilder.group({
+      url: ['']
+    })
+  }
+
   private createSubmissionForm() {
     this.submissionForm = this.formBuilder.group({
       bio: ['', Validators.required],
+      image: [''],
       location: this.createLocationFormGroup(),
-      media: this.createMediaFormGroup(),
+      links: this.createLinksFormGroup(),
       name: ['', Validators.required],
-      statement: ['', Validators.required]
+      statement: ['', Validators.required],
+      
+      genres: [[]],
+      website: ['']
     });
   }
 
-  private createMediaFormGroup(): FormGroup {
+  private createLinksFormGroup(): FormGroup {
     return this.formBuilder.group({
       spotify: '',
       appleMusic: '',
-      image: '',
-      // youtube: this.formBuilder.array([])
+      bandcamp: '',
+      soundcloud: '',
+      facebook: '',
+      twitter: '',
+      tiktok: '',
+      youtube: this.formBuilder.array([this.createYoutubeFormControl()]),
+      website: ''
     });
   }
 

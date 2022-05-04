@@ -3,6 +3,13 @@ ion-text {
     margin-left: 20px;
 }
 
-.state-select {
-    margin-top: 25px;
+// .state-select {
+//     margin-top: 25px;
+// }
+
+ion-row{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
 }
