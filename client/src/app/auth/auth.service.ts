@@ -77,7 +77,7 @@ export class AuthService {
       // const isExpired = this.jwtHelperService.isTokenExpired(tokens.access_token);
       // return !isExpired;
       this.userService.setUser(tokens);
-
+      return true;
     } else {
       return false;
     }

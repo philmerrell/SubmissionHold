@@ -6,6 +6,7 @@
 
 <ion-content>
   <div *ngIf="user.authenticated" class="ion-padding">
+    <ion-button routerLink="/submission">Submit Form</ion-button>
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
     <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>

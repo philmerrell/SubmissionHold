@@ -10,7 +10,7 @@ export class SubmissionService {
   constructor(private http: HttpClient) { }
 
   createSubmission(submission: any) {
-    return this.http.post(`${environment.apiUrl}`, submission).toPromise();
+    return this.http.post(`${environment.apiUrl}/submit`, submission).toPromise();
   }
 
   getHealthCheck() {

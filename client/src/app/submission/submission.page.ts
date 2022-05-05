@@ -43,7 +43,6 @@ export class SubmissionPage implements OnInit {
   }
 
   async submitForm() {
-    console.log(this.submissionForm);
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
       console.log(submission);
@@ -78,14 +77,35 @@ export class SubmissionPage implements OnInit {
   private createSubmissionForm() {
     this.submissionForm = this.formBuilder.group({
       bio: ['', Validators.required],
+      contacts: this.createContactsFormGroup(),
+      genres: [[]],
       image: [''],
       location: this.createLocationFormGroup(),
       links: this.createLinksFormGroup(),
+      memberNames: ['', Validators.required],
       name: ['', Validators.required],
+      numberOfMembers: ['', Validators.required],
       statement: ['', Validators.required],
-      
-      genres: [[]],
+      submitter: this.createSubmitterInfoFormGroup(),
       website: ['']
+    });
+  }
+
+  private createContactsFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      management: [''],
+      agent: [''],
+      publicity: [''],
+      label: ['']
+    });
+  }
+
+  private createSubmitterInfoFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      relationship: ['', Validators.required]
     });
   }
 
