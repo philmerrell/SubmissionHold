@@ -102,6 +102,24 @@
             </ion-text>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item (click)="fileInput.click()" button detail="false">
+              <ion-thumbnail slot="end">
+                <ion-img *ngIf="imageDataUrl" [src]="imageDataUrl"></ion-img>
+              </ion-thumbnail>
+              <!-- <ion-icon slot="start" color="tertiary" size="large"></ion-icon> -->
+              <ion-label color="primary" position="stacked">
+                Choose an image
+              </ion-label>
+              <h3>{{ imageFileName }}</h3>
+              <input (change)="addFile($event)" class="ion-hide" #fileInput type="file" accept="image/*">
+            </ion-item>
+          </ion-col>
+            <!-- <ion-text *ngIf="validateControl('memberNames', 'required')" color="danger">
+              Artist image is required.
+            </ion-text> -->
+        </ion-row>
       </ion-grid>
     </ion-card>
 

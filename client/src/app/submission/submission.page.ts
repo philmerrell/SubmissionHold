@@ -10,11 +10,35 @@ import { SubmissionService } from './submission.service';
 })
 export class SubmissionPage implements OnInit {
   submissionForm: FormGroup;
+  imageDataUrl;
+  imageFileName;
 
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
   ngOnInit() {
     this.createSubmissionForm();
+  }
+
+  async addFile(event) {
+    if (event) {
+      const result = event.target.files[0];
+      const blob = await this.getBlobFromFile(result);
+      this.imageDataUrl = await this.getDataUrl(result);
+      this.imageFileName = result.name;
+      console.log(result);
+    }
+    // this.modalController.dismiss({
+    //   path: dataUrl,
+    //   result: {
+    //     folderPath: '/',
+    //     asset: {
+    //       mimeType: result.type,
+    //       file: blob,
+    //       fileName: 'Profile',
+    //       fileSize: result.size
+    //     }
+    //   }
+    // });
   }
 
   getIsInternational() {
@@ -87,6 +111,7 @@ export class SubmissionPage implements OnInit {
       numberOfMembers: ['', Validators.required],
       statement: ['', Validators.required],
       submitter: this.createSubmitterInfoFormGroup(),
+      type: ['music', Validators.required],
       website: ['']
     });
   }
@@ -129,6 +154,28 @@ export class SubmissionPage implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       country: ['United States', Validators.required]
+    });
+  }
+
+  private async getDataUrl(result: File) {
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const data = event.target.result;
+        resolve(data);
+      };
+      reader.readAsDataURL(result);
+    });
+  }
+
+  private async getBlobFromFile(result: File) {
+    return new Promise<any>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const data = event.target.result;
+        resolve(data);
+      };
+      reader.readAsArrayBuffer(result);
     });
   }
 
