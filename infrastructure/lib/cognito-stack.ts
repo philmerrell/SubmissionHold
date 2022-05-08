@@ -19,14 +19,14 @@ export class CognitoStack extends Stack {
                 emailStyle: VerificationEmailStyle.CODE,
             },
             signInAliases: {
-                username: true,
+                username: false,
                 email: true,
-              },
+            },
             autoVerify: { email: true },
             signInCaseSensitive: false,
             standardAttributes: {
                 email: {
-                    mutable: true,
+                    mutable: false,
                     required: true
                 }
             }
