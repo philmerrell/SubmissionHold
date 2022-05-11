@@ -33,11 +33,11 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('bio', 'required') ? 'danger' : 'primary'" color="primary"
+              <ion-label [color]="validateControl('description', 'required') ? 'danger' : 'primary'" color="primary"
                 position="stacked">Bio</ion-label>
-              <ion-textarea formControlName="bio" rows="5"></ion-textarea>
+              <ion-textarea formControlName="description" rows="5"></ion-textarea>
             </ion-item>
-            <ion-text *ngIf="validateControl('bio', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('description', 'required')" color="danger">
               Artist Bio is required.
             </ion-text>
           </ion-col>
@@ -54,7 +54,7 @@
             </ion-text>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
             <ion-item>
               <ion-label [color]="validateControl('numberOfMembers', 'required') ? 'danger' : 'primary'" color="primary"
@@ -77,7 +77,7 @@
               Band member names are required.
             </ion-text>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
         <ion-row>
           <ion-col>
             <ion-item>
@@ -104,6 +104,14 @@
         </ion-row>
         <ion-row>
           <ion-col>
+            <ion-item>
+              <ion-label color="primary" position="stacked">Website</ion-label>
+              <ion-input formControlName="website" placeholder="Enter primary web link"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
             <ion-item (click)="fileInput.click()" button detail="false">
               <ion-thumbnail slot="end">
                 <ion-img *ngIf="imageDataUrl" [src]="imageDataUrl"></ion-img>
@@ -124,7 +132,7 @@
     </ion-card>
 
 
-    <ion-card formGroupName="location">
+    <ion-card>
       <ion-card-header>
         <ion-card-title>
           Location
@@ -142,8 +150,9 @@
               City is required.
             </ion-text>
           </ion-col>
+        </ion-row>
+        <ion-row>
           <ion-col>
-
             <ion-item *ngIf="!getIsInternational()" class="state-select">
               <ion-label [color]="validateLocationControl('state', 'required') ? 'danger' : 'primary'">Select a State
               </ion-label>
@@ -152,7 +161,7 @@
               </ion-select>
             </ion-item>
             <ion-text
-              *ngIf="validateLocationControl('state', 'required') && !submissionForm.get('location').get('isInternational').value"
+              *ngIf="validateLocationControl('state', 'required') && !submissionForm.get('isInternational').value"
               color="danger">
               State is required.
             </ion-text>
@@ -186,14 +195,6 @@
           </ion-card-title>
         </ion-card-header>
         <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label color="primary" position="stacked">Website</ion-label>
-                <ion-input formControlName="website" placeholder="Enter primary web link"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
           <ion-row>
             <ion-col>
               <ion-item>
@@ -231,25 +232,25 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>
-            Youtube
+            Videos
           </ion-card-title>
           <ion-card-subtitle>Submit up to 3 videos</ion-card-subtitle>
         </ion-card-header>
         <ion-grid>
-          <ion-row *ngFor="let videos of getYoutubeFormArray(submissionForm); let i = index" formArrayName="youtube">
-            <ion-col [formGroupName]="i">
+          <ion-row *ngFor="let videos of getVideosFormArray(submissionForm); let i = index" formArrayName="videos">
+            <ion-col>
               <ion-item>
-                <ion-label position="stacked" color="primary">Youtube Video Url</ion-label>
-                <ion-input formControlName="url"></ion-input>
+                <ion-label position="stacked" color="primary">Video Url</ion-label>
+                <ion-input [formControlName]="i"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="auto">
-              <ion-button (click)="addYoutubeFormControl()" size="small" fill="solid" color="success" shape="round"
-                [disabled]="getYoutubeFormArray(submissionForm).length >= 3">
+              <ion-button (click)="addVideosFormControl()" size="small" fill="solid" color="success" shape="round"
+                [disabled]="getVideosFormArray(submissionForm).length >= 3">
                 <ion-icon slot="icon-only" name="add"></ion-icon>
               </ion-button>
-              <ion-button (click)="removeYoutubeFormControl(i)" size="small" fill="clear" color="danger"
-                [disabled]="getYoutubeFormArray(submissionForm).length === 1">
+              <ion-button (click)="removeVideosFormControl(i)" size="small" fill="clear" color="danger"
+                [disabled]="getVideosFormArray(submissionForm).length === 1">
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
               </ion-button>
             </ion-col>
@@ -258,21 +259,21 @@
       </ion-card>
     </div>
 
-    <ion-card formGroupName="submitter">
+    <ion-card formGroupName="contactInfo">
       <ion-card-header>
         <ion-card-title>
-          Submitter Info
+          Contact Info
         </ion-card-title>
       </ion-card-header>
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('submitter.name', 'required') ? 'danger' : 'primary'"
+              <ion-label [color]="validateControl('contactInfo.name', 'required') ? 'danger' : 'primary'"
                 position="stacked">Submitter Name</ion-label>
               <ion-input formControlName="name"></ion-input>
             </ion-item>
-            <ion-text *ngIf="validateControl('submitter.name', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('contactInfo.name', 'required')" color="danger">
               Submitter Name is required.
             </ion-text>
           </ion-col>
@@ -280,14 +281,14 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="(validateControl('submitter.email', 'email') || validateControl('submitter.email', 'required')) ? 'danger' : 'primary'"
+              <ion-label [color]="(validateControl('contactInfo.email', 'email') || validateControl('contactInfo.email', 'required')) ? 'danger' : 'primary'"
                 position="stacked">Submitter Email</ion-label>
               <ion-input formControlName="email" type="email" inputmode="email"></ion-input>
             </ion-item>
-            <ion-text *ngIf="validateControl('submitter.email', 'email')" color="danger">
+            <ion-text *ngIf="validateControl('contactInfo.email', 'email')" color="danger">
               A valid submitter email is required.
             </ion-text>
-            <ion-text *ngIf="validateControl('submitter.email', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('contactInfo.email', 'required')" color="danger">
               Submitter email is required.
             </ion-text>
           </ion-col>
@@ -295,11 +296,11 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('submitter.phone', 'required') ? 'danger' : 'primary'"
+              <ion-label [color]="validateControl('contactInfo.phoneNumber', 'required') ? 'danger' : 'primary'"
                 position="stacked">Submitter Phone</ion-label>
-              <ion-input formControlName="phone"></ion-input>
+              <ion-input formControlName="phoneNumber"></ion-input>
             </ion-item>
-            <ion-text *ngIf="validateControl('submitter.phone', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('contactInfo.phoneNumber', 'required')" color="danger">
               Submitter phone number is required.
             </ion-text>
           </ion-col>
@@ -307,7 +308,7 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('submitter.relationship', 'required') ? 'danger' : 'primary'" color="primary"
+              <ion-label [color]="validateControl('contactInfo.relationship', 'required') ? 'danger' : 'primary'" color="primary"
                 position="stacked">Relationship to artist</ion-label>
               <ion-select formControlName="relationship" cancelText="Nah"
                 okText="Okay!">
@@ -318,24 +319,16 @@
                 <ion-select-option value="other">Other</ion-select-option>
               </ion-select>
             </ion-item>
-            <ion-text *ngIf="validateControl('submitter.relationship', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('contactInfo.relationship', 'required')" color="danger">
               Please choose one.
             </ion-text>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-card>
-
-    <ion-card formGroupName="contacts">
-      <ion-card-header>
-        <ion-card-title>Additional Contacts</ion-card-title>
-      </ion-card-header>
-      <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
               <ion-label color="primary" position="stacked">Management</ion-label>
-              <ion-input formControlName="management"></ion-input>
+              <ion-input formControlName="managementContact"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -343,7 +336,7 @@
           <ion-col>
             <ion-item>
               <ion-label color="primary" position="stacked">Agent</ion-label>
-              <ion-input formControlName="agent"></ion-input>
+              <ion-input formControlName="agentContact"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -351,7 +344,7 @@
           <ion-col>
             <ion-item>
               <ion-label color="primary" position="stacked">Publicty</ion-label>
-              <ion-input formControlName="publicity"></ion-input>
+              <ion-input formControlName="publicityContact"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -359,12 +352,11 @@
           <ion-col>
             <ion-item>
               <ion-label color="primary" position="stacked">Label</ion-label>
-              <ion-input formControlName="label"></ion-input>
+              <ion-input formControlName="labelContact"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
-
     </ion-card>
 
 

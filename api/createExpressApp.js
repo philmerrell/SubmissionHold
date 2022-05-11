@@ -5,7 +5,7 @@ const router = require('./routes/createRouter.js')()
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var { expressjwt: jwt } = require("express-jwt");
 const jwksRsa = require('jwks-rsa');
-const { client_domain_name, cognito_userpool_id, aws_region } = require('./config')
+const { client_domain_name, cognito_userpool_id } = require('./config')
 
 module.exports = () => express()
   .use(bodyParser.urlencoded({ extended: true }))
@@ -34,23 +34,23 @@ module.exports = () => express()
     next()
   })
   .use(express.static('./public'))
-  // .use(
-  //   jwt({ 
-  //     secret: jwksRsa.expressJwtSecret({
-  //       cache: true,
-  //       rateLimit: true,
-  //       jwksRequestsPerMinute: 5,
-  //       jwksUri: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}/.well-known/jwks.json`
-  //     }),
-  //     // audience: cognito_client_id,
-  //     issuer: `https://cognito-idp.${aws_region}.amazonaws.com/${cognito_userpool_id}`,
-  //     algorithms: [ 'RS256' ]
-  //   }).unless({path: [
-  //     '/api/v1/auth/token',
-  //     '/api/v1/auth/refresh',
-  //     '/api/v1/auth/login',
-  //     '/api/v1/auth/signup',
-  //     '/api/v1/auth/logout']}))
+  .use(
+    jwt({ 
+      secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://cognito-idp.us-west-2.amazonaws.com/${cognito_userpool_id}/.well-known/jwks.json`
+      }),
+      // audience: cognito_client_id,
+      issuer: `https://cognito-idp.us-west-2.amazonaws.com/${cognito_userpool_id}`,
+      algorithms: [ 'RS256' ]
+    }).unless({ path: [
+      '/api/v1/auth/token',
+      '/api/v1/auth/refresh',
+      '/api/v1/auth/login',
+      '/api/v1/auth/signup',
+      '/api/v1/auth/logout']}))
   .use('/api', router)
   .use((error, req, res, next) => {
     console.log('Error: ', error)

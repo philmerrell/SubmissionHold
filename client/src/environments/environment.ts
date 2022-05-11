@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://sbmt-api.com',
+  apiUrl: 'https://treefort.sbmt-api.com',
   authUrl: 'http://localhost:3000/api',
   localStoragePrefix: 'SubmissionHold'
 };

@@ -42,19 +42,19 @@ export class SubmissionPage implements OnInit {
   }
 
   getIsInternational() {
-    return this.submissionForm.get('location').get('isInternational').value;
+    return this.submissionForm.get('isInternational').value
   }
 
   handleIsInternational(event) {
     const isInternational = event.detail.checked;
     if (isInternational) {
-      this.submissionForm.get('location').get('country').setValue('');
-      this.submissionForm.get('location').get('state').setValue('');
-      this.submissionForm.get('location').get('state').clearValidators();
-      this.submissionForm.get('location').get('state').updateValueAndValidity();
+      this.submissionForm.get('country').setValue('');
+      this.submissionForm.get('state').setValue('');
+      this.submissionForm.get('state').clearValidators();
+      this.submissionForm.get('state').updateValueAndValidity();
     } else {
-      this.submissionForm.get('location').get('state').setValidators(Validators.required);
-      this.submissionForm.get('location').get('country').setValue('United States');
+      this.submissionForm.get('state').setValidators(Validators.required);
+      this.submissionForm.get('country').setValue('United States');
     }
   }
 
@@ -63,7 +63,7 @@ export class SubmissionPage implements OnInit {
   }
 
   validateLocationControl(controlName: string, error: string) {
-    return this.submissionForm.get('location').get(controlName).hasError(error) && this.submissionForm.get('location').get(controlName).touched;
+    return this.submissionForm.get(controlName).hasError(error) && this.submissionForm.get(controlName).touched;
   }
 
   async submitForm() {
@@ -77,60 +77,57 @@ export class SubmissionPage implements OnInit {
     }
   }
 
-  addYoutubeFormControl() {
-    const youtubeFormArray = this.submissionForm.get('links.youtube') as FormArray;
-    youtubeFormArray.push(this.createYoutubeFormControl());
+  addVideosFormControl() {
+    const videosFormArray = this.submissionForm.get('links.videos') as FormArray;
+    videosFormArray.push(this.createVideosFormControl());
   }
 
-  removeYoutubeFormControl(i: number) {
-    const youtubeFormArray = this.submissionForm.get('links.youtube') as FormArray;
-    youtubeFormArray.removeAt(i);
+  removeVideosFormControl(i: number) {
+    const videosFormArray = this.submissionForm.get('links.videos') as FormArray;
+    videosFormArray.removeAt(i);
   }
 
-  getYoutubeFormArray(form: FormGroup) {
-    const control =  form.get('links.youtube')['controls']
+  getVideosFormArray(form: FormGroup) {
+    const control =  form.get('links.videos')['controls']
     return control;
   }
 
-  private createYoutubeFormControl() {
-    return this.formBuilder.group({
-      url: ['']
-    })
+  private createVideosFormControl() {
+    return this.formBuilder.control('')
   }
 
   private createSubmissionForm() {
     this.submissionForm = this.formBuilder.group({
-      bio: ['', Validators.required],
-      contacts: this.createContactsFormGroup(),
-      genres: [[]],
-      image: [''],
-      location: this.createLocationFormGroup(),
-      links: this.createLinksFormGroup(),
-      memberNames: ['', Validators.required],
+      fort: ['music', Validators.required],
       name: ['', Validators.required],
-      numberOfMembers: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      country: ['United States', Validators.required],
+      isInternational: [false],
+      description: ['', Validators.required],
+      image: [''],
+      genres: [[]],
+      links: this.createLinksFormGroup(),
       statement: ['', Validators.required],
-      submitter: this.createSubmitterInfoFormGroup(),
+      contactInfo: this.createContactInfoFormGroup(),
       type: ['music', Validators.required],
       website: ['']
+      // numberOfMembers: ['', Validators.required],
+      // memberNames: ['', Validators.required],
+      // contacts: this.createContactsFormGroup(),
     });
   }
 
-  private createContactsFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      management: [''],
-      agent: [''],
-      publicity: [''],
-      label: ['']
-    });
-  }
-
-  private createSubmitterInfoFormGroup(): FormGroup {
+  private createContactInfoFormGroup(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      relationship: ['', Validators.required]
+      relationship: ['', Validators.required],
+      managementContact: [''],
+      agentContact: [''],
+      publicityContact: [''],
+      labelContact: ['']
     });
   }
 
@@ -143,17 +140,7 @@ export class SubmissionPage implements OnInit {
       facebook: '',
       twitter: '',
       tiktok: '',
-      youtube: this.formBuilder.array([this.createYoutubeFormControl()]),
-      website: ''
-    });
-  }
-
-  private createLocationFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      isInternational: false,
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      country: ['United States', Validators.required]
+      videos: this.formBuilder.array([this.createVideosFormControl()])
     });
   }
 
