@@ -4,12 +4,12 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 
 export interface CognitoUser {
-  username: string;
-  attributes: { name: string, value: string }[];
-  userCreateDate: string;
-  userLastModifiedDate: string;
-  enabled: boolean;
-  userStatus: string;
+  Username: string;
+  Attributes: { name: string, value: string }[];
+  UserCreateDate: string;
+  UserLastModifiedDate: string;
+  Enabled: boolean;
+  UserStatus: string;
 };
 
 @Injectable({
