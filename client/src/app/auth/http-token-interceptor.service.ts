@@ -51,11 +51,11 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   }
 
   private addTokenToRequest(request: HttpRequest<any>, tokens: any): HttpRequest<any> {
-    if (request.url.indexOf(`${environment.apiUrl}`) !== -1) {
+    // if (request.url.indexOf(`${environment.apiUrl}`) !== -1) {
       return request.clone({ setHeaders: { Authorization: `Bearer ${tokens.access_token}` } });
-    } else {
+    // } else {
       return request;
-    }
+    // }
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

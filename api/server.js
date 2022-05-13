@@ -1,6 +1,4 @@
 const awsServerlessExpress = require('aws-serverless-express');
-// const logger = require('./logger.js')
-// const database = require('./database/createDatabase.js')({ logger })
 
 const app = require('./createExpressApp.js')();
 app.disable('x-powered-by');

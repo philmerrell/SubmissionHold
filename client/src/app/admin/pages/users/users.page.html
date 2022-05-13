@@ -24,12 +24,61 @@
     <ion-item *ngFor="let user of users">
       <ion-icon slot="start" name="person"></ion-icon>
       <ion-label>
-        <h1>{{ user.first }} {{ user.last }}</h1>
-        <p>{{ user.role }}</p>
+        <p>Enabled: {{ user.Enabled }}</p>
+        <h1>{{ user.Username }}</h1>
+        <p>{{ user.Role }}</p>
       </ion-label>
       <ion-button slot="end">Edit</ion-button>
       <ion-button color="danger" slot="end">Delete</ion-button>
     </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!usersResponseComplete">
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    
   </ion-list>
 
 </ion-content>

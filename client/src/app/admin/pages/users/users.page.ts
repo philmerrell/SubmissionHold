@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { CognitoUser, UserService } from './user.service';
 
 @Component({
   selector: 'app-users',
@@ -7,11 +7,22 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
-  users = [];
-  constructor(private userService: UserService) { }
+  users: CognitoUser[] = [];
+  usersResponseComplete: boolean;
+  constructor(private cognitoUserService: UserService) { }
 
-  ngOnInit() {
-    this.users = this.userService.getUsers();
+  async ngOnInit() {
+    this.getUsers();
+  }
+
+  async getUsers() {
+    this.usersResponseComplete = false;
+    try {
+      this.users = await this.cognitoUserService.listUsersInGroup('admin');
+    } catch (error) {
+
+    }
+    this.usersResponseComplete = true;
   }
 
 }
