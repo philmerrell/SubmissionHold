@@ -40,6 +40,9 @@ export class HttpTokenInterceptor implements HttpInterceptor {
                 case 401:
                   this.presentLoading();
                   return this.handle401Error(request, next);
+                case 400:
+                  console.log(error);
+                  this.presentToast(error.error.message);
                 default:
                   return throwError(error);
               }

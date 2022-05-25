@@ -1,8 +1,8 @@
 const Router = require('express').Router
-const { cognito_userpool_id, env } = require('../../../../config');
+const { cognito_userpool_id } = require('../../../../config');
 var AWS = require('aws-sdk');
-const { response } = require('express');
-const isLocal = env === 'local' ? true : false;
+var toCamelCase = require('../../../../helpers/to-camel');
+
 
 module.exports = Router({ mergeParams: true })
   .post('/v1/admin/create-user', async (req, res, next) => {
@@ -24,8 +24,13 @@ module.exports = Router({ mergeParams: true })
           }
         ]
       }
-      var response = await cognitoidentityserviceprovider.adminCreateUser(params).promise()
-      res.json(response);
+      try {
+        var response = await cognitoidentityserviceprovider.adminCreateUser(params).promise()
+        res.json(toCamelCase(response));
+      } catch (error) {
+        console.log(error);
+        res.status(error.statusCode).json({ message: error.code });
+      }
     } else {
       res.status(403).json({});
     }

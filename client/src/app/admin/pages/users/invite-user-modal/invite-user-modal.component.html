@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>Create a User</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Dismiss</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list [formGroup]="form">
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input formControlName="username"></ion-input>
+    </ion-item>
+    <p *ngIf="validateControl('username', 'required')" style="margin-left: 20px;"><ion-text color="danger">A username is required.</ion-text></p>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email"></ion-input>
+    </ion-item>
+    <p *ngIf="validateControl('email', 'required')" style="margin-left: 20px;"><ion-text color="danger">An email is required.</ion-text></p>
+    <p *ngIf="validateControl('email', 'email')" style="margin-left: 20px;"><ion-text color="danger">A valid email address is required.</ion-text></p>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-buttons slot="end">
+      <ion-button (click)="submitForm()" fill="solid" color="primary">Invite</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -12,7 +12,7 @@
     <ion-toolbar>
       <ion-title size="large">Users</ion-title>
       <ion-buttons slot="end">
-        <ion-button fill="outline">Invite User</ion-button>
+        <ion-button (click)="presentInviteUserModal()" fill="outline">Invite User</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -21,14 +21,28 @@
     Manage
   </ion-list-header>
   <ion-list>
+    <ion-item>
+      <ion-label>User Groups</ion-label>
+      <ion-select (ionChange)="userGroupSelectHandler($event)" value="admin" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="admin">Admin</ion-select-option>
+        <ion-select-option value="voter">Voter</ion-select-option>
+        
+      </ion-select>
+    </ion-item>
     <ion-item *ngFor="let user of users">
       <ion-icon slot="start" name="person"></ion-icon>
       <ion-label>
-        <p>Enabled: {{ user.Enabled }}</p>
-        <h1>{{ user.Username }}</h1>
+        <p>Enabled: {{ user.enabled }}</p>
+        <h1>{{ user.username }}</h1>
+        <ion-badge>{{ user.userStatus }}</ion-badge>
       </ion-label>
-      <ion-button slot="end">Edit</ion-button>
-      <ion-button color="danger" slot="end">Delete</ion-button>
+      <!-- <ion-button slot="end">Edit</ion-button> -->
+      <ion-button (click)="confirmDeleteUser(user)" color="danger" slot="end">Delete</ion-button>
+    </ion-item>
+    <ion-item *ngIf="usersResponseComplete && !users.length">
+      <ion-label>
+        <h1>There are no users in this group.</h1>
+      </ion-label>
     </ion-item>
   </ion-list>
 

@@ -18,6 +18,11 @@ export class CognitoStack extends Stack {
                 emailBody: 'Hello {email}, Thanks for registering for the Treefort Music Fest submission app! Your verification code is {####}',
                 emailStyle: VerificationEmailStyle.CODE,
             },
+            userInvitation: {
+                emailSubject: 'You\'re Invited!',
+                emailBody: 'Hello {username}, you have been invited to join our awesome app! Your temporary password is {####}',
+                smsMessage: 'Hello {username}, your temporary password for our awesome app is {####}',
+            },
             signInAliases: {
                 username: false,
                 email: true,

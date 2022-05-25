@@ -1,4 +1,4 @@
-
+var toCamelCase = require('../../../../helpers/to-camel');
 const Router = require('express').Router
 const { cognito_userpool_id } = require('../../../../config');
 var AWS = require('aws-sdk');
@@ -19,7 +19,7 @@ module.exports = Router({ mergeParams: true })
           if (err) {
             console.log(err, err.stack);
           } else {
-            res.json(data);
+            res.json(toCamelCase(data));
           }  
         });
       } else {
