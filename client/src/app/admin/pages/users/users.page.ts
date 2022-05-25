@@ -62,8 +62,8 @@ export class UsersPage implements OnInit {
     try {
       await this.cognitoUserService.deleteUser(user.username);
       const foundIndex = this.users.findIndex(u => u.username === user.username);
-      this.users.splice(foundIndex, 1);
       if (foundIndex) {
+        this.users.splice(foundIndex, 1);
       }
     } catch (error) {
 
@@ -96,7 +96,7 @@ export class UsersPage implements OnInit {
     }
   }
 
-  userGroupSelectHandler(event: CustomEvent) {
+  userGroupSelectHandler(event) {
     this.selectedGroupName = event.detail.value;
     this.getUsers(this.selectedGroupName);
   }
