@@ -8,6 +8,7 @@ import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as targets from 'aws-cdk-lib/aws-route53-targets';
 
 import { Construct } from "constructs";
+import { Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 
 
 
@@ -20,8 +21,33 @@ export class ApiStack extends Stack {
     const clientDomainName = 'treefort.sbmt-api.com';
     const cognitoDomainPrefix = 'treefort-sbmt-api';
     const cognitoClientId = '3haef1del6m62inkg1l232tghe';
-    const cognitoClientSecret = process.env.COGNITO_CLIENT_SECRET || '';
     const cognitoUserPoolId = 'us-west-2_lDAj99aZZ';
+    const cognitoClientSecret = process.env.COGNITO_CLIENT_SECRET || '';
+    const cognitoArn = process.env.COGNITO_USERPOOL_ARN || '';
+
+
+    const lambdaExecutionRole = new Role(this, 'ApiLambdaExecutionRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      description: 'Role assumed by lambda api for cognito',
+      inlinePolicies: {
+        cognitoPolicy: new PolicyDocument({
+          statements: [
+            new PolicyStatement({
+              resources: [ cognitoArn ],
+              effect: Effect.ALLOW,
+              actions: [
+                "ses:SendEmail",
+                "ses:SendRawEmail",
+                "cognito-idp:AdminAddUserToGroup",
+                "cognito-idp:AdminCreateUser",
+                "cognito-idp:AdminDeleteUser",
+                "cognito-idp:ListUsersInGroup"
+              ]
+            })
+          ]
+        })
+      }
+    });
 
     /**
      * Lambda - Function to host ExpressJS Api
