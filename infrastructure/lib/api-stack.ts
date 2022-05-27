@@ -19,9 +19,9 @@ export class ApiStack extends Stack {
     const apiDomainName = 'treefort-user-api.sbmt-api.com'
     const clientDomainName = 'treefort.sbmt-api.com';
     const cognitoDomainPrefix = 'trft-sbmt';
-    const cognitoClientId = '56c4n7tnqlnho6m6dne6nj0s4o';
+    const cognitoClientId = '3haef1del6m62inkg1l232tghe';
     const cognitoClientSecret = process.env.COGNITO_CLIENT_SECRET || '';
-    const cognitoUserPoolId = 'us-west-2_fhfHoftif';
+    const cognitoUserPoolId = 'us-west-2_lDAj99aZZ';
 
     /**
      * Lambda - Function to host ExpressJS Api
