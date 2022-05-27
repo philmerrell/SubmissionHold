@@ -10,6 +10,7 @@ export interface CognitoUser {
   userLastModifiedDate: string;
   enabled: boolean;
   userStatus: string;
+  email: string;
 };
 
 @Injectable({
@@ -26,16 +27,27 @@ export class UserService {
   createUser(info: { username: string, email: string }): Promise<CognitoUser> {
     return this.http.post<CognitoUser>(`${environment.authUrl}/v1/admin/create-user`, { username: info.username, email: info.email })
       .pipe(
-        map((response: any) => response.user)
+        map((response: any) => response.user),
       ).toPromise();
   }
 
   listUsersInGroup(groupName: string): Promise<CognitoUser[]> {
     return this.http.get<CognitoUser[]>(`${environment.authUrl}/v1/admin/list-users-in-group?groupName=${groupName}`)
-      .pipe(map(response => response['users'])).toPromise();
+      .pipe(
+        map(response => response['users']),
+        map(this.getEmailFromAttributes),
+      ).toPromise();
   }
 
   deleteUser(username: string) {
     return this.http.post(`${environment.authUrl}/v1/admin/delete-user`, { username }).toPromise();
+  }
+
+  private getEmailFromAttributes(users: CognitoUser[]): CognitoUser[] {
+    for (let user of users) {
+      const email = user.attributes.find(attribute => attribute.name === 'email');
+      user.email = email.value;
+    }
+    return users;
   }
 }
