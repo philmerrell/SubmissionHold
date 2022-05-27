@@ -64,4 +64,6 @@ jobs:
       - name: cdk deploy
         run: |
           cd infrastructure
-          cdk deploy * --require-approval never
+          cdk deploy SubmitClientStack
+          cdk deploy SubmitCognitoStack
+          cdk deploy SubmitApiStack
