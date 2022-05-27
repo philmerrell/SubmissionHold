@@ -65,7 +65,7 @@ export class ApiStack extends Stack {
           COGNITO_DOMAIN: cognitoDomainPrefix,
           COGNITO_CLIENT_ID: cognitoClientId,
           COGNITO_CLIENT_SECRET: cognitoClientSecret,
-          COGNITO_LOGOUT_URI: `https://${clientDomainName}$/logout`,
+          COGNITO_LOGOUT_URI: `https://${clientDomainName}/logout`,
           COGNITO_BASE_URL: `https://${cognitoDomainPrefix}.auth.us-west-2.amazoncognito.com`,
           COGNITO_REDIRECT_URI: `https://${clientDomainName}/callback`,
           COGNITO_USERPOOL_ID: cognitoUserPoolId
