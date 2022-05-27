@@ -15,6 +15,7 @@ on:
 env:
   SSL_CERT_ARN: ${{secrets.SSL_CERT_ARN}}
   COGNITO_CLIENT_SECRET: ${{secrets.COGNITO_CLIENT_SECRET}}
+  COGNITO_USERPOOL_ARN: ${{secrets.COGNITO_USERPOOL_ARN}}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
