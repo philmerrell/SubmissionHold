@@ -6,14 +6,14 @@ import { CognitoStack } from '../lib/cognito-stack';
 import { ApiStack } from '../lib/api-stack';
 
 const app = new cdk.App();
-new ClientStack(app, 'SubmissionHoldClientStack', {
+new ClientStack(app, 'SubmitClientStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
 
-new CognitoStack(app, 'TestSubmissionHoldCognitoStack', {
+new CognitoStack(app, 'SubmitCognitoStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });
 
-new ApiStack(app, 'SubmissionHoldApiStack', {
+new ApiStack(app, 'SubmitApiStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
 });

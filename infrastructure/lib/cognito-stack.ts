@@ -10,8 +10,10 @@ export class CognitoStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
+        const domain = 'treefort.sbmt-api.com';
+
         const userPool = new cognito.UserPool(this, 'TrfrtSbmtUserPool', {
-            userPoolName: 'TST-Trfrt-Sbmt-UserPool',
+            userPoolName: 'Trfrt-Sbmt-UserPool',
             selfSignUpEnabled: true,
             userVerification: {
                 emailSubject: 'Verify your email for the Treefort Artist Submit App!',
@@ -67,8 +69,8 @@ export class CognitoStack extends Stack {
                     authorizationCodeGrant: true
                 },
                 scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE],
-                callbackUrls: [`https://submissions.philmerrell.com`, `http://localhost:8100/callback`],
-                logoutUrls: [`https://submission.philmerrell.com/logout`, `http://localhost:8100/logout`],
+                callbackUrls: [`https://${domain}/callback`, `http://localhost:8100/callback`],
+                logoutUrls: [`https://${domain}/logout`, `http://localhost:8100/logout`],
 
             },
             preventUserExistenceErrors: true,
@@ -100,7 +102,7 @@ export class CognitoStack extends Stack {
 
         userPool.addDomain('CognitoDomain', {
             cognitoDomain: {
-                domainPrefix: 'test-trft-sbmt',
+                domainPrefix: 'trft-sbmt',
             },
         });
 

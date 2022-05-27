@@ -12,12 +12,12 @@ import * as cdk from 'aws-cdk-lib';
 export class ClientStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-    const domain = 'submissions.philmerrell.com';
+    const domain = 'treefort.sbmt-api.com';
     const sslCertArn = process.env.SSL_CERT_ARN;
 
     // this should use the accountID to perform the lookup so it gets the sand zoneID and not the prod
     const zone = route53.HostedZone.fromLookup(this, 'GetHostedZone', {
-      domainName: 'philmerrell.com',
+      domainName: 'sbmt-api.com',
     });
 
     // creates the site link as a output after the cf template runs

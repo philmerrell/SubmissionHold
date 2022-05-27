@@ -15,9 +15,9 @@ export class ApiStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props)
 
-    const zoneName = 'philmerrell.com'
-    const apiDomainName = 'submissions-api.philmerrell.com'
-    const clientDomainName = 'submissions.philmerrell.com';
+    const zoneName = 'sbmt-api.com'
+    const apiDomainName = 'treefort-user-api.sbmt-api.com'
+    const clientDomainName = 'treefort.sbmt-api.com';
     const cognitoDomainPrefix = 'trft-sbmt';
     const cognitoClientId = '56c4n7tnqlnho6m6dne6nj0s4o';
     const cognitoClientSecret = process.env.COGNITO_CLIENT_SECRET || '';
@@ -28,7 +28,7 @@ export class ApiStack extends Stack {
      * @property - certArn
      */
 
-    const apiLambda = new lambda.Function(this, 'AwsStarterApiFunction', {
+    const apiLambda = new lambda.Function(this, 'TreefortUserApiFunction', {
         code: new lambda.AssetCode('../api'),
         handler: 'server.handler',
         runtime: lambda.Runtime.NODEJS_12_X,
