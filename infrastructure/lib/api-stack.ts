@@ -59,6 +59,7 @@ export class ApiStack extends Stack {
         handler: 'server.handler',
         runtime: lambda.Runtime.NODEJS_12_X,
         timeout: cdk.Duration.seconds(10),
+        role: lambdaExecutionRole,
         environment: {
           CLIENT_DOMAIN_NAME: `https://${clientDomainName}`,
           COGNITO_DOMAIN: cognitoDomainPrefix,
