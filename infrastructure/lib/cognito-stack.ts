@@ -102,7 +102,7 @@ export class CognitoStack extends Stack {
 
         userPool.addDomain('CognitoDomain', {
             cognitoDomain: {
-                domainPrefix: 'trft-sbmt',
+                domainPrefix: 'treefort-sbmt-api',
             },
         });
 
