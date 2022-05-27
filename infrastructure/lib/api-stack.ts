@@ -18,7 +18,7 @@ export class ApiStack extends Stack {
     const zoneName = 'sbmt-api.com'
     const apiDomainName = 'treefort-user-api.sbmt-api.com'
     const clientDomainName = 'treefort.sbmt-api.com';
-    const cognitoDomainPrefix = 'trft-sbmt';
+    const cognitoDomainPrefix = 'treefort-sbmt-api';
     const cognitoClientId = '3haef1del6m62inkg1l232tghe';
     const cognitoClientSecret = process.env.COGNITO_CLIENT_SECRET || '';
     const cognitoUserPoolId = 'us-west-2_lDAj99aZZ';
