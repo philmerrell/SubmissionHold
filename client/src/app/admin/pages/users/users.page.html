@@ -23,10 +23,9 @@
   <ion-list>
     <ion-item>
       <ion-label>User Groups</ion-label>
-      <ion-select (ionChange)="userGroupSelectHandler($event)" value="admin" okText="Okay" cancelText="Dismiss">
+      <ion-select (ionChange)="userGroupSelectHandler($event)" value="voter" okText="Okay" cancelText="Dismiss">
         <ion-select-option value="admin">Admin</ion-select-option>
         <ion-select-option value="voter">Voter</ion-select-option>
-        
       </ion-select>
     </ion-item>
     <ion-item *ngFor="let user of users">

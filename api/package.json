@@ -19,6 +19,7 @@
     "express-jwt": "^7.5.2",
     "express-jwt-permissions": "^1.3.6",
     "express-winston": "^4.2.0",
+    "generate-password": "^1.7.0",
     "glob": "^8.0.1",
     "jwks-rsa": "^2.1.0",
     "querystring": "^0.2.1",

@@ -2,6 +2,7 @@ const Router = require('express').Router
 const { cognito_userpool_id } = require('../../../../config');
 var AWS = require('aws-sdk');
 var toCamelCase = require('../../../../helpers/to-camel');
+var generator = require('generate-password');
 
 
 module.exports = Router({ mergeParams: true })
@@ -10,13 +11,22 @@ module.exports = Router({ mergeParams: true })
     if (req.auth['cognito:groups'].indexOf('admin') > -1) {
       AWS.config.update({ region: 'us-west-2' });
       var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+
+      var password = generator.generate({
+        length: 10,
+        numbers: true,
+        lowercase: true,
+        uppercase: true,
+        symbols: true
+      });
+
       var params = {
         UserPoolId: cognito_userpool_id,
-        Username: req.body.username,
+        Username: req.body.email,
         DesiredDeliveryMediums: [
           "EMAIL"
         ],
-        TemporaryPassword: "Password@123",
+        TemporaryPassword: password,
         UserAttributes: [
           {
             Name: "email",

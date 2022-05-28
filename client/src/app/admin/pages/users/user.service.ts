@@ -24,8 +24,8 @@ export class UserService {
     return this.http.post(`${environment.authUrl}/v1/admin/add-user-to-group`, { username: user.username, groupName }).toPromise();
   }
 
-  createUser(info: { username: string, email: string }): Promise<CognitoUser> {
-    return this.http.post<CognitoUser>(`${environment.authUrl}/v1/admin/create-user`, { username: info.username, email: info.email })
+  createUser(email: string): Promise<CognitoUser> {
+    return this.http.post<CognitoUser>(`${environment.authUrl}/v1/admin/create-user`, { email })
       .pipe(
         map((response: any) => response.user),
       ).toPromise();
@@ -35,7 +35,7 @@ export class UserService {
     return this.http.get<CognitoUser[]>(`${environment.authUrl}/v1/admin/list-users-in-group?groupName=${groupName}`)
       .pipe(
         map(response => response['users']),
-        map(this.getEmailFromAttributes),
+        map(this.mapEmailAttributes),
       ).toPromise();
   }
 
@@ -43,11 +43,16 @@ export class UserService {
     return this.http.post(`${environment.authUrl}/v1/admin/delete-user`, { username }).toPromise();
   }
 
-  private getEmailFromAttributes(users: CognitoUser[]): CognitoUser[] {
+  mapEmailAttributes = (users: CognitoUser[]): CognitoUser[] => {
     for (let user of users) {
-      const email = user.attributes.find(attribute => attribute.name === 'email');
-      user.email = email.value;
+      user = this.getEmailFromAttributes(user);
     }
     return users;
+  }
+
+  getEmailFromAttributes = (user: CognitoUser): CognitoUser => {
+    const email = user.attributes.find(attribute => attribute.name === 'email');
+    user.email = email.value;
+    return user;
   }
 }

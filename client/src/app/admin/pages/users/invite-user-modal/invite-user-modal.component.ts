@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { validateAllFormFields } from '../../../../form-utils';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-invite-user-modal',
@@ -10,6 +9,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./invite-user-modal.component.scss'],
 })
 export class InviteUserModalComponent implements OnInit {
+  @Input() role: 'admin' | 'voter';
   form: FormGroup;
 
   constructor(
@@ -22,8 +22,8 @@ export class InviteUserModalComponent implements OnInit {
 
   createInviteUserForm() {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email ]]
+      email: ['', [Validators.required, Validators.email ]],
+      role: [this.role]
     })
   }
 
@@ -41,7 +41,6 @@ export class InviteUserModalComponent implements OnInit {
     } else  {
         validateAllFormFields(this.form);
     }
-    
   }
 
 }

@@ -45,12 +45,16 @@ module.exports = () => express()
       // audience: cognito_client_id,
       issuer: `https://cognito-idp.us-west-2.amazonaws.com/${cognito_userpool_id}`,
       algorithms: [ 'RS256' ]
-    }).unless({ path: [
-      '/api/v1/auth/token',
-      '/api/v1/auth/refresh',
-      '/api/v1/auth/login',
-      '/api/v1/auth/signup',
-      '/api/v1/auth/logout']}))
+    })
+    .unless({ 
+      path: [
+        '/api/v1/auth/token',
+        '/api/v1/auth/refresh',
+        '/api/v1/auth/login',
+        '/api/v1/auth/signup',
+        '/api/v1/auth/logout'
+      ]
+    }))
   .use('/api', router)
   .use((error, req, res, next) => {
     console.log('Error: ', error)

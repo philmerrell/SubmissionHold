@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { InviteUserModalComponent } from './invite-user-modal/invite-user-modal.component';
 import { CognitoUser, UserService } from './user.service';
 
@@ -11,11 +11,12 @@ import { CognitoUser, UserService } from './user.service';
 export class UsersPage implements OnInit {
   users: CognitoUser[] = [];
   usersResponseComplete: boolean;
-  selectedGroupName: 'admin' | 'voter' = 'admin';
+  selectedGroupName: 'admin' | 'voter' = 'voter';
   constructor(
     private alertController: AlertController,
     private cognitoUserService: UserService,
-    private modalController: ModalController) { }
+    private modalController: ModalController,
+    private toastController: ToastController) { }
 
   async ngOnInit() {
     this.getUsers(this.selectedGroupName);
@@ -25,7 +26,7 @@ export class UsersPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Delete',
-      message: `Are you sure you want to delete ${user.username}?`,
+      message: `Are you sure you want to delete ${user.email}?`,
       buttons: [
         {
           text: 'Cancel',
@@ -61,22 +62,29 @@ export class UsersPage implements OnInit {
   async deleteUser(user: CognitoUser) {
     try {
       await this.cognitoUserService.deleteUser(user.username);
-      const foundIndex = this.users.findIndex(u => u.username === user.username);
-      if (foundIndex) {
+      const foundIndex = this.users.findIndex(u => u.email === user.email);
+      console.log(foundIndex, user, this.users);
+      if (foundIndex != -1) {
         this.users.splice(foundIndex, 1);
+        this.presentToast(user.email, 'deleted')
       }
     } catch (error) {
 
     }
   }
 
-  async createUser(info: { username: string, email: string}) {
+  async createUser(info: { role: 'admin' | 'voter', email: string}) {
     try {
-      const user: CognitoUser = await this.cognitoUserService.createUser(info);
+      let user: CognitoUser = await this.cognitoUserService.createUser(info.email);
 
       try {
-        this.cognitoUserService.addUserToGroup(user, this.selectedGroupName);
-        this.users.push(user);
+        this.cognitoUserService.addUserToGroup(user, info.role);
+        user = this.cognitoUserService.getEmailFromAttributes(user);
+
+        if (this.selectedGroupName === info.role) {
+          this.users.push(user);
+        }
+        this.presentToast(user.email, 'invited')
       } catch (error) {
         console.log(error);
       }
@@ -87,7 +95,10 @@ export class UsersPage implements OnInit {
 
   async presentInviteUserModal() {
     const modal = await this.modalController.create({
-      component: InviteUserModalComponent
+      component: InviteUserModalComponent,
+      componentProps: {
+        role: this.selectedGroupName
+      }
     });
     await modal.present();
     const { data } = await modal.onDidDismiss();
@@ -99,6 +110,15 @@ export class UsersPage implements OnInit {
   userGroupSelectHandler(event) {
     this.selectedGroupName = event.detail.value;
     this.getUsers(this.selectedGroupName);
+  }
+
+  private async presentToast(user: string, action) {
+    const toast = await this.toastController.create({
+      message: `${user} has been ${action}.`,
+      duration: 3000,
+      color: 'dark'
+    });
+    toast.present();
   }
 
 }
