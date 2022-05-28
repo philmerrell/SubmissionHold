@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>Festival</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list [formGroup]="form">
+    <ion-item button="true" id="open-startdate-input">
+      <ion-label>Submission Start Date</ion-label>
+      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-popover trigger="open-startdate-input" show-backdrop="true">
+        <ng-template>
+          <ion-datetime
+            formControlName="startDateTime"
+            presentation="time-date"
+            #popoverStartDatetime
+            size="cover"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item button="true" id="open-enddate-input">
+      <ion-label>Submission End Date</ion-label>
+      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-popover trigger="open-enddate-input" show-backdrop="true">
+        <ng-template>
+          <ion-datetime
+            formControlName="endDateTime"
+            presentation="time-date"
+            #popoverEndDatetime
+            size="cover"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+    <ion-item>
+      <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'primary'" position="stacked">Festival Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <ion-text *ngIf="validateControl('name', 'required')" color="danger">
+      A festival name is required.
+    </ion-text>
+    <ion-item>
+      <ion-label [color]="validateControl('guidelines', 'required') ? 'danger' : 'primary'" color="primary"
+        position="stacked">Guidelines</ion-label>
+      <ion-textarea formControlName="guidelines" rows="5"></ion-textarea>
+    </ion-item>
+    <ion-text *ngIf="validateControl('guidelines', 'required')" color="danger">
+      Festival guidelines are required.
+    </ion-text>
+    
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <div class="ion-padding">
+    <ion-button (click)="submitForm()" expand="block" color="primary">Save</ion-button>
+  </div>
+</ion-footer>

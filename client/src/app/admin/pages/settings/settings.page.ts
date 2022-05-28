@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { SettingService } from '../../services/setting.service';
+import { CreateFestivalModalComponent } from './create-festival-modal/create-festival-modal.component';
 
 @Component({
   selector: 'app-settings',
@@ -10,19 +12,28 @@ export class SettingsPage implements OnInit {
   categories = [];
   holds = [];
 
-  constructor(private settingService: SettingService) { }
+  constructor(
+    private modalController: ModalController,
+    private settingService: SettingService) { }
 
   ngOnInit() {
     this.getCategories();
-    this.getHolds();
+    this.getFestivals();
   }
 
   getCategories() {
     this.categories = this.settingService.getCategories();
   }
 
-  getHolds() {
-    this.holds = this.settingService.getHolds();
+  getFestivals() {
+    this.holds = this.settingService.getFestivals();
+  }
+
+  async presentCreateFestivalModal() {
+    const modal = await this.modalController.create({
+      component: CreateFestivalModalComponent
+    });
+    await modal.present();
   }
 
 }

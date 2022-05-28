@@ -15,8 +15,8 @@
   </ion-header>
   
   <ion-list-header>
-    <ion-label>Submission Holds</ion-label>
-    <ion-button>Add</ion-button>
+    <ion-label>Festivals</ion-label>
+    <ion-button (click)="presentCreateFestivalModal()">Create</ion-button>
   </ion-list-header>
   <ion-list>
     <ion-item *ngFor="let hold of holds" button>
