@@ -31,7 +31,6 @@ export class UserService {
       authenticated: true,
       claims: await this.mapClaims(tokens)
     };
-    console.log(this.user);
     this.userSubject.next(this.user);
   }
 

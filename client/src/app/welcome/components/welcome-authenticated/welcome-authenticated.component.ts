@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Festival } from '../../../admin/services/setting.service';
 
 @Component({
@@ -7,12 +7,7 @@ import { Festival } from '../../../admin/services/setting.service';
   styleUrls: ['./welcome-authenticated.component.scss'],
 })
 export class WelcomeAuthenticatedComponent implements OnInit {
-  festival: Festival = {
-    name: 'Treefort 2023',
-    guidelines: 'Guidelines go here...',
-    startDateTime: '2022-07-10',
-    endDateTime: '2022-12-01'
-  }
+  @Input() festival: Festival;
   constructor() { }
 
   ngOnInit() {}

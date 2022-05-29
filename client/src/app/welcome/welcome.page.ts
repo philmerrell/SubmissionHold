@@ -4,6 +4,8 @@ import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
 import { SubmissionService } from '../submission/submission.service';
 import { User, UserService } from '../auth/user.service';
+import { Festival } from '../admin/services/setting.service';
+import { WelcomeService } from './welcome.service';
 
 @Component({
   selector: 'app-welcome',
@@ -11,8 +13,12 @@ import { User, UserService } from '../auth/user.service';
   styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
-  tokens: Tokens;
   user: User;
+  festival: Festival;
+
+
+
+  tokens: Tokens;
   decodedAccessToken;
   decodedIdToken;
   accessToken;
@@ -22,7 +28,8 @@ export class WelcomePage implements OnInit {
     private authService: AuthService,
     private submissionService: SubmissionService,
     private toastController: ToastController,
-    private userService: UserService) { }
+    private userService: UserService,
+    private welcomeService: WelcomeService) { }
 
   async ngOnInit() {
     this.userService.getUserObservable()
@@ -34,7 +41,9 @@ export class WelcomePage implements OnInit {
           this.decodedAccessToken = this.authService.decodeAccessToken(tokens);
           this.decodedIdToken = this.authService.decodeIdToken(tokens);
         }
-      })
+      });
+    
+    this.festival = this.welcomeService.getActiveFestival();
   }
 
   async copyAccessToken() {
