@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { DatetimeChangeEventDetail, IonDatetime, ModalController } from '@ionic/angular';
 import { validateAllFormFields } from '../../../../form-utils';
 
 @Component({
@@ -36,12 +36,14 @@ export class CreateFestivalModalComponent implements OnInit {
     return this.form.get('endDateTime').value;
   }
 
-  endDateTimeChange(newDateTime: string) {
+  endDateTimeChange(event: any) {
+    const newDateTime = event.target.detail;
     this.form.get('endDateTime').updateValueAndValidity;
     this.form.get('endDateTime').setValue(newDateTime);
   }
-
-  startDateTimeChange(newDateTime: string) { 
+ 
+  startDateTimeChange(event: any) { 
+    const newDateTime = event.target.detail;
     this.form.get('startDateTime').updateValueAndValidity;
     this.form.get('startDateTime').setValue(newDateTime);
   }

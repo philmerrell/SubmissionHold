@@ -15,7 +15,7 @@
           <ion-datetime
             formControlName="startDateTime"
             showDefaultButtons="true"
-            (ionChange)="startDateTimeChange($event.target.value)"
+            (ionChange)="startDateTimeChange($event)"
             [value]="startDateTime" presentation="time-date"
             locale="en-US"
             minuteValues="0,15,30,45"
@@ -36,7 +36,7 @@
           <ion-datetime
             formControlName="endDateTime"
             showDefaultButtons="true"
-            (ionChange)="startDateTimeChange($event.target.value)"
+            (ionChange)="startDateTimeChange($event)"
             [value]="endDateTime" presentation="time-date"
             locale="en-US"
             minuteValues="0,15,30,45"
