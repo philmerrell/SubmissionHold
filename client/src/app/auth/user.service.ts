@@ -31,6 +31,7 @@ export class UserService {
       authenticated: true,
       claims: await this.mapClaims(tokens)
     };
+    console.log(this.user);
     this.userSubject.next(this.user);
   }
 
@@ -53,7 +54,17 @@ export class UserService {
     return {
       email: idToken.email,
       username: accessToken.username,
-      roles: accessToken['cognito:groups'] || []
+      roles: accessToken['cognito:groups'] || [],
+      isVoter: this.setRole(accessToken, 'voter'),
+      isAdmin: this.setRole(accessToken, 'admin')
+    }
+  }
+
+  private setRole(accessToken, role) {
+    if (accessToken['cognito:groups']) {
+      return accessToken['cognito:groups'].indexOf(role) !== -1
+    } else {
+      return false;
     }
   }
 }

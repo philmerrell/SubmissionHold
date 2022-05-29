@@ -24,7 +24,6 @@ export class CallbackPage implements OnInit {
       try {
         const response = await this.authService.getTokensFromCognito({code, state});
         await this.authService.saveTokensToLocalStorage(response);
-        console.log(response);
         this.router.navigateByUrl('/', { replaceUrl: true });
       } catch (error) {
         console.log(error);

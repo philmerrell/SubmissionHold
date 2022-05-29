@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Welcome</ion-title>
+    <ion-title>
+      <ion-img src="/assets/logo-circle.svg" style="height: 35px;"></ion-img>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -47,6 +49,7 @@
     </pre>
   </div>
   <div *ngIf="!user.authenticated" class="ion-padding">
+    <h1>Welcome to the Treefort Submission App</h1>
     <ion-button (click)="login()">Sign In</ion-button>
     <ion-button (click)="signup()">Sign Up</ion-button>
   </div>

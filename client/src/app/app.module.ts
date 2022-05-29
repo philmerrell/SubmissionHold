@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { HttpTokenInterceptor } from './auth/http-token-interceptor.service';
+import { AdminMenuComponent } from './core/admin-menu/admin-menu.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AdminMenuComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [

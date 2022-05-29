@@ -2,9 +2,12 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay" [hidden]="!user.authenticated">
       <ion-content>
-        <ion-list id="inbox-list">
+        <ion-list>
           <ion-list-header>
-            <span style="font-weight: 900; font-size: 1.5em;">Submission Hold</span>
+              <img src="/assets/logo-circle.svg">
+            <span style="margin-bottom: 10px; margin-left: 10px; font-weight: 900; font-size: 1.5em;">
+              Submissions
+            </span>
           </ion-list-header>
           <ion-item lines="none">
             <ion-label>
@@ -13,27 +16,10 @@
             <ion-button (click)="logout()">Logout</ion-button>
           </ion-item>
 
-          <ion-searchbar></ion-searchbar>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
         </ion-list>
 
-        <ion-list id="labels-list">
-          <ion-list-header>
-            <ion-label>Labels</ion-label>
-            <ion-button fill="outline">Add</ion-button>
-          </ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon slot="start" name="bookmark-outline"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
-          </ion-item>
-        </ion-list>
+        <app-admin-menu *ngIf="user.authenticated && (user.claims.isVoter || user.claims.isAdmin)" [user]="user"></app-admin-menu>
+        
         
       </ion-content>
     </ion-menu>
