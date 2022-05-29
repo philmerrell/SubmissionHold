@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SettingService } from '../../services/setting.service';
+import { Festival, SettingService } from '../../services/setting.service';
 import { CreateFestivalModalComponent } from './create-festival-modal/create-festival-modal.component';
 
 @Component({
@@ -10,7 +10,8 @@ import { CreateFestivalModalComponent } from './create-festival-modal/create-fes
 })
 export class SettingsPage implements OnInit {
   categories = [];
-  holds = [];
+  festivals: Festival[] = [];
+  festivalsRequestComplete: boolean;
 
   constructor(
     private modalController: ModalController,
@@ -26,7 +27,12 @@ export class SettingsPage implements OnInit {
   }
 
   getFestivals() {
-    this.holds = this.settingService.getFestivals();
+    try {
+      this.festivals = this.settingService.getFestivals();
+    } catch (error) {
+      console.log(error);
+    }
+    this.festivalsRequestComplete = true;
   }
 
   async presentCreateFestivalModal() {
@@ -34,6 +40,12 @@ export class SettingsPage implements OnInit {
       component: CreateFestivalModalComponent
     });
     await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+
+    if (data) {
+      this.settingService.saveFestival(data);
+    }
   }
 
 }

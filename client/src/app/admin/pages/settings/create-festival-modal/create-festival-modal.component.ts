@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { validateAllFormFields } from '../../../../form-utils';
 
 @Component({
@@ -10,7 +11,9 @@ import { validateAllFormFields } from '../../../../form-utils';
 export class CreateFestivalModalComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private modalController: ModalController) { }
 
   ngOnInit() {
     this.createForm();
@@ -25,16 +28,32 @@ export class CreateFestivalModalComponent implements OnInit {
     });
   }
 
+  get startDateTime() {
+    return this.form.get('startDateTime').value;
+  }
+
+  get endDateTime() {
+    return this.form.get('endDateTime').value;
+  }
+
+  endDateTimeChange(newDateTime: string) {
+    this.form.get('endDateTime').updateValueAndValidity;
+    this.form.get('endDateTime').setValue(newDateTime);
+  }
+
+  startDateTimeChange(newDateTime: string) { 
+    this.form.get('startDateTime').updateValueAndValidity;
+    this.form.get('startDateTime').setValue(newDateTime);
+  }
+
   validateControl(controlName: string, error: string) {
     return this.form.get(controlName).hasError(error) && this.form.get(controlName).touched
   }
 
   async submitForm() {
     if (this.form.valid) {
-      const submission = this.form.value;
-      console.log(submission);
-      // await this.submissionService.createSubmission(submission);
-      // TODO: submit form values
+      const festival = this.form.value;
+      this.modalController.dismiss(festival);
     } else {
       validateAllFormFields(this.form);
     }

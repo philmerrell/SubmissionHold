@@ -8,34 +8,46 @@
 
   <ion-list [formGroup]="form">
     <ion-item button="true" id="open-startdate-input">
-      <ion-label>Submission Start Date</ion-label>
-      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-label [color]="validateControl('startDateTime', 'required') ? 'danger' : 'primary'">Submission Start Date</ion-label>
+      <ion-text slot="end">{{ startDateTime | date: 'short'}}</ion-text>
       <ion-popover trigger="open-startdate-input" show-backdrop="true">
         <ng-template>
           <ion-datetime
             formControlName="startDateTime"
-            presentation="time-date"
-            #popoverStartDatetime
-            size="cover"
-          ></ion-datetime>
+            showDefaultButtons="true"
+            (ionChange)="startDateTimeChange($event.target.value)"
+            [value]="startDateTime" presentation="time-date"
+            locale="en-US"
+            minuteValues="0,15,30,45"
+            display-format="DD.MM.YYYY HH:mm">
+          </ion-datetime>
         </ng-template>
       </ion-popover>
     </ion-item>
+    <ion-text *ngIf="validateControl('startDateTime', 'required')" color="danger">
+      A submission start time is required.
+    </ion-text>
 
     <ion-item button="true" id="open-enddate-input">
-      <ion-label>Submission End Date</ion-label>
-      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-label [color]="validateControl('endDateTime', 'required') ? 'danger' : 'primary'">Submission End Date</ion-label>
+      <ion-text slot="end">{{ endDateTime | date: 'short' }}</ion-text>
       <ion-popover trigger="open-enddate-input" show-backdrop="true">
         <ng-template>
           <ion-datetime
             formControlName="endDateTime"
-            presentation="time-date"
-            #popoverEndDatetime
-            size="cover"
-          ></ion-datetime>
+            showDefaultButtons="true"
+            (ionChange)="startDateTimeChange($event.target.value)"
+            [value]="endDateTime" presentation="time-date"
+            locale="en-US"
+            minuteValues="0,15,30,45"
+            display-format="DD.MM.YYYY HH:mm">
+          </ion-datetime>
         </ng-template>
       </ion-popover>
     </ion-item>
+    <ion-text *ngIf="validateControl('startDateTime', 'required')" color="danger">
+      A submission end time is required.
+    </ion-text>
     <ion-item>
       <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'primary'" position="stacked">Festival Name</ion-label>
       <ion-input formControlName="name"></ion-input>
