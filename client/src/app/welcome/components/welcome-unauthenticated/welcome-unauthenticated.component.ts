@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Festival } from '../../../admin/services/setting.service';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./welcome-unauthenticated.component.scss'],
 })
 export class WelcomeUnauthenticatedComponent implements OnInit {
-
+  @Input() festival: Festival;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {}

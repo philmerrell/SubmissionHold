@@ -9,6 +9,8 @@ export interface User {
     email: string;
     username: string;
     roles: string[];
+    isVoter: boolean;
+    isAdmin: boolean;
   }
 }
 
