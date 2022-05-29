@@ -6,8 +6,6 @@ const isLocal = env === 'local' ? true : false;
 
 module.exports = Router({ mergeParams: true })
   .get('/v1/auth/login', async (req, res, next) => {
-    console.log(env);
-
     try {
       cookieParser()(req, res, () => {
         const state = req.cookies.state || generateStateValue();
@@ -24,5 +22,4 @@ module.exports = Router({ mergeParams: true })
 
 function generateStateValue() {
   return randomBytes(20).toString('hex');
-
 }
