@@ -19,8 +19,20 @@
         </ion-list>
 
         <app-admin-menu *ngIf="user.authenticated && (user.claims.isVoter || user.claims.isAdmin)" [user]="user"></app-admin-menu>
-        
-        
+        <p>&nbsp;</p>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>
+              <h1 class="list-header">My Submissions</h1>
+            </ion-label>
+            <ion-button routerLink="/welcome" slot="end" fill="outline">
+              Create
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            You don't have any submissions yet.
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

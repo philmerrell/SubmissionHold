@@ -7,8 +7,11 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="user.authenticated" class="ion-padding">
-    <ion-button routerLink="/submission">Submit Form</ion-button>
+
+  <app-welcome-authenticated *ngIf="user.authenticated"></app-welcome-authenticated>
+  <app-welcome-unauthenticated *ngIf="!user.authenticated"></app-welcome-unauthenticated>
+
+    <!-- <ion-button routerLink="/submission">Submit Form</ion-button>
     <h1>Access Token:</h1>
     <pre>{{ accessToken }}</pre>
     <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
@@ -46,11 +49,8 @@
     <h2>HealthCheck</h2>
     <pre>
       {{ healthCheck | json }}
-    </pre>
-  </div>
+    </pre> -->
   <div *ngIf="!user.authenticated" class="ion-padding">
-    <h1>Welcome to the Treefort Submission App</h1>
-    <ion-button (click)="login()">Sign In</ion-button>
-    <ion-button (click)="signup()">Sign Up</ion-button>
+    
   </div>
 </ion-content>

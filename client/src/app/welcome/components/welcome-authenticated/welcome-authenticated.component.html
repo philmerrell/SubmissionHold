@@ -1,0 +1,21 @@
+<div class="ion-padding">
+  <h1 class="title">{{ festival.name }} Submissions</h1>
+  <p>{{ festival.guidelines }}</p>
+  <ion-list-header>
+    <h3>Create a submission</h3>
+  </ion-list-header>
+  <ion-list>
+    <ion-item routerLink="/submission" [queryParams]="{ fort: 'music'}" button detail>
+      <ion-icon slot="start" color="secondary" name="musical-notes-outline"></ion-icon>
+      <ion-label>
+        <h1>Music</h1>
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/submission" [queryParams]="{ fort: 'comedy'}" button detail>
+      <ion-icon slot="start" color="secondary" name="bandage-outline"></ion-icon>
+      <ion-label>
+        <h1>Comedy</h1>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</div>

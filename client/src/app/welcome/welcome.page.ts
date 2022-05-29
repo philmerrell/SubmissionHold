@@ -54,12 +54,6 @@ export class WelcomePage implements OnInit {
     this.healthCheck = await this.submissionService.getHealthCheck();
   }
 
-  login() {
-    this.authService.login();
-  }
-
-  signup() {
-    this.authService.signUp();
-  }
+  
 
 }

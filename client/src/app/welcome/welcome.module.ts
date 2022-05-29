@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { WelcomePageRoutingModule } from './welcome-routing.module';
 
 import { WelcomePage } from './welcome.page';
+import { WelcomeAuthenticatedComponent } from './components/welcome-authenticated/welcome-authenticated.component';
+import { WelcomeUnauthenticatedComponent } from './components/welcome-unauthenticated/welcome-unauthenticated.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import { WelcomePage } from './welcome.page';
     IonicModule,
     WelcomePageRoutingModule
   ],
-  declarations: [WelcomePage]
+  declarations: [WelcomePage, WelcomeAuthenticatedComponent, WelcomeUnauthenticatedComponent]
 })
 export class WelcomePageModule {}
