@@ -28,7 +28,7 @@ export class ComposeFestivalModalComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group({
-      id: [uuid(), Validators.required],
+      id: null,
       name: ['', Validators.required],
       guidelines: [''],
       startDateTime: ['', Validators.required],
