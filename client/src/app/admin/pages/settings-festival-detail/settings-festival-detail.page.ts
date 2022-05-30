@@ -99,4 +99,8 @@ export class SettingsFestivalDetailPage implements OnInit {
     }
   }
 
+  presentComposeFortModal() {
+
+  }
+
 }

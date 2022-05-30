@@ -48,7 +48,7 @@ export class ComposeFestivalModalComponent implements OnInit {
     return this.form.get('endDateTime').value;
   }
 
-  endDateTimeChange(event: CustomEvent<DatetimeChangeEventDetail>) {
+  endDateTimeChange(event) {
     const newDateTime = event.detail.value;
     this.form.get('endDateTime').updateValueAndValidity;
     this.form.get('endDateTime').setValue(newDateTime);
@@ -58,7 +58,7 @@ export class ComposeFestivalModalComponent implements OnInit {
     this.form.patchValue(this.festival);
   }
  
-  startDateTimeChange(event: CustomEvent<DatetimeChangeEventDetail>) {
+  startDateTimeChange(event) {
     console.log(event);
     const newDateTime = event.detail.value;
     this.form.get('startDateTime').updateValueAndValidity;

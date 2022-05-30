@@ -23,7 +23,7 @@ export class AdminFortService {
 
   getForts(id: string): Promise<Fort[]> {
     if (!this.fortsMap[id]) {
-      return this.http.get<FortsApiResponse>(`${environment.apiUrl}/festivals/${id}/forts`)
+      return this.http.get<FortsApiResponse>(`${environment.apiUrl}/festivals/${id}/forts?pageSize=100`)
         .pipe(
           map((response: FortsApiResponse) => {
             this.fortsMap[id] = response.forts;
