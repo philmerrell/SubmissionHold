@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatetimeChangeEventDetail, IonDatetime, ModalController } from '@ionic/angular';
-import { validateAllFormFields } from '../../../../form-utils';
+import { v4 as uuid } from 'uuid';
+import { validateAllFormFields } from '../../../form-utils';
+import { Festival } from '../../services/admin-festival.service';
+
 
 @Component({
-  selector: 'app-create-festival-modal',
-  templateUrl: './create-festival-modal.component.html',
-  styleUrls: ['./create-festival-modal.component.scss'],
+  selector: 'app-compose-festival-modal',
+  templateUrl: './compose-festival-modal.component.html',
+  styleUrls: ['./compose-festival-modal.component.scss'],
 })
-export class CreateFestivalModalComponent implements OnInit {
+export class ComposeFestivalModalComponent implements OnInit {
+  @Input() festival: Festival;
   form: FormGroup;
 
   constructor(
@@ -17,15 +21,23 @@ export class CreateFestivalModalComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    if (this.festival) {
+      this.setFormValues();
+    }
   }
 
   createForm() {
     this.form = this.fb.group({
+      id: [uuid(), Validators.required],
       name: ['', Validators.required],
       guidelines: [''],
       startDateTime: ['', Validators.required],
       endDateTime: ['', Validators.required]
     });
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
   }
 
   get startDateTime() {
@@ -36,14 +48,19 @@ export class CreateFestivalModalComponent implements OnInit {
     return this.form.get('endDateTime').value;
   }
 
-  endDateTimeChange(event: any) {
-    const newDateTime = event.target.detail;
+  endDateTimeChange(event: CustomEvent<DatetimeChangeEventDetail>) {
+    const newDateTime = event.detail.value;
     this.form.get('endDateTime').updateValueAndValidity;
     this.form.get('endDateTime').setValue(newDateTime);
   }
+
+  setFormValues() {
+    this.form.patchValue(this.festival);
+  }
  
-  startDateTimeChange(event: any) { 
-    const newDateTime = event.target.detail;
+  startDateTimeChange(event: CustomEvent<DatetimeChangeEventDetail>) {
+    console.log(event);
+    const newDateTime = event.detail.value;
     this.form.get('startDateTime').updateValueAndValidity;
     this.form.get('startDateTime').setValue(newDateTime);
   }

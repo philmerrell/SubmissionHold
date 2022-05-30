@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/settings" text="Settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="festival">{{ festival.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentComposeFestivalModal(festival)">Edit</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header *ngIf="festival" mode="ios" collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ festival.name }}</ion-title>
+      <ion-buttons slot="end">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="festival">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <p>{{ festival.startDateTime | date:'short' }} - {{ festival.endDateTime | date:'short' }}</p>
+          <h2>{{ festival.guidelines }}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Danger Zone:</ion-label>
+        <ion-button (click)="presentDeleteFestivalAlert()" color="danger">Delete</ion-button>
+      </ion-item>
+    </ion-list>
+    
+    <ion-list-header>
+      <ion-label>Forts</ion-label>
+      <ion-button (click)="presentComposeFortModal()">Create</ion-button>
+    </ion-list-header>
+    <ion-list *ngIf="fortsRequestComplete">
+      <ion-item *ngFor="let fort of forts" button>
+        <ion-label>
+          <h2>{{ fort.name }}</h2>
+          <!-- <ion-text *ngIf="hold.active" color="danger">Active</ion-text> -->
+          <!-- <ion-text *ngIf="!hold.active" color="medium">Inactive</ion-text> -->
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="!festivals.length">
+        <h1>No forts have been created yet.</h1>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!festivalsRequestComplete">
+      <ion-item>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-item>
+      <ion-item>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-item>
+    </ion-list>
+    
+    
+    <pre>
+      {{ festival | json }}
+    </pre>
+  </div>
+
+  
+</ion-content>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Festival } from '../../../admin/services/setting.service';
+import { Festival } from '../../../admin/services/admin-festival.service';
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({

@@ -10,6 +10,7 @@ export class WelcomeService {
 
   getActiveFestival() {
     return {
+      id: 'test',
       name: 'Treefort 2023',
       guidelines: 'Guidelines go here...',
       startDateTime: '2022-07-10',

@@ -7,16 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
 import { SettingsPage } from './settings.page';
-import { CreateFestivalModalComponent } from './create-festival-modal/create-festival-modal.component';
+import { ComposeFestivalModalModule } from '../../shared/compose-festival-modal/compose-festival-modal.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ComposeFestivalModalModule,
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
     SettingsPageRoutingModule
   ],
-  declarations: [SettingsPage, CreateFestivalModalComponent]
+  declarations: [SettingsPage ]
 })
 export class SettingsPageModule {}

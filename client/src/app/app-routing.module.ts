@@ -48,6 +48,10 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'admin/settings/festival/:id',
+    loadChildren: () => import('./admin/pages/settings-festival-detail/settings-festival-detail.module').then( m => m.SettingsFestivalDetailPageModule)
   }
 ];
 

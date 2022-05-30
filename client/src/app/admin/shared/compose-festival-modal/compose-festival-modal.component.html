@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-title>Festival</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +19,7 @@
             formControlName="startDateTime"
             showDefaultButtons="true"
             (ionChange)="startDateTimeChange($event)"
-            [value]="startDateTime" presentation="time-date"
+            presentation="time-date"
             locale="en-US"
             minuteValues="0,15,30,45"
             display-format="DD.MM.YYYY HH:mm">
@@ -36,7 +39,7 @@
           <ion-datetime
             formControlName="endDateTime"
             showDefaultButtons="true"
-            (ionChange)="startDateTimeChange($event)"
+            (ionChange)="endDateTimeChange($event)"
             [value]="endDateTime" presentation="time-date"
             locale="en-US"
             minuteValues="0,15,30,45"
@@ -45,7 +48,7 @@
         </ng-template>
       </ion-popover>
     </ion-item>
-    <ion-text *ngIf="validateControl('startDateTime', 'required')" color="danger">
+    <ion-text *ngIf="validateControl('endDateTime', 'required')" color="danger">
       A submission end time is required.
     </ion-text>
     <ion-item>

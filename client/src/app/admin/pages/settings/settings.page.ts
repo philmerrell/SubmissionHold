@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Festival, SettingService } from '../../services/setting.service';
-import { CreateFestivalModalComponent } from './create-festival-modal/create-festival-modal.component';
+import { Festival, AdminFestivalService } from '../../services/admin-festival.service';
+import { ComposeFestivalModalComponent } from '../../shared/compose-festival-modal/compose-festival-modal.component';
 
 @Component({
-  selector: 'app-settings',
+  selector: 'app-settings-page',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
@@ -15,37 +15,58 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private settingService: SettingService) { }
+    private festivalService: AdminFestivalService) { }
 
   ngOnInit() {
-    this.getCategories();
     this.getFestivals();
   }
 
-  getCategories() {
-    this.categories = this.settingService.getCategories();
-  }
 
-  getFestivals() {
+  async getFestivals() {
     try {
-      this.festivals = this.settingService.getFestivals();
+      this.festivals = await this.festivalService.getFestivals();
     } catch (error) {
       console.log(error);
     }
     this.festivalsRequestComplete = true;
   }
 
-  async presentCreateFestivalModal() {
+  async presentComposeFestivalModal(festival?: Festival) {
     const modal = await this.modalController.create({
-      component: CreateFestivalModalComponent
+      component: ComposeFestivalModalComponent,
+      componentProps: {
+        festival
+      }
     });
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
 
     if (data) {
-      this.settingService.saveFestival(data);
+      this.saveFestival(data);
     }
   }
+
+  private async saveFestival(festival: Festival) {
+    try {
+      console.log(festival);
+      await this.festivalService.saveFestival(festival);
+      this.updateFestivalsArray(festival);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private updateFestivalsArray(festival: Festival) {
+    const foundIndex = this.festivals.findIndex(f => f.id === festival.id);
+    if (foundIndex) {
+      this.festivals.splice(foundIndex, 1, festival);
+    } else {
+      this.festivals.unshift(festival);
+    }
+  }
+
+
 
 }

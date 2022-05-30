@@ -16,10 +16,10 @@
   
   <ion-list-header>
     <ion-label>Festivals</ion-label>
-    <ion-button (click)="presentCreateFestivalModal()">Create</ion-button>
+    <ion-button (click)="presentComposeFestivalModal()">Create</ion-button>
   </ion-list-header>
   <ion-list *ngIf="festivalsRequestComplete">
-    <ion-item *ngFor="let festival of festivals" button>
+    <ion-item *ngFor="let festival of festivals" [routerLink]="['/admin', 'settings', 'festival', festival.id]" button>
       <ion-label>
         <h2>{{ festival.name }}</h2>
         <p><b>Submissions:</b> {{ festival.startDateTime | date:'short'}} to {{ festival.endDateTime | date:'short'}}</p>

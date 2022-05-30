@@ -4,8 +4,8 @@ import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
 import { SubmissionService } from '../submission/submission.service';
 import { User, UserService } from '../auth/user.service';
-import { Festival } from '../admin/services/setting.service';
 import { WelcomeService } from './welcome.service';
+import { Festival } from '../admin/services/admin-festival.service';
 
 @Component({
   selector: 'app-welcome',
