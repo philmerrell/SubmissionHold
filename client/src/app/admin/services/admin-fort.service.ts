@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Festival } from './admin-festival.service';
 
 export interface Fort {
   id: string;
@@ -38,6 +39,10 @@ export class AdminFortService {
   async createFort(id: string, name: {name: string}) {
     const response = await this.http.post<FortsApiResponse>(`${environment.apiUrl}/festivals/${id}/forts`, name).toPromise();
     return response;
+  }
+
+  async deleteFort(festival: Festival, fort: Fort) {
+    return this.http.delete(`${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}`).toPromise();
   }
 
 

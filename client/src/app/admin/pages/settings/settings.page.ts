@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { AuthService, Tokens } from '../../../auth/auth.service';
 import { Festival, AdminFestivalService } from '../../services/admin-festival.service';
 import { ComposeFestivalModalComponent } from '../../shared/compose-festival-modal/compose-festival-modal.component';
+import { User, UserService } from '../../../auth/user.service';
+import { Clipboard } from '@capacitor/clipboard';
+
 
 @Component({
   selector: 'app-settings-page',
@@ -13,12 +17,23 @@ export class SettingsPage implements OnInit {
   festivals: Festival[] = [];
   festivalsRequestComplete: boolean;
 
+  tokens: Tokens;
+  user: User;
+  decodedAccessToken;
+  decodedIdToken;
+  accessToken;
+  healthCheck;
+
   constructor(
     private modalController: ModalController,
-    private festivalService: AdminFestivalService) { }
+    private festivalService: AdminFestivalService,
+    private userService: UserService,
+    private authService: AuthService,
+    private toastController: ToastController
+    ) { }
 
   ngOnInit(): void {
-    console.log('festivals')
+    this.subscribeToUser();
     this.getFestivals();
   }
 
@@ -69,6 +84,36 @@ export class SettingsPage implements OnInit {
     } else {
       this.festivals.unshift(festival);
     }
+  }
+
+
+
+
+
+  subscribeToUser() {
+    this.userService.getUserObservable()
+      .subscribe(async (user: User) => {
+        this.user = user;
+        if (user.authenticated) {
+          const tokens = await this.authService.getAuthTokens();
+          this.accessToken = tokens.access_token;
+          this.decodedAccessToken = this.authService.decodeAccessToken(tokens);
+          this.decodedIdToken = this.authService.decodeIdToken(tokens);
+        }
+      });
+  }
+
+  async copyAccessToken() {
+    await Clipboard.write({
+      string: this.accessToken
+    });
+
+    const toast = await this.toastController.create({
+      message: 'Access token copied.',
+      duration: 3000,
+      color: 'dark'
+    });
+    toast.present();
   }
 
 

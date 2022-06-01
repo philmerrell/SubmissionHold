@@ -17,54 +17,14 @@
 
 
   <div *ngIf="festival">
-    <app-welcome-authenticated *ngIf="user.authenticated" [festival]="festival"></app-welcome-authenticated>
-    <app-welcome-unauthenticated *ngIf="!user.authenticated" [festival]="festival"></app-welcome-unauthenticated>
+    <div *ngIf="user$ | async as user">
+      <app-welcome-authenticated *ngIf="user.authenticated" [festival]="festival"></app-welcome-authenticated>
+      <app-welcome-unauthenticated *ngIf="!user.authenticated" [festival]="festival"></app-welcome-unauthenticated>
+    </div>
   </div>
 
   <div *ngIf="!festival" class="ion-padding">
     <h1>Submissions are not currently open.</h1>
-  </div>
-
-  <div class="ion-padding">
-
-    <h1>Access Token:</h1>
-    <pre>{{ accessToken }}</pre>
-    <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
-    <ion-accordion-group>
-      <ion-accordion value="accessToken">
-        <ion-item slot="header">
-          <ion-label>Decoded Access Token</ion-label>
-        </ion-item>
-        <ion-list slot="content">
-          <ion-item>
-            <pre>
-              {{ decodedAccessToken | json }}
-            </pre> 
-          </ion-item>
-        </ion-list>
-      </ion-accordion>
-      <ion-accordion value="idToken">
-        <ion-item slot="header">
-          <ion-label>Decoded Id Token</ion-label>
-        </ion-item>
-        <ion-list slot="content">
-          <ion-item>
-            <pre>
-              {{ decodedIdToken | json }}
-            </pre>
-          </ion-item>
-        </ion-list>
-        
-      </ion-accordion>
-    </ion-accordion-group>
-
-    <ion-button (click)="getHealthCheck()">
-      Get Health Check
-    </ion-button>
-    <h2>HealthCheck</h2>
-    <pre>
-      {{ healthCheck | json }}
-    </pre>
   </div>
 
 </ion-content>

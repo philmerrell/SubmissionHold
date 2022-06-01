@@ -13,6 +13,8 @@ import { ComposeFestivalModalComponent } from '../../shared/compose-festival-mod
 export class SettingsFestivalDetailPage implements OnInit {
   festival: Festival;
   forts: Fort[];
+  fortCreateComplete: boolean = true;
+  fortPendingDeleteId: string;
   fortsRequestComplete: boolean;
 
   constructor(
@@ -40,7 +42,7 @@ export class SettingsFestivalDetailPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Delete',
-      message: 'Are you sure you want to delete this festival?',
+      message: 'This is probably a bad idea. Are you sure you want to delete this festival?',
       inputs: [
         {
           name: 'delete',
@@ -68,6 +70,41 @@ export class SettingsFestivalDetailPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentDeleteFortAlert(fort: Fort) {
+    const alert = await this.alertController.create({
+      header: 'Delete',
+      message: 'You probably don\'t want to do this...',
+      inputs: [
+        {
+          name: 'delete',
+          type: 'text',
+          placeholder: 'Type "delete"'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Delete',
+          handler: (values) => {
+            if(values.delete === 'delete') {
+              this.deleteFort(fort);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    await alert.onDidDismiss();
+    this.fortPendingDeleteId = null;
   }
 
   async presentComposeFestivalModal(festival: Festival) {
@@ -110,6 +147,24 @@ export class SettingsFestivalDetailPage implements OnInit {
     }
   }
 
+  private async deleteFort(fort: Fort) {
+    try {
+      this.fortPendingDeleteId = fort.id;
+      await this.fortService.deleteFort(this.festival, fort);
+      const toast = await this.toastController.create({
+        message: `${this.festival.name} has been deleted.`,
+        color: 'dark',
+        duration: 3000
+      });
+      const foundIndex = this.forts.findIndex(f => f.id === fort.id);
+      if (foundIndex !== -1) {
+        this.forts.splice(foundIndex, 1);
+      }
+    } catch(error) {
+
+    }
+  }
+
   async presentComposeFortAlert() {
     const alert = await this.alertController.create({
       header: 'Add a Fort',
@@ -132,14 +187,19 @@ export class SettingsFestivalDetailPage implements OnInit {
           text: 'Add',
           handler: async (values) => {
             if(values.fort) {
+              this.fortCreateComplete = false;
               const response = await this.fortService.createFort(this.festival.id, { name: values.fort})
-              console.log(response);
+              const tempFort = {
+                id: '',
+                name: values.fort
+              }
+              this.forts.push(tempFort);
             }
+            this.fortCreateComplete = true;
           }
         }
       ]
     });
-
     await alert.present();
   }
 

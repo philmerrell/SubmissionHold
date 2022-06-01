@@ -40,11 +40,39 @@
     </ion-item>
   </ion-list>
 
-  <!-- <ion-list-header>Categories</ion-list-header>
-  <ion-list>
-    <ion-item *ngFor="let category of categories">
-      {{ category }}
-    </ion-item>
-  </ion-list> -->
+  <div class="ion-padding">
+
+    <h1>Access Token:</h1>
+    <pre>{{ accessToken }}</pre>
+    <ion-button (click)="copyAccessToken()">Copy Access Token</ion-button>
+    <ion-accordion-group>
+      <ion-accordion value="accessToken">
+        <ion-item slot="header">
+          <ion-label>Decoded Access Token</ion-label>
+        </ion-item>
+        <ion-list slot="content">
+          <ion-item>
+            <pre>
+              {{ decodedAccessToken | json }}
+            </pre> 
+          </ion-item>
+        </ion-list>
+      </ion-accordion>
+      <ion-accordion value="idToken">
+        <ion-item slot="header">
+          <ion-label>Decoded Id Token</ion-label>
+        </ion-item>
+        <ion-list slot="content">
+          <ion-item>
+            <pre>
+              {{ decodedIdToken | json }}
+            </pre>
+          </ion-item>
+        </ion-list>
+        
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
 
 </ion-content>

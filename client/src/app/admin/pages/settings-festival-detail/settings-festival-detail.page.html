@@ -29,21 +29,22 @@
       </ion-item>
       <ion-item>
         <ion-label>Danger Zone:</ion-label>
-        <ion-button (click)="presentDeleteFestivalAlert()" color="danger">Delete</ion-button>
+        <ion-button (click)="presentDeleteFestivalAlert()" color="danger" fill="clear">Delete Festival</ion-button>
       </ion-item>
     </ion-list>
     
     <ion-list-header>
       <ion-label>Forts</ion-label>
+      <ion-spinner *ngIf="!fortCreateComplete" name="crescent"></ion-spinner>
       <ion-button (click)="presentComposeFortAlert()">Create</ion-button>
     </ion-list-header>
     <ion-list *ngIf="fortsRequestComplete">
       <ion-item *ngFor="let fort of forts">
         <ion-label>
           <h2>{{ fort.name }}</h2>
-          <!-- <ion-text *ngIf="hold.active" color="danger">Active</ion-text> -->
-          <!-- <ion-text *ngIf="!hold.active" color="medium">Inactive</ion-text> -->
         </ion-label>
+        <ion-spinner *ngIf="fortPendingDeleteId === fort.id" name="crescent"></ion-spinner>
+        <ion-button (click)="presentDeleteFortAlert(fort)" slot="end" fill="clear" color="danger">Delete</ion-button>
       </ion-item>
       <ion-item *ngIf="!forts.length">
         <h1>No forts have been created yet.</h1>
@@ -59,9 +60,9 @@
     </ion-list>
     
     
-    <pre>
+    <!-- <pre>
       {{ festival | json }}
-    </pre>
+    </pre> -->
   </div>
 
   
