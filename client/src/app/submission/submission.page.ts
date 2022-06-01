@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SubmissionService } from './submission.service';
 
@@ -9,7 +8,7 @@ import { SubmissionService } from './submission.service';
   styleUrls: ['./submission.page.scss'],
 })
 export class SubmissionPage implements OnInit {
-  fort: 'music' | 'comedy';
+  fort: 'Music' | 'Comedy';
 
   constructor(private activatedRoute: ActivatedRoute, private submissionService: SubmissionService) {
     this.fort = this.activatedRoute.snapshot.queryParamMap['params']['fort'];
