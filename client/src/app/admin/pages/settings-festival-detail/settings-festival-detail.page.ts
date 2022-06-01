@@ -102,7 +102,8 @@ export class SettingsFestivalDetailPage implements OnInit {
         color: 'dark',
         duration: 3000
       });
-      this.router.navigate(['/admin/settings'], { replaceUrl: true });
+      this.navController.setDirection('back');
+      this.router.navigate(['../admin/settings'], { replaceUrl: true });
       toast.present();
     } catch(error) {
 
