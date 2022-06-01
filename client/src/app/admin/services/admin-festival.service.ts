@@ -11,7 +11,7 @@ export interface Festival {
   endDateTime: string;
 }
 
-interface FestivalsApiResponse {
+export interface FestivalsApiResponse {
   pageSize: number;
   paginationKey: string;
   festivals: Festival[]
@@ -21,25 +21,9 @@ interface FestivalsApiResponse {
   providedIn: 'root'
 })
 export class AdminFestivalService {
-  activeFestival: Festival;
   festivals: Festival[];
 
   constructor(private http: HttpClient) { }
-
-  getActiveFestival(): Promise<Festival> {
-    if (!this.activeFestival) {
-      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?activeOnly=true&pageSize=1`)
-        .pipe(
-          map((response: FestivalsApiResponse) => {
-            this.activeFestival = response.festivals[0] || {} as Festival;
-            return this.activeFestival;
-          })
-        )
-        .toPromise();
-    } else {
-      return Promise.resolve(this.activeFestival);
-    }
-  }
 
   async getFestival(id: string) {
     const festivals = await this.getFestivals();
@@ -61,12 +45,17 @@ export class AdminFestivalService {
     }
   }
 
-  saveFestival(festival: Festival): Promise<any> {
-    return this.http.post(`${environment.apiUrl}/festivals`, festival).toPromise();
+  async saveFestival(festival: Festival): Promise<Festival> {
+    const response = await this.http.post<Festival>(`${environment.apiUrl}/festivals`, festival).toPromise();
+    return response
   }
 
-  deleteFestival(festival: Festival) {
-    return this.http.delete(`${environment.apiUrl}/festivals/${festival.id}`).toPromise();
+  async deleteFestival(festival: Festival) {
+    await this.http.delete(`${environment.apiUrl}/festivals/${festival.id}`).toPromise();
+    const foundIndex = this.festivals.findIndex(f => f.id === festival.id);
+    if (foundIndex !== -1) {
+      this.festivals.splice(foundIndex, 1);
+    }
   }
   
 }

@@ -35,10 +35,10 @@
     
     <ion-list-header>
       <ion-label>Forts</ion-label>
-      <ion-button (click)="presentComposeFortModal()">Create</ion-button>
+      <ion-button (click)="presentComposeFortAlert()">Create</ion-button>
     </ion-list-header>
     <ion-list *ngIf="fortsRequestComplete">
-      <ion-item *ngFor="let fort of forts" button>
+      <ion-item *ngFor="let fort of forts">
         <ion-label>
           <h2>{{ fort.name }}</h2>
           <!-- <ion-text *ngIf="hold.active" color="danger">Active</ion-text> -->

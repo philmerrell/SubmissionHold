@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { Festival, AdminFestivalService } from '../../services/admin-festival.service';
 import { Fort, AdminFortService } from '../../services/admin-fort.service';
 import { ComposeFestivalModalComponent } from '../../shared/compose-festival-modal/compose-festival-modal.component';
@@ -20,7 +20,10 @@ export class SettingsFestivalDetailPage implements OnInit {
     private alertController: AlertController,
     private festivalService: AdminFestivalService,
     private fortService: AdminFortService,
-    private modalController: ModalController) { }
+    private modalController: ModalController,
+    private navController: NavController,
+    private router: Router,
+    private toastController: ToastController) { }
 
   async ngOnInit() {
     const params = this.activatedRoute.snapshot.params;
@@ -93,14 +96,50 @@ export class SettingsFestivalDetailPage implements OnInit {
 
   private async deleteFestival() {
     try {
-      await this.festivalService.deleteFestival(this.festival)
+      await this.festivalService.deleteFestival(this.festival);
+      const toast = await this.toastController.create({
+        message: `${this.festival.name} has been deleted.`,
+        color: 'dark',
+        duration: 3000
+      });
+      this.router.navigate(['/admin/settings'], { replaceUrl: true });
+      toast.present();
     } catch(error) {
 
     }
   }
 
-  presentComposeFortModal() {
+  async presentComposeFortAlert() {
+    const alert = await this.alertController.create({
+      header: 'Add a Fort',
+      inputs: [
+        {
+          name: 'fort',
+          type: 'text',
+          placeholder: 'Enter a fort name'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Add',
+          handler: async (values) => {
+            if(values.fort) {
+              const response = await this.fortService.createFort(this.festival.id, { name: values.fort})
+              console.log(response);
+            }
+          }
+        }
+      ]
+    });
 
+    await alert.present();
   }
 
 }

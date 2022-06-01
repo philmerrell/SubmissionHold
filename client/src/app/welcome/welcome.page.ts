@@ -43,7 +43,7 @@ export class WelcomePage implements OnInit {
         }
       });
     
-    this.festival = this.welcomeService.getActiveFestival();
+    this.festival = await this.welcomeService.getActiveFestival();
   }
 
   async copyAccessToken() {

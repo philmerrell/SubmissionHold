@@ -17,8 +17,13 @@ export class SettingsPage implements OnInit {
     private modalController: ModalController,
     private festivalService: AdminFestivalService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    console.log('festivals')
     this.getFestivals();
+  }
+
+  ionViewDidEnter() {
+    
   }
 
 
@@ -49,9 +54,8 @@ export class SettingsPage implements OnInit {
 
   private async saveFestival(festival: Festival) {
     try {
-      console.log(festival);
-      await this.festivalService.saveFestival(festival);
-      this.updateFestivalsArray(festival);
+      const response = await this.festivalService.saveFestival(festival);
+      this.updateFestivalsArray(response);
       
     } catch (error) {
       console.log(error);
@@ -60,7 +64,7 @@ export class SettingsPage implements OnInit {
 
   private updateFestivalsArray(festival: Festival) {
     const foundIndex = this.festivals.findIndex(f => f.id === festival.id);
-    if (foundIndex) {
+    if (foundIndex !== -1) {
       this.festivals.splice(foundIndex, 1, festival);
     } else {
       this.festivals.unshift(festival);
