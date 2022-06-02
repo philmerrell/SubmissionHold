@@ -7,7 +7,7 @@ import { Festival, FestivalsApiResponse } from '../admin/services/admin-festival
 @Injectable({
   providedIn: 'root'
 })
-export class WelcomeService {
+export class ActiveFestivalService {
   activeFestival: Festival;
 
   constructor(private http: HttpClient) { }

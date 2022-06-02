@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { User, UserService } from '../auth/user.service';
-import { WelcomeService } from './welcome.service';
-import { Festival } from '../admin/services/admin-festival.service';
 import { Observable } from 'rxjs';
 
 @Component({

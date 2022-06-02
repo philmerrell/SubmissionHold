@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Festival } from '../../../admin/services/admin-festival.service';
 import { AdminFortService, Fort } from '../../../admin/services/admin-fort.service';
-import { WelcomeService } from '../../welcome.service';
+import { ActiveFestivalService } from '../../../shared/active-festival.service';
 
 @Component({
   selector: 'app-welcome-authenticated',
@@ -14,7 +14,7 @@ export class WelcomeAuthenticatedComponent implements OnInit {
   forts: Fort[];
   fortsRequestComplete: boolean;
 
-  constructor(private welcomeService: WelcomeService, private fortService: AdminFortService) { }
+  constructor(private activeFestivalService: ActiveFestivalService, private fortService: AdminFortService) { }
 
   async ngOnInit() {
     await this.getActiveFestival();
@@ -22,7 +22,7 @@ export class WelcomeAuthenticatedComponent implements OnInit {
   }
 
   async getActiveFestival() {
-    this.festival = await this.welcomeService.getActiveFestival();
+    this.festival = await this.activeFestivalService.getActiveFestival();
     this.festivalRequestComplete = true;
   }
   
