@@ -11,15 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class WelcomePage implements OnInit {
   user$: Observable<User>;
-  festival: Festival;
 
   constructor(
-    private userService: UserService,
-    private welcomeService: WelcomeService) { }
+    private userService: UserService) { }
 
   async ngOnInit() {
     this.user$ = this.userService.getUserObservable();
-    this.festival = await this.welcomeService.getActiveFestival();
   }
 
 }

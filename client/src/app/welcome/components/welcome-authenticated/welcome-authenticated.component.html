@@ -1,11 +1,11 @@
-<div class="ion-padding">
+<div *ngIf="festival" class="ion-padding">
   <p>{{ festival.guidelines }}</p>
   <ion-list-header>
     <h3>Create a submission</h3>
   </ion-list-header>
   <ion-card>
 
-    <ion-list>
+    <ion-list *ngIf="fortsRequestComplete">
       <ion-item *ngFor="let fort of forts" routerLink="/submission" [queryParams]="{ fort: fort.name }" button detail>
         <!-- <ion-icon slot="start" color="secondary" name="musical-notes-outline"></ion-icon> -->
         <ion-label>
@@ -14,4 +14,20 @@
       </ion-item>
     </ion-list>
   </ion-card>
+  
+  <ion-list *ngIf="!fortsRequestComplete">
+    <ion-item>
+      <ion-skeleton-list animated></ion-skeleton-list>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-list animated></ion-skeleton-list>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-list animated></ion-skeleton-list>
+    </ion-item>
+  </ion-list>
+</div>
+
+<div *ngIf="!festivalRequestComplete" style="text-align: center">
+  <ion-spinner name="crescent" style="height: 3em; width: 3em;"></ion-spinner>
 </div>

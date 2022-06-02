@@ -8,7 +8,6 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./welcome-unauthenticated.component.scss'],
 })
 export class WelcomeUnauthenticatedComponent implements OnInit {
-  @Input() festival: Festival;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {}
