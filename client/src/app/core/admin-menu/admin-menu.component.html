@@ -1,9 +1,29 @@
 <ion-searchbar></ion-searchbar>
 
-<ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-  <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-    <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-    <ion-label>{{ p.title }}</ion-label>
+<ion-menu-toggle auto-hide="false">
+  <ion-item routerDirection="root" routerLink="/admin/submissions" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="folder-outline"></ion-icon>
+    <ion-label>Submissions</ion-label>
+  </ion-item>
+  <ion-item routerDirection="root" routerLink="/admin/my-votes" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="ticket-outline"></ion-icon>
+    <ion-label>My Votes</ion-label>
+  </ion-item>
+  <ion-item routerDirection="root" routerLink="/admin/ignored" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="skull-outline"></ion-icon>
+    <ion-label>Ignored</ion-label>
+  </ion-item>
+  <ion-item *ngIf="user.claims.isAdmin" routerDirection="root" routerLink="/admin/archived" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="archive-outline"></ion-icon>
+    <ion-label>Archived</ion-label>
+  </ion-item>
+  <ion-item *ngIf="user.claims.isAdmin" routerDirection="root" routerLink="/admin/users" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="people-outline"></ion-icon>
+    <ion-label>Users</ion-label>
+  </ion-item>
+  <ion-item *ngIf="user.claims.isAdmin" routerDirection="root" routerLink="/admin/settings" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="settings-outline"></ion-icon>
+    <ion-label>Settings</ion-label>
   </ion-item>
 </ion-menu-toggle>
 
