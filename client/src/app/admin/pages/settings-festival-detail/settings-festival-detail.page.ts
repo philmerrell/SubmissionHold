@@ -189,11 +189,7 @@ export class SettingsFestivalDetailPage implements OnInit {
             if(values.fort) {
               this.fortCreateComplete = false;
               const response = await this.fortService.createFort(this.festival.id, { name: values.fort})
-              const tempFort = {
-                id: '',
-                name: values.fort
-              }
-              this.forts.push(tempFort);
+              this.forts.push(response);
             }
             this.fortCreateComplete = true;
           }
