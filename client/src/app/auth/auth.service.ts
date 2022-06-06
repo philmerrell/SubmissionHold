@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   async saveTokensToLocalStorage(tokensResponse: Tokens) {
-    if (tokensResponse.access_token) {
+    if (tokensResponse.refresh_token) {
       this.tokensSubject.next(tokensResponse);
       this.userService.setUser(tokensResponse);
       return Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokensResponse) });
