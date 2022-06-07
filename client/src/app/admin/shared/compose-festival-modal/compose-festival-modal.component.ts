@@ -32,7 +32,8 @@ export class ComposeFestivalModalComponent implements OnInit {
       name: ['', Validators.required],
       guidelines: [''],
       startDateTime: ['', Validators.required],
-      endDateTime: ['', Validators.required]
+      endDateTime: ['', Validators.required],
+      isActive: [false, Validators.required]
     });
   }
 

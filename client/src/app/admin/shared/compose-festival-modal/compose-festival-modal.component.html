@@ -10,6 +10,10 @@
 <ion-content>
 
   <ion-list [formGroup]="form">
+    <ion-item>
+      <ion-label>Active</ion-label>
+      <ion-checkbox formControlName="isActive" slot="end"></ion-checkbox>
+    </ion-item>
     <ion-item button="true" id="open-startdate-input">
       <ion-label [color]="validateControl('startDateTime', 'required') ? 'danger' : 'primary'">Submission Start Date</ion-label>
       <ion-text slot="end">{{ startDateTime | date: 'short'}}</ion-text>

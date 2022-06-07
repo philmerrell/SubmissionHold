@@ -63,6 +63,7 @@ export class SettingsPage implements OnInit {
     const { data } = await modal.onDidDismiss();
 
     if (data) {
+      this.festivalsRequestComplete = false;
       this.saveFestival(data);
     }
   }
@@ -71,7 +72,7 @@ export class SettingsPage implements OnInit {
     try {
       const response = await this.festivalService.saveFestival(festival);
       this.updateFestivalsArray(response);
-      
+      this.festivalsRequestComplete = true;
     } catch (error) {
       console.log(error);
     }
@@ -85,9 +86,6 @@ export class SettingsPage implements OnInit {
       this.festivals.unshift(festival);
     }
   }
-
-
-
 
 
   subscribeToUser() {

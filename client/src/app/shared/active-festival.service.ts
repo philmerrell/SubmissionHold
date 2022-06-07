@@ -14,7 +14,7 @@ export class ActiveFestivalService {
 
   getActiveFestival(): Promise<Festival> {
     if (!this.activeFestival) {
-      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?activeOnly=true&pageSize=1`)
+      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?submissionsOpen=true&pageSize=1&activeOnly=true`)
         .pipe(
           map((response: FestivalsApiResponse) => {
             this.activeFestival = response.festivals[0] || null;

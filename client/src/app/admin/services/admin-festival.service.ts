@@ -9,6 +9,8 @@ export interface Festival {
   guidelines: string;
   startDateTime: string;
   endDateTime: string;
+  submissionsOpen: boolean;
+  isActive: boolean;
 }
 
 export interface FestivalsApiResponse {
@@ -22,17 +24,33 @@ export interface FestivalsApiResponse {
 })
 export class AdminFestivalService {
   festivals: Festival[];
+  activeFestival: Festival;
 
   constructor(private http: HttpClient) { }
+
+  getActiveFestival(): Promise<Festival> {
+    if (!this.activeFestival) {
+      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?submissionsOpen=true&pageSize=1&activeOnly=true`)
+        .pipe(
+          map((response: FestivalsApiResponse) => {
+            this.activeFestival = response.festivals[0] || null;
+            return this.activeFestival;
+          })
+        )
+        .toPromise();
+    } else {
+      return Promise.resolve(this.activeFestival);
+    }
+  }
 
   async getFestival(id: string) {
     const festivals = await this.getFestivals();
     return festivals.find(f => f.id === id);
   }
 
-  getFestivals(activeOnly: boolean = false, pageSize: number = 100): Promise<Festival[]> {
+  getFestivals(activeOnly: boolean = false, pageSize: number = 100, submissionsOpen: boolean = false): Promise<Festival[]> {
     if (!this.festivals) {
-      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?activeOnly=${activeOnly}&pageSize=${pageSize}`)
+      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?activeOnly=${activeOnly}&pageSize=${pageSize}&submissionsOpen=${submissionsOpen}`)
         .pipe(
           map((response: FestivalsApiResponse) => {
             this.festivals = response.festivals;
