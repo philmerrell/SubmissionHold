@@ -40,6 +40,10 @@ export class SubmissionsPage implements OnInit {
     this.paginationKey = this.submissionsResponse.paginationKey;
     this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
     event.target.complete();
+
+    if (!this.paginationKey) {
+      event.target.disabled = true;
+    }
   }
 
 }
