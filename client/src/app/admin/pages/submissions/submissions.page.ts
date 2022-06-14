@@ -13,6 +13,7 @@ export class SubmissionsPage implements OnInit {
   forts = [];
   paginationKey: string;
   submissionsResponse: SubmissionsApiResponse;
+  submissionsResponseComplete: boolean;
   submissions: any[] = [];
   constructor(
     private festivalService: AdminFestivalService,
@@ -33,6 +34,7 @@ export class SubmissionsPage implements OnInit {
     this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0]);
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
+    this.submissionsResponseComplete = true;
   }
 
   async getMoreSubmissions(event) {

@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="false">
+
+  
+
+
   <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350" class="ion-content-scroll-host">
     <ion-header mode="ios" collapse="condense">
       <ion-toolbar>
@@ -20,7 +24,10 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-  
+
+
+    <app-submissions-loading  *ngIf="!submissionsResponseComplete"></app-submissions-loading>
+
     <ion-list>
       <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
         <ion-thumbnail slot="start">
@@ -33,10 +40,11 @@
         <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
       </ion-item>
     </ion-list>
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreSubmissions($event)">
+    <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreSubmissions($event)">
       <ion-infinite-scroll-content
         loadingSpinner="crescent">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </cdk-virtual-scroll-viewport>
+
 </ion-content>

@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { SubmissionsPageRoutingModule } from './submissions-routing.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SubmissionsPage } from './submissions.page';
+import { SubmissionsLoadingComponent } from './submissions-loading/submissions-loading.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { SubmissionsPage } from './submissions.page';
     ScrollingModule,
     SubmissionsPageRoutingModule
   ],
-  declarations: [SubmissionsPage]
+  declarations: [SubmissionsPage, SubmissionsLoadingComponent ]
 })
 export class SubmissionsPageModule {}

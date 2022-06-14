@@ -14,11 +14,11 @@
       <ion-title *ngIf="submissionRequestComplete" size="large">{{ submission.name }}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- <div class="background-texture">
-    <div class="background-texture-image">
-      <img [src]="'/assets/the-french-tips.jpeg'">
-    </div>
-  </div> -->
+
+  <div style="text-align: center;">
+    <ion-spinner *ngIf="!submissionRequestComplete" name="crescent" style="height: 30px; width: 30px"></ion-spinner>
+  </div>
+
   <div *ngIf="submissionRequestComplete" class="ion-padding">
 
     <ion-chip *ngIf="submission.country !== 'United States'">
