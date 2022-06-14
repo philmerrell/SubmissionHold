@@ -34,6 +34,10 @@ export class SubmissionService {
 
   }
 
+  getSubmission(festival: Festival, fort: Fort, id: string): Promise<Submission> {
+    return this.http.get<Submission>(`${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions/${id}`).toPromise();
+  }
+
   getMockSubmissions(): any[] {
     return [
       {

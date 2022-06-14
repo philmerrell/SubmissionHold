@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/admin/submissions" text="Submissions"></ion-back-button>
     </ion-buttons>
-    <ion-title>The French Tips</ion-title>
+    <ion-title *ngIf="submissionRequestComplete">{{ submission.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   
   <ion-header mode="ios" collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">The French Tips</ion-title>
+      <ion-title *ngIf="submissionRequestComplete" size="large">{{ submission.name }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <!-- <div class="background-texture">
@@ -19,32 +19,34 @@
       <img [src]="'/assets/the-french-tips.jpeg'">
     </div>
   </div> -->
-  <div class="ion-padding">
-    <div>
-      <ion-badge style="font-size: 1.em;">Boise, Idaho</ion-badge>
-    </div>
+  <div *ngIf="submissionRequestComplete" class="ion-padding">
 
-    <ion-chip>
-      <ion-icon name="musical-notes"></ion-icon>
-      <ion-label>Music</ion-label>
-      <!-- <ion-icon name="close-circle"></ion-icon> -->
+    <ion-chip *ngIf="submission.country !== 'United States'">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>{{ submission.city }}, {{ submission.country }}</ion-label>
+    </ion-chip>
+    <ion-chip *ngIf="submission.country === 'United States'">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>{{ submission.city }}, {{ submission.state }}</ion-label>
     </ion-chip>
     <ion-grid>
       <ion-row>
-        <ion-col size="8">
-          <h3>Statement</h3>
+        <ion-col size="7">
+          <!-- <h3>Statement</h3>
           <div>
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </p>
-          </div>
+          </div> -->
           <h3>Bio</h3>
           <div>
             <p>
-              What began as an avenue for releasing pent up rage through music has evolved into a refuge from the personal and collective challenges of being a human over the past five years. The French Tips fuel their sound with an abundance of influences. Punk rock, post punk, disco, dance, pop, funk, surf, and doo wop are infused into the garage rock sound they have honed over two albums, 2019’s It’s the Tips and 2022’s All the Rage. Released in 2019, It's the Tips is an eight song ripper with heavy hooks and fevered dance beats that drive songs aching with righteous rage. A veritable feast of fourth wave feminist anthems, punk rock bangers and surfy love songs. Following well received performances at Boise festival Treefort Music Fest, the band toured the Pacific Northwest with . They had the honor of playing with several other legendary bands including , , , , and . The year of its release, It’s the Tips was the most played record on Boise community radio station KRBX. Their sophomore album releasing May 2022, features a gaudy pink cake brought to life by the talented Boise cake artist Sugar Librarian on its cover, All the Rage is a fire starter wrapped in pink cream. The record is a multicourse meal with pulsing dance beats, heavy guitar riffage and the nimble interweaving vocals of the three musicians.
+              {{ submission.description }}
             </p>
           </div>
-          <div>
+          <iframe *ngIf="submission.links.spotify" style="border-radius:12px" src="{{submission.links.spotify}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          <h3>Contact Info</h3>
+          <!-- <div>
             <h3>Labels</h3>
             <ion-item>
               <ion-label>Labels</ion-label>
@@ -64,21 +66,55 @@
             <ion-chip *ngFor="let label of labels">
               <ion-icon name="fast-food"></ion-icon>
               <ion-label>{{ label }}</ion-label>
-              <!-- <ion-icon name="close-circle"></ion-icon> -->
             </ion-chip>
-          </div>
+          </div> -->
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="5">
           <ion-card>
-            <ion-img src="/assets/the-french-tips.jpeg"></ion-img>
+            <ion-img [src]="submission.image"></ion-img>
             <ion-item>
-              <h3>Spotify</h3>
+              <h3>Links</h3>
             </ion-item>
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6mmM9OOJ0sDmdrFVcNALTZ?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-            <ion-item>
+            <ion-item *ngIf="submission.links.appleMusic" [href]="submission.links.appleMusic" button>
+              <ion-icon slot="end" name="logo-apple"></ion-icon>
+              <ion-label>Apple Music</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.bandcamp" [href]="submission.links.bandcamp" button>
+              <!-- <ion-icon slot="end" name="logo-apple"></ion-icon> -->
+              <ion-label>Bandcamp</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.facebook" [href]="submission.links.facebook" button>
+              <ion-icon slot="end" name="logo-facebook"></ion-icon>
+              <ion-label>Facebook</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.instagram" [href]="submission.links.instagram" button>
+              <ion-icon slot="end" name="logo-instagram"></ion-icon>
+              <ion-label>Instagram</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.soundcloud" [href]="submission.links.soundcloud" button>
+              <ion-icon slot="end" name="logo-soundcloud"></ion-icon>
+              <ion-label>Soundcloud</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.spotify" [href]="submission.links.spotify" button>
+              <ion-icon slot="end" name="logo-spotify"></ion-icon>
+              <ion-label>Spotify</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.tikTok" [href]="submission.links.tikTok" button>
+              <ion-icon slot="end" name="logo-tikTok"></ion-icon>
+              <ion-label>Tiktok</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.links.twitter" [href]="submission.links.twitter" button>
+              <ion-icon slot="end" name="logo-twitter"></ion-icon>
+              <ion-label>Twitter</ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.website" [href]="submission.website" button>
+              <ion-icon slot="end" name="link"></ion-icon>
+              <ion-label>Website</ion-label>
+            </ion-item>
+            <!-- <ion-item>
               <h3>You Tube</h3>
             </ion-item>
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/kKwPo8Ko7eE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/kKwPo8Ko7eE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
           </ion-card>
         </ion-col>
       </ion-row>
@@ -86,11 +122,11 @@
   </div>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-toolbar>
     <ion-item color="light">
       <ion-thumbnail slot="start">
-        <ion-img src="/assets/the-french-tips.jpeg"></ion-img>
+        <ion-img [src]="submission.image"></ion-img>
       </ion-thumbnail>
       <ion-label>
         <h2>My Vote</h2>
@@ -109,4 +145,4 @@
       </ion-select>
     </ion-item>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

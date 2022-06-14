@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./admin/pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
   {
-    path: 'admin/submission-detail',
+    path: 'admin/submissions/:id',
     loadChildren: () => import('./admin/pages/submission-detail/submission-detail.module').then( m => m.SubmissionDetailPageModule)
   },
   {

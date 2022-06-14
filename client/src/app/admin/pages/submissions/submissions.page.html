@@ -22,7 +22,7 @@
     </ion-header>
   
     <ion-list>
-      <ion-item *cdkVirtualFor="let submission of submissions" routerLink="/admin/submission-detail" button detail>
+      <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
         <ion-thumbnail slot="start">
           <ion-img [src]="submission.image"></ion-img>
         </ion-thumbnail>

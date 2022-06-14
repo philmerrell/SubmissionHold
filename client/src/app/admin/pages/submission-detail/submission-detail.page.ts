@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AdminFestivalService, Festival } from '../../services/admin-festival.service';
+import { AdminFortService } from '../../services/admin-fort.service';
+import { Submission, SubmissionService } from '../../services/submission.service';
 
 @Component({
   selector: 'app-submission-detail',
@@ -6,10 +10,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./submission-detail.page.scss'],
 })
 export class SubmissionDetailPage implements OnInit {
-  labels = ['bacon', 'pineapple']
-  constructor() { }
+  festival: Festival;
+  forts = [];
+  id: string;
+  labels = ['bacon', 'pineapple'];
+  submission: Submission;
+  submissionRequestComplete: boolean;
 
-  ngOnInit() {
+  constructor(
+    private festivalService: AdminFestivalService,
+    private fortService: AdminFortService,
+    private route: ActivatedRoute,
+    private submissionService: SubmissionService) { }
+
+  async ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    await this.getActiveFestival();
+    await this.getSubmission();
+  }
+
+  async getActiveFestival() {
+    this.festival = await this.festivalService.getActiveFestival();
+    this.forts = await this.fortService.getForts(this.festival.id);
+  }
+
+  async getSubmission() {
+    this.submission = await this.submissionService.getSubmission(this.festival, this.forts[0], this.id);
+    this.submissionRequestComplete = true;
   }
 
 }
