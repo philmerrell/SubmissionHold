@@ -44,8 +44,35 @@
               {{ submission.description }}
             </p>
           </div>
-          <iframe *ngIf="submission.links.spotify" style="border-radius:12px" src="{{submission.links.spotify}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          
+          <iframe *ngIf="submission.links.spotify" style="border-radius:12px" [src]="sanitize('https://open.spotify.com/embed/artist/' + getSpotifyArtistId(submission.links.spotify))" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
           <h3>Contact Info</h3>
+          <ion-list>
+            <ion-item>
+              <ion-icon name="person" slot="start"></ion-icon>
+              <ion-label>
+                <h2>{{ submission.contactInfo.name }} <small>{{ submission.contactInfo.relationship }}</small></h2>
+                <p>{{ submission.contactInfo.phoneNumber }}</p>
+                <p>{{ submission.contactInfo.email }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="submission.contactInfo.agentContact">
+              <p>Agent</p>
+              <h2>{{ submission.contactInfo.agentContact }}</h2>
+            </ion-item>
+            <ion-item *ngIf="submission.contactInfo.labelContact">
+              <p>Label Contact</p>
+              <h2>{{ submission.contactInfo.labelContact }}</h2>
+            </ion-item>
+            <ion-item *ngIf="submission.contactInfo.managementContact">
+              <p>Management Contact</p>
+              <h2>{{ submission.contactInfo.managementContact }}</h2>
+            </ion-item>
+            <ion-item *ngIf="submission.contactInfo.publicityContact">
+              <p>Publicity Contact</p>
+              <h2>{{ submission.contactInfo.publicityContact }}</h2>
+            </ion-item>
+          </ion-list>
           <!-- <div>
             <h3>Labels</h3>
             <ion-item>
@@ -75,35 +102,35 @@
             <ion-item>
               <h3>Links</h3>
             </ion-item>
-            <ion-item *ngIf="submission.links.appleMusic" [href]="submission.links.appleMusic" button>
+            <ion-item *ngIf="submission.links.appleMusic" [href]="submission.links.appleMusic" target="_blank" button>
               <ion-icon slot="end" name="logo-apple"></ion-icon>
               <ion-label>Apple Music</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.bandcamp" [href]="submission.links.bandcamp" button>
+            <ion-item *ngIf="submission.links.bandcamp" [href]="submission.links.bandcamp" target="_blank" button>
               <!-- <ion-icon slot="end" name="logo-apple"></ion-icon> -->
               <ion-label>Bandcamp</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.facebook" [href]="submission.links.facebook" button>
+            <ion-item *ngIf="submission.links.facebook" [href]="submission.links.facebook" target="_blank" button>
               <ion-icon slot="end" name="logo-facebook"></ion-icon>
               <ion-label>Facebook</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.instagram" [href]="submission.links.instagram" button>
+            <ion-item *ngIf="submission.links.instagram" [href]="submission.links.instagram" target="_blank" button>
               <ion-icon slot="end" name="logo-instagram"></ion-icon>
               <ion-label>Instagram</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.soundcloud" [href]="submission.links.soundcloud" button>
+            <ion-item *ngIf="submission.links.soundcloud" [href]="submission.links.soundcloud" target="_blank" button>
               <ion-icon slot="end" name="logo-soundcloud"></ion-icon>
               <ion-label>Soundcloud</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.spotify" [href]="submission.links.spotify" button>
+            <ion-item *ngIf="submission.links.spotify" [href]="submission.links.spotify" target="_blank" button>
               <ion-icon slot="end" name="logo-spotify"></ion-icon>
               <ion-label>Spotify</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.tikTok" [href]="submission.links.tikTok" button>
+            <ion-item *ngIf="submission.links.tikTok" [href]="submission.links.tikTok" target="_blank" button>
               <ion-icon slot="end" name="logo-tikTok"></ion-icon>
               <ion-label>Tiktok</ion-label>
             </ion-item>
-            <ion-item *ngIf="submission.links.twitter" [href]="submission.links.twitter" button>
+            <ion-item *ngIf="submission.links.twitter" [href]="submission.links.twitter" target="_blank" button>
               <ion-icon slot="end" name="logo-twitter"></ion-icon>
               <ion-label>Twitter</ion-label>
             </ion-item>

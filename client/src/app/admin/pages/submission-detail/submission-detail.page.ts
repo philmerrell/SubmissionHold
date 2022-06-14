@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { AdminFestivalService, Festival } from '../../services/admin-festival.service';
 import { AdminFortService } from '../../services/admin-fort.service';
@@ -21,6 +22,7 @@ export class SubmissionDetailPage implements OnInit {
     private festivalService: AdminFestivalService,
     private fortService: AdminFortService,
     private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
     private submissionService: SubmissionService) { }
 
   async ngOnInit() {
@@ -36,7 +38,18 @@ export class SubmissionDetailPage implements OnInit {
 
   async getSubmission() {
     this.submission = await this.submissionService.getSubmission(this.festival, this.forts[0], this.id);
+    console.log(this.submission);
     this.submissionRequestComplete = true;
+  }
+
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  getSpotifyArtistId(url: string) {
+    const split = url.split('/');
+    const id = split[split.length - 1];
+    return id;
   }
 
 }
