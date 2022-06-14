@@ -14,7 +14,7 @@ export class SubmissionDetailPage implements OnInit {
   forts = [];
   id: string;
   labels = ['bacon', 'pineapple'];
-  submission: Submission;
+  submission;
   submissionRequestComplete: boolean;
 
   constructor(
