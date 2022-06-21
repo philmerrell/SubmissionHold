@@ -13,6 +13,7 @@ export class MusicFormComponent implements OnInit {
   submissionForm: FormGroup;
   imageDataUrl;
   imageFileName;
+  showForm: boolean;
 
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
