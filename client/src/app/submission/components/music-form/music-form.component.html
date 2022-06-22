@@ -153,7 +153,7 @@
               <ion-label [color]="validateLocationControl('state', 'required') ? 'danger' : 'primary'">Select a State
               </ion-label>
               <ion-select formControlName="state">
-                <ion-select-option value="idaho">Idaho</ion-select-option>
+                <ion-select-option *ngFor="let state of states" [value]="state.value">{{ state.label }}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-text
@@ -356,6 +356,9 @@
     </ion-card>
   </div>
   <div class="ion-padding">
-    <ion-button (click)="submitForm()" expand="block">Submit</ion-button>
+    <ion-button (click)="submitForm()" [disabled]="submissionPending" expand="block">
+      <span *ngIf="!submissionPending">Submit</span>
+      <ion-spinner *ngIf="submissionPending" name="crescent"></ion-spinner>
+    </ion-button>
   </div>
 </div>

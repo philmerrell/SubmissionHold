@@ -52,6 +52,10 @@ const routes: Routes = [
   {
     path: 'admin/settings/festival/:id',
     loadChildren: () => import('./admin/pages/settings-festival-detail/settings-festival-detail.module').then( m => m.SettingsFestivalDetailPageModule)
+  },
+  {
+    path: 'submission-success',
+    loadChildren: () => import('./submission-success/submission-success.module').then( m => m.SubmissionSuccessPageModule)
   }
 ];
 
