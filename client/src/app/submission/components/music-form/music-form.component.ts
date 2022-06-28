@@ -16,12 +16,14 @@ export class MusicFormComponent implements OnInit {
   imageFileName;
   showForm: boolean;
   states: { label: string, value: string }[];
+  genres: string[];
 
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
   ngOnInit() {
     this.createSubmissionForm();
     this.states = this.getStates();
+    this.genres = this.getGenres();
   }
 
   async addFile(event) {
@@ -223,6 +225,53 @@ export class MusicFormComponent implements OnInit {
       { 'label':'Wisconsin', 'value': 'WI'},
       { 'label':'Wyoming', 'value': 'WY'}
       ];
+  }
+
+  getGenres() {
+    return [
+      'Acoustic',
+      'Alternative',
+      'Ambient',
+      'Americana',
+      'Bluegrass',
+      'Blues',
+      'Classical',
+      'Country',
+      'Dance',
+      'DJ',
+      'Doom',
+      'Dream Pop',
+      'Electronic',
+      'Experimental',
+      'Folk',
+      'Funk',
+      'Garage',
+      'Goth',
+      'Hardcore',
+      'Heavy',
+      'Hip-hop',
+      'Indie',
+      'Industrial',
+      'Jazz',
+      'Latin',
+      'Lo-fi',
+      'Metal',
+      'New Wave',
+      'Pop',
+      'Post-Rock',
+      'Psychedelic',
+      'Punk',
+      'R&B',
+      'Rap',
+      'Reggae / Ska',
+      'Rock',
+      'Shoegaze',
+      'Singer-Songwriter',
+      'Soul',
+      'Surf',
+      'World',
+      'Canada'
+    ]
   }
 
 }
