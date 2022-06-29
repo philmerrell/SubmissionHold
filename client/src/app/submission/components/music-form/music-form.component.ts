@@ -33,6 +33,14 @@ export class MusicFormComponent implements OnInit {
       this.imageDataUrl = await this.getDataUrl(result);
       this.imageFileName = result.name;
       console.log(result);
+
+      this.submissionService.uploadAsset(
+        {
+          mimeType: result.type,
+          file: blob,
+          fileName: result.name
+        }
+      )
     }
     // this.modalController.dismiss({
     //   path: dataUrl,

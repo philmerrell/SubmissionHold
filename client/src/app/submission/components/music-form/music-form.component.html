@@ -109,7 +109,7 @@
                 Choose an image
               </ion-label>
               <h3>{{ imageFileName }}</h3>
-              <input (change)="addFile($event)" class="ion-hide" #fileInput type="file" accept="image/*">
+              <input #fileInput (change)="addFile($event)" class="ion-hide" type="file" accept="image/*">
             </ion-item>
           </ion-col>
             <!-- <ion-text *ngIf="validateControl('memberNames', 'required')" color="danger">
