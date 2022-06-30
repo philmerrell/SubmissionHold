@@ -4,47 +4,46 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Submissions</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline">
+        Filter
+        <ion-icon slot="end" size="small" name="caret-down-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" [scrollY]="false">
 
-  
-
-
   <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350" class="ion-content-scroll-host">
     <ion-header mode="ios" collapse="condense">
-      <ion-toolbar>
+      <ion-toolbar color="light">
         <ion-title size="large">Submissions</ion-title>
-        <ion-buttons slot="end">
-          <ion-button fill="outline">
-            Filter Submissions
-            <ion-icon slot="end" name="caret-down-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
 
     <app-submissions-loading  *ngIf="!submissionsResponseComplete"></app-submissions-loading>
 
-    <ion-list>
-      <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
-        <ion-thumbnail slot="start">
-          <ion-img [src]="submission.image"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ submission.name }}</h2>
-          <p>{{ submission.category }}</p>
-        </ion-label>
-        <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
-      </ion-item>
-    </ion-list>
-    <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreSubmissions($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="crescent">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <ion-card>
+      <ion-list>
+        <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="submission.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ submission.name }}</h2>
+            <p>{{ submission.category }}</p>
+          </ion-label>
+          <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
+        </ion-item>
+      </ion-list>
+      <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreSubmissions($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card>
   </cdk-virtual-scroll-viewport>
 
 </ion-content>

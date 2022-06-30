@@ -10,12 +10,15 @@
 <ion-content [fullscreen]="true">
 
   <ion-header mode="ios" collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar color="light">
       <ion-title size="large">{{ fort | titlecase }} Submission</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending"></app-music-form>
-  <app-comedy-form *ngIf="fort === 'Comedy'"  (submit)="submit($event)"></app-comedy-form>
+  <div *ngIf="festival">
+    <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending" [festivalId]="festival.id"></app-music-form>
+    <app-comedy-form *ngIf="fort === 'Comedy'"  (submit)="submit($event)"></app-comedy-form>
+  </div>
+
 
 </ion-content>

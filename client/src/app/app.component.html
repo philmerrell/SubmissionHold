@@ -1,17 +1,17 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay" [hidden]="!user.authenticated">
-      <ion-content>
-        <ion-list>
+      <ion-content style="--background: var(--ion-color-secondary)">
+        <ion-list style="background: var(--ion-color-secondary)">
           <ion-list-header>
               <img src="/assets/logo-circle.svg">
-            <span style="margin-bottom: 10px; margin-left: 10px; font-weight: 900; font-size: 1.5em;">
+            <ion-text color="light" style="margin-bottom: 10px; margin-left: 10px; font-weight: 900; font-size: 1.5em;">
               Submissions
-            </span>
+            </ion-text>
           </ion-list-header>
-          <ion-item lines="none">
+          <ion-item lines="none" color="secondary">
             <ion-label>
-              <ion-text color="medium">{{ user.claims?.email }}</ion-text>
+              <ion-text color="light">{{ user.claims?.email }}</ion-text>
             </ion-label>
             <ion-button (click)="logout()">Logout</ion-button>
           </ion-item>
@@ -20,12 +20,12 @@
 
         <app-admin-menu *ngIf="user.authenticated && (user.claims.isVoter || user.claims.isAdmin)" [user]="user"></app-admin-menu>
         <p>&nbsp;</p>
-        <ion-list>
+        <ion-list style="background: var(--ion-color-secondary)">
           <ion-item lines="none">
             <ion-label>
               <h1 class="list-header">My Submissions</h1>
             </ion-label>
-            <ion-button routerLink="/welcome" slot="end" fill="outline">
+            <ion-button routerLink="/welcome" slot="end">
               Create
             </ion-button>
           </ion-item>

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   apiUrl: 'https://treefort-submit-api.sbmt-api.com',
   authUrl: 'http://localhost:3000/api',
-  localStoragePrefix: 'SubmissionHold'
+  localStoragePrefix: 'SubmissionHold',
+  s3ImageBucketUrl: 'https://sbmt-api-1.s3.us-west-2.amazonaws.com'
 };
 
 /*

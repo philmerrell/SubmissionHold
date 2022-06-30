@@ -24,7 +24,7 @@ export class SubmissionService {
   }
 
   async getUploadUrl(asset: any) {
-    const encodedFileName = encodeURIComponent(asset.fileName);
+    const encodedFileName = encodeURIComponent(`${asset.festivalId}/${asset.uuid}/${asset.fileName}`);
     const encodedFileType = encodeURIComponent(asset.fileType);
     return await this.http.get(`${environment.apiUrl}/photo-upload-url?fileName=${encodedFileName}&fileType=${encodedFileType}`)
       .pipe(
@@ -33,7 +33,7 @@ export class SubmissionService {
       .toPromise();
   }
 
-  async uploadAsset(asset: { mimeType: string, file: Blob, fileName: string }) {
+  async uploadAsset(asset: { uuid: string, mimeType: string, festivalId: string, file: Blob, fileName: string }) {
     // this.showUploadProgressToast();
     const uploadUrl = await this.getUploadUrl(asset);
     const headers = new HttpHeaders({'Content-Type': asset.mimeType});    

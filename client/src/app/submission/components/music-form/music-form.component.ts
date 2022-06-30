@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { validateAllFormFields } from '../../../form-utils';
 import { SubmissionService } from '../../submission.service';
+import { v4 as uuidv4 } from 'uuid';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'app-music-form',
@@ -10,6 +13,7 @@ import { SubmissionService } from '../../submission.service';
 })
 export class MusicFormComponent implements OnInit {
   @Input() submissionPending: boolean;
+  @Input() festivalId: string;
   @Output() submit = new EventEmitter<any>();
   submissionForm: FormGroup;
   imageDataUrl;
@@ -32,28 +36,19 @@ export class MusicFormComponent implements OnInit {
       const blob = await this.getBlobFromFile(result);
       this.imageDataUrl = await this.getDataUrl(result);
       this.imageFileName = result.name;
-      console.log(result);
+      const uuid = uuidv4();
 
       this.submissionService.uploadAsset(
         {
+          uuid,
           mimeType: result.type,
+          festivalId: this.festivalId,
           file: blob,
           fileName: result.name
         }
       )
+      this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festivalId}/${uuid}/${this.imageFileName}`);
     }
-    // this.modalController.dismiss({
-    //   path: dataUrl,
-    //   result: {
-    //     folderPath: '/',
-    //     asset: {
-    //       mimeType: result.type,
-    //       file: blob,
-    //       fileName: 'Profile',
-    //       fileSize: result.size
-    //     }
-    //   }
-    // });
   }
 
   getIsInternational() {
@@ -111,7 +106,6 @@ export class MusicFormComponent implements OnInit {
 
   private createSubmissionForm() {
     this.submissionForm = this.formBuilder.group({
-      fort: ['music', Validators.required],
       name: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],

@@ -1,9 +1,12 @@
 <div *ngIf="festival" class="ion-padding">
   <p>{{ festival.guidelines }}</p>
-  <ion-list-header>
-    <h3>Create a submission</h3>
-  </ion-list-header>
+
   <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Create a Submission
+      </ion-card-title>
+    </ion-card-header>
 
     <ion-list *ngIf="fortsRequestComplete">
       <ion-item *ngFor="let fort of forts" routerLink="/submission" [queryParams]="{ fort: fort.name }" button detail>
