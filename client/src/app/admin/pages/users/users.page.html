@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-header mode="ios" collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar color="light">
       <ion-title size="large">Users</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="presentInviteUserModal()" fill="outline">Invite User</ion-button>
@@ -17,80 +17,82 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list-header>
+  <!-- <ion-list-header>
     Manage
-  </ion-list-header>
-  <ion-list>
-    <ion-item>
-      <ion-label>User Groups</ion-label>
-      <ion-select (ionChange)="userGroupSelectHandler($event)" value="voter" okText="Okay" cancelText="Dismiss">
-        <ion-select-option value="admin">Admin</ion-select-option>
-        <ion-select-option value="voter">Voter</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item *ngFor="let user of users">
-      <ion-icon slot="start" name="person"></ion-icon>
-      <ion-label>
-        <p>Enabled: {{ user.enabled }}</p>
-        <h1>{{ user.email }}</h1>
-        <ion-badge>{{ user.userStatus }}</ion-badge>
-      </ion-label>
-      <!-- <ion-button slot="end">Edit</ion-button> -->
-      <ion-button (click)="confirmDeleteUser(user)" color="danger" slot="end">Delete</ion-button>
-    </ion-item>
-    <ion-item *ngIf="usersResponseComplete && !users.length">
-      <ion-label>
-        <h1>There are no users in this group.</h1>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="!usersResponseComplete">
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
-    
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
-    
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
-    
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
-    
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
-    
-  </ion-list>
+  </ion-list-header> -->
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label>User Groups</ion-label>
+        <ion-select (ionChange)="userGroupSelectHandler($event)" value="voter" okText="Okay" cancelText="Dismiss">
+          <ion-select-option value="admin">Admin</ion-select-option>
+          <ion-select-option value="voter">Voter</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngFor="let user of users">
+        <ion-icon slot="start" name="person"></ion-icon>
+        <ion-label>
+          <p>Enabled: {{ user.enabled }}</p>
+          <h1>{{ user.email }}</h1>
+          <ion-badge>{{ user.userStatus }}</ion-badge>
+        </ion-label>
+        <!-- <ion-button slot="end">Edit</ion-button> -->
+        <ion-button (click)="confirmDeleteUser(user)" color="danger" slot="end">Delete</ion-button>
+      </ion-item>
+      <ion-item *ngIf="usersResponseComplete && !users.length">
+        <ion-label>
+          <h1>There are no users in this group.</h1>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  
+    <ion-list *ngIf="!usersResponseComplete">
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+      
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+      
+    </ion-list>
+  </ion-card>
 
 </ion-content>

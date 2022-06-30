@@ -29,3 +29,29 @@
 ion-content {
     --background: var(--ion-color-light);
 }
+
+ion-split-pane {
+    --side-max-width: 350px;
+    ion-menu {  
+      
+      ion-content {
+        --background: var(--ion-color-secondary);
+        --color: var(--ion-color-light);
+  
+        ion-list {
+          --background: var(--ion-color-secondary);
+          ion-list-header {
+            --background: var(--ion-color-secondary);
+            --color: var(--ion-color-light)
+          }
+          ion-item {
+            --background: var(--ion-color-secondary);
+            --color: var(--ion-color-light);
+            ion-icon {
+              color: var(--ion-color-light);
+            }
+          }
+        }
+      }
+    }
+  }

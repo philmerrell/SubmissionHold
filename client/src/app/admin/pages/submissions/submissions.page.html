@@ -27,12 +27,13 @@
 
     <ion-card>
       <ion-list>
+        <ion-list-header></ion-list-header>
         <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
           <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>
           </ion-thumbnail>
           <ion-label>
-            <h2>{{ submission.name }}</h2>
+            <h1>{{ submission.name }}</h1>
             <p>{{ submission.category }}</p>
           </ion-label>
           <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>

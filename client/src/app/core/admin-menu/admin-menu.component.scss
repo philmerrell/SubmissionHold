@@ -121,6 +121,8 @@ ion-menu ion-content {
   
   ion-item.selected {
     --color: var(--ion-color-primary);
+    --background: var(--ion-color-secondary-shade);
+    border-left: 4px solid var(--ion-color-primary)
   }
   
   
