@@ -15,12 +15,13 @@ export class MusicFormComponent implements OnInit {
   @Input() submissionPending: boolean;
   @Input() festivalId: string;
   @Output() submit = new EventEmitter<any>();
-  submissionForm: FormGroup;
+  genres: string[];
   imageDataUrl;
   imageFileName;
   showForm: boolean;
+  showRequiredFieldsMissingWarning: boolean;
   states: { label: string, value: string }[];
-  genres: string[];
+  submissionForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
@@ -82,6 +83,7 @@ export class MusicFormComponent implements OnInit {
       this.submit.emit(submission);
     } else {
       validateAllFormFields(this.submissionForm);
+      this.showRequiredFieldsMissingWarning = true;
     }
   }
 
@@ -119,9 +121,6 @@ export class MusicFormComponent implements OnInit {
       contactInfo: this.createContactInfoFormGroup(),
       type: ['music', Validators.required],
       website: ['']
-      // numberOfMembers: ['', Validators.required],
-      // memberNames: ['', Validators.required],
-      // contacts: this.createContactsFormGroup(),
     });
   }
 
@@ -129,7 +128,7 @@ export class MusicFormComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['smith.colin00@gmail.com', [Validators.required, Validators.email]],
       relationship: ['', Validators.required],
       managementContact: [''],
       agentContact: [''],
