@@ -58,4 +58,10 @@ export class SubmissionDetailPage implements OnInit {
     return (match&&match[7].length==11)? match[7] : false;
   }
 
+  videoLinkType(url: string) {
+    if (url.indexOf('youtube.com') !== -1 ) {
+      return 'youtube';
+    }
+  }
+
 }

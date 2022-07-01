@@ -80,6 +80,7 @@ export class MusicFormComponent implements OnInit {
   async submitForm() {
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
+      this.removeEmptyVideoLinks(submission);
       this.submit.emit(submission);
     } else {
       validateAllFormFields(this.submissionForm);
@@ -114,7 +115,7 @@ export class MusicFormComponent implements OnInit {
       country: ['United States', Validators.required],
       isInternational: [false],
       description: ['', Validators.required],
-      image: [''],
+      image: ['', Validators.required],
       genres: [[]],
       links: this.createLinksFormGroup(),
       statement: ['', Validators.required],
@@ -170,6 +171,10 @@ export class MusicFormComponent implements OnInit {
       };
       reader.readAsArrayBuffer(result);
     });
+  }
+
+  private removeEmptyVideoLinks(submission: any) {
+    submission.links.videos = submission.links.videos.filter(v => v !== '');
   }
 
   private getStates() {

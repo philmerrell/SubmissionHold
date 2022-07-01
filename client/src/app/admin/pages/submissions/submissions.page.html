@@ -25,9 +25,11 @@
 
     <app-submissions-loading  *ngIf="!submissionsResponseComplete"></app-submissions-loading>
 
-    <ion-card>
+    <ion-card *ngIf="submissionsResponseComplete">
       <ion-list>
-        <ion-list-header></ion-list-header>
+        <ion-list-header>
+          <h2>{{ festival.name }}</h2>
+        </ion-list-header>
         <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
           <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>

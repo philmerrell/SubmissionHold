@@ -62,30 +62,6 @@
             </ion-text>
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label [color]="validateControl('numberOfMembers', 'required') ? 'danger' : 'secondary'" color="secondary"
-                position="stacked">Number of Band Members</ion-label>
-              <ion-input formControlName="numberOfMembers" type="number" inputmode="number"></ion-input>
-            </ion-item>
-            <ion-text *ngIf="validateControl('numberOfMembers', 'required')" color="danger">
-              Number of band members is required.
-            </ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label [color]="validateControl('memberNames', 'required') ? 'danger' : 'secondary'" color="secondary"
-                position="stacked">Band Member Names</ion-label>
-              <ion-input formControlName="memberNames"></ion-input>
-            </ion-item>
-            <ion-text *ngIf="validateControl('memberNames', 'required')" color="danger">
-              Band member names are required.
-            </ion-text>
-          </ion-col>
-        </ion-row> -->
         <ion-row>
           <ion-col>
             <ion-item>
@@ -117,16 +93,17 @@
                 <ion-img *ngIf="imageDataUrl" [src]="imageDataUrl"></ion-img>
               </ion-thumbnail>
               <!-- <ion-icon slot="start" color="tertiary" size="large"></ion-icon> -->
-              <ion-label color="secondary" position="stacked">
+              <ion-label [color]="validateControl('image', 'required') ? 'danger' : 'secondary'" position="stacked">
                 Choose an image
               </ion-label>
               <h3>{{ imageFileName }}</h3>
               <input #fileInput (change)="addFile($event)" class="ion-hide" type="file" accept="image/*">
             </ion-item>
-          </ion-col>
-            <!-- <ion-text *ngIf="validateControl('memberNames', 'required')" color="danger">
+            <ion-text *ngIf="validateControl('image', 'required')" color="danger">
               Artist image is required.
-            </ion-text> -->
+            </ion-text>
+          </ion-col>
+            
         </ion-row>
       </ion-grid>
     </ion-card>
@@ -176,7 +153,7 @@
             </ion-text>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
             <ion-item>
               <ion-label>Is This a Non U.S. Based Artist?</ion-label>
@@ -184,7 +161,7 @@
               </ion-checkbox>
             </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-grid>
     </ion-card>
     <div formGroupName="links">
