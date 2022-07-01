@@ -51,35 +51,17 @@
             </p>
           </div>
           
-          <iframe *ngIf="submission.links.spotify" style="border-radius:12px" [src]="sanitize('https://open.spotify.com/embed/artist/' + getSpotifyArtistId(submission.links.spotify))" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          <div *ngIf="submission.links.spotify">
+            <h3>Spotify</h3>
+            <iframe style="border-radius:12px" [src]="sanitize('https://open.spotify.com/embed/artist/' + getSpotifyArtistId(submission.links.spotify))" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          </div>
 
-          <h3>Contact Info</h3>
-          <ion-list>
-            <ion-item>
-              <ion-icon name="person" slot="start"></ion-icon>
-              <ion-label>
-                <h2>{{ submission.contactInfo.name }} <small>{{ submission.contactInfo.relationship }}</small></h2>
-                <p>{{ submission.contactInfo.phoneNumber }}</p>
-                <p>{{ submission.contactInfo.email }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item *ngIf="submission.contactInfo.agentContact">
-              <p>Agent</p>
-              <h2>{{ submission.contactInfo.agentContact }}</h2>
-            </ion-item>
-            <ion-item *ngIf="submission.contactInfo.labelContact">
-              <p>Label Contact</p>
-              <h2>{{ submission.contactInfo.labelContact }}</h2>
-            </ion-item>
-            <ion-item *ngIf="submission.contactInfo.managementContact">
-              <p>Management Contact</p>
-              <h2>{{ submission.contactInfo.managementContact }}</h2>
-            </ion-item>
-            <ion-item *ngIf="submission.contactInfo.publicityContact">
-              <p>Publicity Contact</p>
-              <h2>{{ submission.contactInfo.publicityContact }}</h2>
-            </ion-item>
-          </ion-list>
+          <div *ngIf="submission.links.videos.length">
+            <h3>Videos</h3>
+            <iframe *ngFor="let video of submission.links.videos" width="100%" height="315" [src]="sanitize('https://www.youtube.com/embed/' + getYoutubeVideoId(video))" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!-- <p >{{ video }}</p> -->
+          </div>
+
           <!-- <div>
             <h3>Labels</h3>
             <ion-item>
@@ -150,6 +132,38 @@
             </ion-item>
             <iframe width="100%" height="315" src="https://www.youtube.com/embed/kKwPo8Ko7eE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
           </ion-card>
+          <ion-card>
+            <ion-list>
+              <ion-item>
+                <h3>Contact Info</h3>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="person" slot="start"></ion-icon>
+                <ion-label>
+                  <h2>{{ submission.contactInfo.name }} <small>{{ submission.contactInfo.relationship }}</small></h2>
+                  <p>{{ submission.contactInfo.phoneNumber }}</p>
+                  <p>{{ submission.contactInfo.email }}</p>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="submission.contactInfo.agentContact">
+                <p>Agent</p>
+                <h2>{{ submission.contactInfo.agentContact }}</h2>
+              </ion-item>
+              <ion-item *ngIf="submission.contactInfo.labelContact">
+                <p>Label Contact</p>
+                <h2>{{ submission.contactInfo.labelContact }}</h2>
+              </ion-item>
+              <ion-item *ngIf="submission.contactInfo.managementContact">
+                <p>Management Contact</p>
+                <h2>{{ submission.contactInfo.managementContact }}</h2>
+              </ion-item>
+              <ion-item *ngIf="submission.contactInfo.publicityContact">
+                <p>Publicity Contact</p>
+                <h2>{{ submission.contactInfo.publicityContact }}</h2>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+          
         </ion-col>
       </ion-row>
     </ion-grid>

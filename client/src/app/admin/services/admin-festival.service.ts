@@ -30,7 +30,7 @@ export class AdminFestivalService {
 
   getActiveFestival(): Promise<Festival> {
     if (!this.activeFestival) {
-      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?submissionsOpen=true&pageSize=1&activeOnly=true`)
+      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?pageSize=1&activeOnly=true`)
         .pipe(
           map((response: FestivalsApiResponse) => {
             this.activeFestival = response.festivals[0] || null;

@@ -12,6 +12,7 @@ import { SubmissionService } from './submission.service';
 export class SubmissionPage implements OnInit {
   fort: 'Music' | 'Comedy';
   festival: Festival;
+  festivalRequestComplete: boolean;
   submissionPending: boolean;
 
   constructor(
@@ -25,7 +26,8 @@ export class SubmissionPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.festival = await this.festivalService.getActiveFestival()
+    this.festival = await this.festivalService.getActiveFestival();
+    this.festivalRequestComplete = true;
   }
 
   async submit(submission) {

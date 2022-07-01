@@ -15,9 +15,15 @@
     </ion-toolbar>
   </ion-header>
 
+
+
   <div *ngIf="festival">
     <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending" [festivalId]="festival.id"></app-music-form>
     <app-comedy-form *ngIf="fort === 'Comedy'"  (submit)="submit($event)"></app-comedy-form>
+  </div>
+
+  <div *ngIf="!festivalRequestComplete" style="text-align: center">
+    <ion-spinner name="crescent" style="height: 3em; width: 3em;"></ion-spinner>
   </div>
 
 
