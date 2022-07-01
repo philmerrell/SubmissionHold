@@ -129,7 +129,7 @@ export class MusicFormComponent implements OnInit {
     return this.formBuilder.group({
       name: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['smith.colin00@gmail.com', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       relationship: ['', Validators.required],
       managementContact: [''],
       agentContact: [''],
