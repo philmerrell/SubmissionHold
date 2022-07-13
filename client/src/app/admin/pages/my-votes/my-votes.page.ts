@@ -15,7 +15,7 @@ export class MyVotesPage implements OnInit {
   }
 
   getSubmissions() {
-    this.submissions = this.submissionService.getMockSubmissions();
+    // this.submissions = this.submissionService.getMockSubmissions();
   }
 
 }

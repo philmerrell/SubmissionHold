@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SettingService } from '../../admin/services/setting.service';
+import { Festival } from '../../admin/services/admin-festival.service';
+import { LabelService, LabelsResponse } from '../../admin/services/label.service';
 import { User } from '../../auth/user.service';
+import { ActiveFestivalService } from '../../shared/active-festival.service';
 
 @Component({
   selector: 'app-admin-menu',
@@ -9,17 +11,20 @@ import { User } from '../../auth/user.service';
 })
 export class AdminMenuComponent implements OnInit {
   @Input() user: User;
+  activeFestival: Festival;
+  labelResponse: LabelsResponse;
+  labelsRequestComplete: boolean;
 
-  public labels = [];
+  constructor(private festivalService: ActiveFestivalService, private labelService: LabelService) { }
 
-  constructor(private settingService: SettingService) { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.activeFestival = await this.festivalService.getActiveFestival();
     this.getLabels();
   }
 
-  getLabels() {
-    this.labels = this.settingService.getLabels();
+  async getLabels() {
+    this.labelResponse = await this.labelService.getLabels(this.activeFestival.id);
+    this.labelsRequestComplete = true;
   }
 
 }
