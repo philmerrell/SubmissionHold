@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { Festival, AdminFestivalService } from '../../services/admin-festival.service';
 import { Fort, AdminFortService } from '../../services/admin-fort.service';
+import { Label, LabelService, LabelsResponse } from '../../services/label.service';
 import { ComposeFestivalModalComponent } from '../../shared/compose-festival-modal/compose-festival-modal.component';
 
 @Component({
@@ -16,12 +17,17 @@ export class SettingsFestivalDetailPage implements OnInit {
   fortCreateComplete: boolean = true;
   fortPendingDeleteId: string;
   fortsRequestComplete: boolean;
+  labelCreateComplete: boolean = true;
+  labelPendingDeleteId: string;
+  labelsRequestComplete: boolean;
+  labelResponse: LabelsResponse;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private festivalService: AdminFestivalService,
     private fortService: AdminFortService,
+    private labelService: LabelService,
     private modalController: ModalController,
     private navController: NavController,
     private router: Router,
@@ -31,11 +37,18 @@ export class SettingsFestivalDetailPage implements OnInit {
     const params = this.activatedRoute.snapshot.params;
     this.festival = await this.festivalService.getFestival(params.id);
     this.getForts();
+    this.getLabels();
   }
 
   async getForts() {
     this.forts = await this.fortService.getForts(this.festival.id);
     this.fortsRequestComplete = true;
+  }
+
+  async getLabels() {
+    this.labelsRequestComplete = false;
+    this.labelResponse = await this.labelService.getLabels(this.festival.id);
+    this.labelsRequestComplete = true;
   }
 
   async presentDeleteFestivalAlert() {
@@ -152,7 +165,7 @@ export class SettingsFestivalDetailPage implements OnInit {
       this.fortPendingDeleteId = fort.id;
       await this.fortService.deleteFort(this.festival, fort);
       const toast = await this.toastController.create({
-        message: `${this.festival.name} has been deleted.`,
+        message: `The ${fort.name} fort has been deleted.`,
         color: 'dark',
         duration: 3000
       });
@@ -197,6 +210,95 @@ export class SettingsFestivalDetailPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async presentCreateLabelAlert() {
+    const alert = await this.alertController.create({
+      header: 'Create a Label',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Enter a label name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'OK',
+          role: 'confirm'
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role, data } = await alert.onDidDismiss();
+    if (role === 'confirm' && data.values.name !== '') {
+      this.createLabel(data.values.name);
+    }
+  }
+
+  async createLabel(name: string) {
+    await this.labelService.createLabel(this.festival.id, { name, submissionIds: []});
+    this.getLabels();
+  }
+
+  async presentDeleteLabelAlert(label: Label) {
+    const alert = await this.alertController.create({
+      header: 'Delete Label',
+      message: `Are you sure you want to delete the ${label.name} label?`,
+      inputs: [
+        {
+          name: 'delete',
+          type: 'text',
+          placeholder: 'Type "delete"'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Delete',
+          handler: (values) => {
+            if(values.delete === 'delete') {
+              this.deleteLabel(label);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    await alert.onDidDismiss();
+    this.labelPendingDeleteId = null;
+  }
+
+  private async deleteLabel(label: Label) {
+    try {
+      this.labelPendingDeleteId = label.id;
+      await this.labelService.deleteLabel(this.festival.id, label.id);
+      const toast = await this.toastController.create({
+        message: `The label ${label.name} has been deleted.`,
+        color: 'dark',
+        duration: 3000
+      });
+
+      const foundIndex = this.labelResponse.labels.findIndex(l => l.id === label.id);
+      if (foundIndex !== -1) {
+        this.labelResponse.labels.splice(foundIndex, 1);
+        toast.present();
+      }
+    } catch(error) {
+
+    }
   }
 
 }
