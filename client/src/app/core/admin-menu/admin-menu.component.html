@@ -27,10 +27,12 @@
   </ion-item>
 </ion-menu-toggle>
 
-<ion-list-header>
-  <ion-label color="light">Labels</ion-label>
-  <!-- <ion-button fill="outline">Add</ion-button> -->
-</ion-list-header>
+<ion-item lines="none">
+  <ion-label color="light">
+    <h1 style="font-weight: 600;">Labels</h1>
+  </ion-label>
+  <ion-button *ngIf="user.claims.isAdmin" (click)="presentCreateLabelAlert()" [disabled]="!labelsRequestComplete" slot="end" fill="solid">Create</ion-button>
+</ion-item>
 <ion-list *ngIf="labelsRequestComplete" id="labels-list">
   <ion-item *ngFor="let label of labelResponse.labels" lines="none">
     <ion-icon slot="start" name="bookmark-outline"></ion-icon>
