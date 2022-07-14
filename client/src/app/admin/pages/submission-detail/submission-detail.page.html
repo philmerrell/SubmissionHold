@@ -149,20 +149,28 @@
                 </ion-label>
               </ion-item>
               <ion-item *ngIf="submission.contactInfo.agentContact">
-                <p>Agent</p>
-                <h2>{{ submission.contactInfo.agentContact }}</h2>
+                <ion-label>
+                  <p>Agent</p>
+                  <h2>{{ submission.contactInfo.agentContact }}</h2>
+                </ion-label>
               </ion-item>
               <ion-item *ngIf="submission.contactInfo.labelContact">
-                <p>Label Contact</p>
-                <h2>{{ submission.contactInfo.labelContact }}</h2>
+                <ion-label>
+                  <p>Label Contact</p>
+                  <h2>{{ submission.contactInfo.labelContact }}</h2>
+                </ion-label>
               </ion-item>
               <ion-item *ngIf="submission.contactInfo.managementContact">
-                <p>Management Contact</p>
-                <h2>{{ submission.contactInfo.managementContact }}</h2>
+                <ion-label>
+                  <p>Management Contact</p>
+                  <h2>{{ submission.contactInfo.managementContact }}</h2>
+                </ion-label>
               </ion-item>
               <ion-item *ngIf="submission.contactInfo.publicityContact">
-                <p>Publicity Contact</p>
-                <h2>{{ submission.contactInfo.publicityContact }}</h2>
+                <ion-label>
+                  <p>Publicity Contact</p>
+                  <h2>{{ submission.contactInfo.publicityContact }}</h2>
+                </ion-label>
               </ion-item>
             </ion-list>
           </ion-card>
