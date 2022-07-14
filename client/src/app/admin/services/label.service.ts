@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Submission } from './submission.service';
 
@@ -24,7 +25,7 @@ export interface LabelRequest {
   providedIn: 'root'
 })
 export class LabelService {
-
+  private reloadLabelsBehaviorSubject: BehaviorSubject<{ reload: boolean }> = new BehaviorSubject({ reload: false });
   constructor(private http: HttpClient) { }
 
   getLabels(festivalId: string): Promise<LabelsResponse> {
@@ -42,5 +43,13 @@ export class LabelService {
 
   deleteLabel(festivalId: string, labelId: string): Promise<void> {
     return this.http.delete<void>(`${environment.apiUrl}/festivals/${festivalId}/labels/${labelId}`).toPromise();
+  }
+
+  setReloadLabels(reload: boolean) {
+    this.reloadLabelsBehaviorSubject.next({ reload });
+  }
+
+  getReloadLabelsObservable(): Observable<{reload: boolean}> {
+    return this.reloadLabelsBehaviorSubject.asObservable();
   }
 }

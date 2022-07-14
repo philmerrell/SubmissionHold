@@ -243,6 +243,7 @@ export class SettingsFestivalDetailPage implements OnInit {
 
   async createLabel(name: string) {
     await this.labelService.createLabel(this.festival.id, { name, submissionIds: []});
+    this.labelService.setReloadLabels(true);
     this.getLabels();
   }
 
@@ -294,6 +295,7 @@ export class SettingsFestivalDetailPage implements OnInit {
       const foundIndex = this.labelResponse.labels.findIndex(l => l.id === label.id);
       if (foundIndex !== -1) {
         this.labelResponse.labels.splice(foundIndex, 1);
+        this.labelService.setReloadLabels(true);
         toast.present();
       }
     } catch(error) {

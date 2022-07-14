@@ -19,9 +19,9 @@ export class AdminMenuComponent implements OnInit {
   constructor(private alertController: AlertController, private festivalService: ActiveFestivalService, private labelService: LabelService) { }
 
   async ngOnInit() {
-    console.log(this.user);
     this.activeFestival = await this.festivalService.getActiveFestival();
     this.getLabels();
+    this.subscribeToLabelReload();
   }
 
   async createLabel(name: string) {
@@ -59,10 +59,18 @@ export class AdminMenuComponent implements OnInit {
     await alert.present();
 
     const { role, data } = await alert.onDidDismiss();
-    console.log(data);
     if (role === 'confirm' && data.values.name !== '') {
       this.createLabel(data.values.name);
     }
+  }
+
+  subscribeToLabelReload() {
+    this.labelService.getReloadLabelsObservable()
+      .subscribe((response: { reload: boolean }) => {
+        if (response.reload) {
+          this.getLabels();
+        }
+      })
   }
 
 
