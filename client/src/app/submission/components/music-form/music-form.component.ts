@@ -4,6 +4,7 @@ import { validateAllFormFields } from '../../../form-utils';
 import { SubmissionService } from '../../submission.service';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../../environments/environment';
+import { Festival } from '../../../admin/services/admin-festival.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class MusicFormComponent implements OnInit {
   @Input() submissionPending: boolean;
-  @Input() festivalId: string;
+  @Input() festival: Festival;
   @Output() submit = new EventEmitter<any>();
   genres: string[];
   imageDataUrl;
@@ -43,12 +44,12 @@ export class MusicFormComponent implements OnInit {
         {
           uuid,
           mimeType: result.type,
-          festivalId: this.festivalId,
+          festivalId: this.festival.id,
           file: blob,
           fileName: result.name
         }
       )
-      this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festivalId}/${uuid}/${this.imageFileName}`);
+      this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
     }
   }
 

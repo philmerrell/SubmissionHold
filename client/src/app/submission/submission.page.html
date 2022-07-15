@@ -18,7 +18,7 @@
 
 
   <div *ngIf="festival">
-    <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending" [festivalId]="festival.id"></app-music-form>
+    <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending" [festival]="festival"></app-music-form>
     <app-comedy-form *ngIf="fort === 'Comedy'"  (submit)="submit($event)"></app-comedy-form>
   </div>
 
