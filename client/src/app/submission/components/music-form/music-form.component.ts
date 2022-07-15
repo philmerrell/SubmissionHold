@@ -79,6 +79,7 @@ export class MusicFormComponent implements OnInit {
   }
 
   async submitForm() {
+    console.log(this.submissionForm);
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
       this.removeEmptyVideoLinks(submission);
@@ -117,7 +118,7 @@ export class MusicFormComponent implements OnInit {
       isInternational: [false],
       description: ['', Validators.required],
       image: ['', Validators.required],
-      genres: [[]],
+      genres: [[], [Validators.required, Validators.minLength(3), Validators.maxLength(5)]],
       links: this.createLinksFormGroup(),
       statement: ['', Validators.required],
       contactInfo: this.createContactInfoFormGroup(),

@@ -63,7 +63,7 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('genres', 'minLength') ? 'danger' : 'secondary'" color="secondary"
+              <ion-label [color]="(validateControl('genres', 'required') || validateControl('genres', 'minlength') || validateControl('genres', 'maxlength') ) ? 'danger' : 'secondary'" color="secondary"
                 position="stacked">Genre</ion-label>
               <ion-select formControlName="genres" placeholder="Select 3 - 5 genres" multiple="true" cancelText="Nah"
                 okText="Okay!">
@@ -71,7 +71,7 @@
                 
               </ion-select>
             </ion-item>
-            <ion-text *ngIf="validateControl('genres', 'required')" color="danger">
+            <ion-text *ngIf="(validateControl('genres', 'required') || validateControl('genres', 'minlength') || validateControl('genres', 'maxlength'))" color="danger">
               Please choose 3 - 5 genres.
             </ion-text>
           </ion-col>
