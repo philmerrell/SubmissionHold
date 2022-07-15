@@ -34,18 +34,22 @@ export class SubmissionsPage implements OnInit {
     this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0]);
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
+    console.log(this.paginationKey);
     this.submissionsResponseComplete = true;
   }
 
   async getMoreSubmissions(event) {
-    this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0], this.paginationKey);
-    this.paginationKey = this.submissionsResponse.paginationKey;
-    this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
-    event.target.complete();
-
     if (!this.paginationKey) {
       event.target.disabled = true;
     }
+
+    if (this.paginationKey) {
+      this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0], this.paginationKey);
+      this.paginationKey = this.submissionsResponse.paginationKey;
+      this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
+      event.target.complete();
+    }
+
   }
 
 }
