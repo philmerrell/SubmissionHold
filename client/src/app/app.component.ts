@@ -13,11 +13,22 @@ export class AppComponent {
   user: User;
 
   constructor(private settingService: SettingService, private authService: AuthService, private userService: UserService) {
-    this.userService.getUserObservable().subscribe((user: User ) => this.user = user);
+    this.subscribeToUserObservable();
     this.authService.isAuthenticated();
   }
 
   
+  subscribeToUserObservable() {
+    this.userService.getUserObservable().subscribe((user: User ) => {
+      this.user = user
+      if (user.authenticated) {
+        // get active festival
+        // get all forts
+        // get all submissions for all forts
+        // getUsersSubmitted 
+      }
+    });
+  }
 
   
 

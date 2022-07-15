@@ -12,9 +12,6 @@ import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { AuthService } from './auth.service';
-import { environment } from '../../environments/environment';
-
-// HERE BE DRAGONS...
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
@@ -38,7 +35,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
               switch (error.status) {
                 case 401:
-                  this.presentLoading();
+                  // this.presentLoading();
                   return this.handle401Error(request, next);
                 case 400:
                   console.log(error);
