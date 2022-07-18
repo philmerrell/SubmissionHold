@@ -25,7 +25,6 @@ export class MySubmissionsComponent implements OnInit {
     if (this.user.authenticated) {
       const festival = await this.getActiveFestival();
       const forts = await this.getForts(festival);
-      console.log(forts);
       this.getAllSubmissions(festival, forts);
       // get all submissions for all forts
       // getUsersSubmitted 
