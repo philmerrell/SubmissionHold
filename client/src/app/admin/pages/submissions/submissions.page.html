@@ -27,9 +27,12 @@
 
     <ion-card *ngIf="submissionsResponseComplete">
       <ion-list>
-        <ion-list-header>
-          <h2>{{ festival.name }}</h2>
-        </ion-list-header>
+        <ion-item>
+          <ion-label><h2 style="font-weight: 600;">Select a fort</h2></ion-label>
+          <ion-select (ionChange)="handleFortChange($event)" [value]="selectedFort" interface="popover" placeholder="Select a fort">
+            <ion-select-option *ngFor="let fort of forts" [value]="fort">{{ fort.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
           <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>
@@ -39,6 +42,11 @@
             <p>{{ submission.category }}</p>
           </ion-label>
           <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
+        </ion-item>
+        <ion-item *ngIf="!submissions.length">
+          <ion-label>
+            <h1>There are no {{ selectedFort.name }} submissions.</h1>
+          </ion-label>
         </ion-item>
       </ion-list>
       <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreSubmissions($event)">

@@ -9,6 +9,7 @@ import { SubmissionPageRoutingModule } from './submission-routing.module';
 import { SubmissionPage } from './submission.page';
 import { MusicFormComponent } from './components/music-form/music-form.component';
 import { ComedyFormComponent } from './components/comedy-form/comedy-form.component';
+import { AleFormComponent } from './components/ale-form/ale-form.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,10 @@ import { ComedyFormComponent } from './components/comedy-form/comedy-form.compon
     IonicModule,
     SubmissionPageRoutingModule
   ],
-  declarations: [SubmissionPage, MusicFormComponent, ComedyFormComponent]
+  declarations: [
+    SubmissionPage,
+    MusicFormComponent,
+    ComedyFormComponent,
+    AleFormComponent]
 })
 export class SubmissionPageModule {}
