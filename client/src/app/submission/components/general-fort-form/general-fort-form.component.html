@@ -27,11 +27,11 @@
         <ion-row>
           <ion-col>
             <ion-item>
-              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'secondary'" position="stacked">Name</ion-label>
+              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'secondary'" position="stacked">Performer or Act Name</ion-label>
               <ion-input formControlName="name"></ion-input>
             </ion-item>
             <ion-text *ngIf="validateControl('name', 'required')" color="danger">
-              Name is required.
+              Performer or Act Name is required.
             </ion-text>
           </ion-col>
         </ion-row>

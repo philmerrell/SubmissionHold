@@ -7,11 +7,11 @@ import { SubmissionService } from '../../submission.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-ale-form',
-  templateUrl: './ale-form.component.html',
-  styleUrls: ['./ale-form.component.scss'],
+  selector: 'app-general-fort-form',
+  templateUrl: './general-fort-form.component.html',
+  styleUrls: ['./general-fort-form.component.scss'],
 })
-export class AleFormComponent implements OnInit {
+export class GeneralFortFormComponent implements OnInit {
   @Input() submissionPending: boolean;
   @Input() festival: Festival;
   @Output() submit = new EventEmitter<any>();

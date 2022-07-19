@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ComedyFormComponent } from './comedy-form.component';
+import { GeneralFortFormComponent } from './general-fort-form.component';
 
-describe('ComedyFormComponent', () => {
-  let component: ComedyFormComponent;
-  let fixture: ComponentFixture<ComedyFormComponent>;
+describe('GeneralFortFormComponent', () => {
+  let component: GeneralFortFormComponent;
+  let fixture: ComponentFixture<GeneralFortFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ComedyFormComponent ],
+      declarations: [ GeneralFortFormComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ComedyFormComponent);
+    fixture = TestBed.createComponent(GeneralFortFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

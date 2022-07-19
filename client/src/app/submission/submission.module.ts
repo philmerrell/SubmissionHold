@@ -8,8 +8,7 @@ import { SubmissionPageRoutingModule } from './submission-routing.module';
 
 import { SubmissionPage } from './submission.page';
 import { MusicFormComponent } from './components/music-form/music-form.component';
-import { ComedyFormComponent } from './components/comedy-form/comedy-form.component';
-import { AleFormComponent } from './components/ale-form/ale-form.component';
+import { GeneralFortFormComponent } from './components/general-fort-form/general-fort-form.component';
 
 @NgModule({
   imports: [
@@ -22,7 +21,6 @@ import { AleFormComponent } from './components/ale-form/ale-form.component';
   declarations: [
     SubmissionPage,
     MusicFormComponent,
-    ComedyFormComponent,
-    AleFormComponent]
+    GeneralFortFormComponent]
 })
 export class SubmissionPageModule {}
