@@ -10,7 +10,7 @@ import { SubmissionService } from './submission.service';
   styleUrls: ['./submission.page.scss'],
 })
 export class SubmissionPage implements OnInit {
-  fort: 'Music' | 'Comedy';
+  fort: 'Music' | 'Comedy' | 'Alefort';
   festival: Festival;
   festivalRequestComplete: boolean;
   submissionPending: boolean;
