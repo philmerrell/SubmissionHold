@@ -1,0 +1,345 @@
+<ion-card *ngIf="!showForm">
+  <ion-card-header>
+    <ion-card-title>
+      <h2>Submit your music project for a chance to perform at Treefort Music Fest 2022!</h2>
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>In this submission form, tell us about yourself/your band, send us links to your music, and upload your best song. Submissions for Treefort 2022 close on {{ festival.endDateTime | date }}</p>
+    <p>&nbsp;</p>
+    <p>All music artists accepted to perform at Treefort 2023 will be offered at least one 30-40 minute set at an official Treefort venue over the 5 day span of the festival (March 22 - 26, 2023). All accepted artists will receive a minimum of $100 cash (additional travel reimbursement negotiable), 5-day festival wristbands for each band member ($250 value per wristband), access to Treefort Artist Hospitality Lounge, 3 guest list spots to the specific show that you play, eternal glory, plus other Treefort good times and perks like drink tickets, bag of goodies and more!</p>
+    <p>&nbsp;</p>
+    <p><b>RADIUS CLAUSE: </b> All artists confirmed for Treefort Music Fest will be asked to not play any other Boise area (100 mile radius) shows in March 2023 and to not announce any other Boise area shows in April 2023 and beyond until after their set at the festival. We are open to exceptions to this request, but ask that they are discussed with us before confirming your appearance. <i>Please note that if accepted, the applicant will be notified and sent a new form to collect finalized assets.</i></p>
+
+    <div class="ion-padding ion-text-end">
+      <ion-button (click)="showForm = true;" size="large" fill="solid" slot="end">Let's Do This! <ion-icon slot="end" name="chevron-forward"></ion-icon></ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+<div *ngIf="showForm">
+  <div [formGroup]="submissionForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>General</ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('name', 'required') ? 'danger' : 'secondary'" position="stacked">Name</ion-label>
+              <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateControl('name', 'required')" color="danger">
+              Name is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('description', 'required') ? 'danger' : 'secondary'" color="secondary"
+                position="stacked">Bio</ion-label>
+              <ion-textarea formControlName="description" rows="5" [spellcheck]="true"></ion-textarea>
+            </ion-item>
+            <ion-text *ngIf="validateControl('description', 'required')" color="danger">
+              Bio is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('statement', 'required') ? 'danger' : 'secondary'" position="stacked">
+                Why do you want to participate in Treefort?</ion-label>
+              <ion-textarea formControlName="statement" [spellcheck]="true"></ion-textarea>
+            </ion-item>
+            <ion-text *ngIf="validateControl('statement', 'required')" color="danger">
+              Statement is required.
+            </ion-text>
+          </ion-col>
+        </ion-row> -->
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="(validateControl('genres', 'required') || validateControl('genres', 'minlength') || validateControl('genres', 'maxlength') ) ? 'danger' : 'secondary'" color="secondary"
+                position="stacked">Genre</ion-label>
+              <ion-select formControlName="genres" placeholder="Select 3 - 5 genres" multiple="true" cancelText="Nah"
+                okText="Okay!">
+                <ion-select-option *ngFor="let genre of genres" [value]="genre">{{ genre }}</ion-select-option>
+                
+              </ion-select>
+            </ion-item>
+            <ion-text *ngIf="(validateControl('genres', 'required') || validateControl('genres', 'minlength') || validateControl('genres', 'maxlength'))" color="danger">
+              Please choose 3 - 5 genres.
+            </ion-text>
+          </ion-col>
+        </ion-row> -->
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="secondary" position="stacked">Website</ion-label>
+              <ion-input formControlName="website" placeholder="Enter primary web link"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item (click)="fileInput.click()" button detail="false">
+              <ion-thumbnail slot="end">
+                <ion-img *ngIf="imageDataUrl" [src]="imageDataUrl"></ion-img>
+              </ion-thumbnail>
+              <!-- <ion-icon slot="start" color="tertiary" size="large"></ion-icon> -->
+              <ion-label [color]="validateControl('image', 'required') ? 'danger' : 'secondary'" position="stacked">
+                Choose an image
+              </ion-label>
+              <h3>{{ imageFileName }}</h3>
+              <input #fileInput (change)="addFile($event)" class="ion-hide" type="file" accept="image/*">
+            </ion-item>
+            <ion-text *ngIf="validateControl('image', 'required')" color="danger">
+              Artist image is required.
+            </ion-text>
+          </ion-col>
+            
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Location
+        </ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateLocationControl('city', 'required') ? 'danger' : 'secondary'"
+                position="stacked">City</ion-label>
+              <ion-input formControlName="city"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateLocationControl('city', 'required')" color="danger">
+              City is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item *ngIf="!getIsInternational()" class="state-select">
+              <ion-label position="stacked" [color]="validateLocationControl('state', 'required') ? 'danger' : 'secondary'">Select a State
+              </ion-label>
+              <ion-select formControlName="state">
+                <ion-select-option *ngFor="let state of states" [value]="state.value">{{ state.label }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-text
+              *ngIf="validateLocationControl('state', 'required') && !submissionForm.get('isInternational').value"
+              color="danger">
+              State is required.
+            </ion-text>
+  
+            <ion-item *ngIf="getIsInternational()">
+              <ion-label [color]="validateLocationControl('country', 'required') ? 'danger' : 'secondary'"
+                position="stacked">Country</ion-label>
+              <ion-input formControlName="country"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateLocationControl('country', 'required')" color="danger">
+              Country is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Is This a Non U.S. Based Artist?</ion-label>
+              <ion-checkbox formControlName="isInternational" (ionChange)="handleIsInternational($event)">
+              </ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+    <div formGroupName="links">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Links
+          </ion-card-title>
+        </ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Apple Music</ion-label>
+                <ion-input formControlName="appleMusic"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Spotify</ion-label>
+                <ion-input formControlName="spotify"></ion-input>
+              </ion-item>
+              <!-- <ion-item>
+                <ion-label color="secondary" position="stacked">Bandcamp</ion-label>
+                <ion-input formControlName="bandcamp"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Soundcloud</ion-label>
+                <ion-input formControlName="soundcloud"></ion-input>
+              </ion-item> -->
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Facebook</ion-label>
+                <ion-input formControlName="facebook"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Twitter</ion-label>
+                <ion-input formControlName="twitter"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="secondary" position="stacked">Tik-Tok</ion-label>
+                <ion-input formControlName="tiktok"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Videos
+          </ion-card-title>
+          <ion-card-subtitle>Submit up to 3 videos</ion-card-subtitle>
+        </ion-card-header>
+        <ion-grid>
+          <ion-row *ngFor="let videos of getVideosFormArray(submissionForm); let i = index" formArrayName="videos">
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked" color="secondary">Video Url</ion-label>
+                <ion-input [formControlName]="i"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-button (click)="addVideosFormControl()" size="small" fill="solid" color="success" shape="round"
+                [disabled]="getVideosFormArray(submissionForm).length >= 3">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
+              <ion-button (click)="removeVideosFormControl(i)" size="small" fill="clear" color="danger"
+                [disabled]="getVideosFormArray(submissionForm).length === 1">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+  
+    <ion-card formGroupName="contactInfo">
+      <ion-card-header>
+        <ion-card-title>
+          Contact Info
+        </ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('contactInfo.name', 'required') ? 'danger' : 'secondary'"
+                position="stacked">Submitter Name</ion-label>
+              <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateControl('contactInfo.name', 'required')" color="danger">
+              Submitter Name is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="(validateControl('contactInfo.email', 'email') || validateControl('contactInfo.email', 'required')) ? 'danger' : 'secondary'"
+                position="stacked">Submitter Email</ion-label>
+              <ion-input formControlName="email" type="email" inputmode="email"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateControl('contactInfo.email', 'email')" color="danger">
+              A valid submitter email is required.
+            </ion-text>
+            <ion-text *ngIf="validateControl('contactInfo.email', 'required')" color="danger">
+              Submitter email is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('contactInfo.phoneNumber', 'required') ? 'danger' : 'secondary'"
+                position="stacked">Submitter Phone</ion-label>
+              <ion-input formControlName="phoneNumber"></ion-input>
+            </ion-item>
+            <ion-text *ngIf="validateControl('contactInfo.phoneNumber', 'required')" color="danger">
+              Submitter phone number is required.
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label [color]="validateControl('contactInfo.relationship', 'required') ? 'danger' : 'secondary'" color="secondary"
+                position="stacked">Relationship to artist</ion-label>
+              <ion-select formControlName="relationship" cancelText="Nah"
+                okText="Okay!">
+                <ion-select-option value="agent">Agent</ion-select-option>
+                <ion-select-option value="manager">Manager</ion-select-option>
+                <ion-select-option value="member">Member</ion-select-option>
+                <ion-select-option value="mom">Mom</ion-select-option>
+                <ion-select-option value="other">Other</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-text *ngIf="validateControl('contactInfo.relationship', 'required')" color="danger">
+              Please choose one.
+            </ion-text>
+          </ion-col>
+        </ion-row> -->
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="secondary" position="stacked">Management</ion-label>
+              <ion-input formControlName="managementContact" [spellcheck]="true"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="secondary" position="stacked">Agent</ion-label>
+              <ion-input formControlName="agentContact" [spellcheck]="true"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="secondary" position="stacked">Publicity</ion-label>
+              <ion-input formControlName="publicityContact" [spellcheck]="true"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label color="secondary" position="stacked">Label</ion-label>
+              <ion-input formControlName="labelContact" [spellcheck]="true"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row> -->
+      </ion-grid>
+    </ion-card>
+    <h2>
+      <ion-text *ngIf="showRequiredFieldsMissingWarning && !submissionForm.valid" color="danger">You have one or more required fields missing.</ion-text>
+    </h2>
+  </div>
+  <div class="ion-padding">
+    <ion-button (click)="submitForm()" [disabled]="submissionPending" expand="block">
+      <span *ngIf="!submissionPending">Submit</span>
+      <ion-spinner *ngIf="submissionPending" name="crescent"></ion-spinner>
+    </ion-button>
+  </div>
+</div>
