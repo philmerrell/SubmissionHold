@@ -147,6 +147,7 @@ export class MusicFormComponent implements OnInit {
       bandcamp: '',
       soundcloud: '',
       facebook: '',
+      instagram: '',
       twitter: '',
       tiktok: '',
       videos: this.formBuilder.array([this.createVideosFormControl()])
