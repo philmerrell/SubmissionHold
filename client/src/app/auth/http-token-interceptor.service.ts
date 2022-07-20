@@ -35,14 +35,15 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
               switch (error.status) {
                 case 401:
-                  // this.presentLoading();
+                  this.presentLoading();
                   return this.handle401Error(request, next);
                 case 400:
                   console.log(error);
                   this.presentToast(error.error.message);
                 default:
-                  return throwError(error);
+                  console.log('Error: ', error);
               }
+              return throwError(error);
             }
           )
         );
@@ -51,11 +52,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   }
 
   private addTokenToRequest(request: HttpRequest<any>, tokens: any): HttpRequest<any> {
-    // if (request.url.indexOf(`${environment.apiUrl}`) !== -1) {
-      return request.clone({ setHeaders: { Authorization: `Bearer ${tokens.access_token}` } });
-    // } else {
-      return request;
-    // }
+    return request.clone({ setHeaders: { Authorization: `Bearer ${tokens.access_token}` } });
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
@@ -69,15 +66,15 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             if (tokens !== null) {
               this.tokenSubject.next(tokens.access_token);
               this.authService.saveTokensToLocalStorage(tokens);
-              // this.loadingController.dismiss();
+              this.loadingController.dismiss();
               return next.handle(this.addTokenToRequest(request, tokens));
             } else {
               console.log('Tokens cleared: (tried refreshing tokens and failed)');
-              // this.loadingController.dismiss();
+              this.loadingController.dismiss();
               this.presentToast('Your session has expired');
               // this.authService.clearTokens();
               this.router.navigateByUrl('/home', { replaceUrl: true });
-              // return EMPTY;
+              return EMPTY;
             }
 
           }),

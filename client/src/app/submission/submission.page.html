@@ -19,7 +19,7 @@
 
   <div *ngIf="festival">
     <app-music-form *ngIf="fort === 'Music'" (submit)="submit($event)" [submissionPending]="submissionPending" [festival]="festival"></app-music-form>
-    <app-general-fort-form *ngIf="fort === 'Alefort' || 'Comedyfort' || 'Dragfort' || 'Foodfort' || 'Hackfort' || 'Kidfort' || 'Podfort' || 'Storyfort' || 'Yogafort'"  (submit)="submit($event)" [submissionPending]="submissionPending" [festival]="festival"></app-general-fort-form>
+    <app-general-fort-form *ngIf="fort !== 'Music'"  (submit)="submit($event)" [submissionPending]="submissionPending" [festival]="festival"></app-general-fort-form>
   </div>
 
   <div *ngIf="!festivalRequestComplete" style="text-align: center">

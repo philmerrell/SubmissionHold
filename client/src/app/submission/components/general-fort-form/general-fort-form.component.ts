@@ -41,7 +41,7 @@ export class GeneralFortFormComponent implements OnInit {
       image: ['', Validators.required],
       genres: [[]],
       links: this.createLinksFormGroup(),
-      statement: [''],
+      statement: ['', Validators.required],
       contactInfo: this.createContactInfoFormGroup(),
       type: ['music', Validators.required],
       website: ['']

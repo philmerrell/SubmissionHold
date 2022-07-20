@@ -30,6 +30,7 @@ export class MusicFormComponent implements OnInit {
     this.createSubmissionForm();
     this.states = this.submissionService.getStates();
     this.genres = this.submissionService.getGenres();
+    console.log(this.showForm);
   }
 
   async addFile(event) {
