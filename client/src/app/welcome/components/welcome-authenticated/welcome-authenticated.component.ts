@@ -8,6 +8,7 @@ interface FortLink {
   external: boolean;
   name: string;
   description: string;
+  url?: string;
 };
 
 @Component({
