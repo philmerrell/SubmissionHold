@@ -3,6 +3,13 @@ import { Festival } from '../../../admin/services/admin-festival.service';
 import { AdminFortService, Fort } from '../../../admin/services/admin-fort.service';
 import { ActiveFestivalService } from '../../../shared/active-festival.service';
 
+interface FortLink {
+  id: string;
+  external: boolean;
+  name: string;
+  description: string;
+};
+
 @Component({
   selector: 'app-welcome-authenticated',
   templateUrl: './welcome-authenticated.component.html',
@@ -11,6 +18,7 @@ import { ActiveFestivalService } from '../../../shared/active-festival.service';
 export class WelcomeAuthenticatedComponent implements OnInit {
   festivalRequestComplete: boolean;
   festival: Festival;
+  fortLinks: FortLink[];
   forts: Fort[];
   fortsRequestComplete: boolean;
 
@@ -18,7 +26,8 @@ export class WelcomeAuthenticatedComponent implements OnInit {
 
   async ngOnInit() {
     await this.getActiveFestival();
-    this.getForts();
+    await this.getForts();
+    this.createFortLinks(this.forts);
   }
 
   async getActiveFestival() {
@@ -29,6 +38,39 @@ export class WelcomeAuthenticatedComponent implements OnInit {
   async getForts() {
     this.forts = await this.fortService.getForts(this.festival.id);
     this.fortsRequestComplete = true;
+  }
+
+  // Need to accommodate filmfort, which doesn't come from the DB.
+  // Also need to accommodate the wish for forts to be sorted alpha
+  // Should be Alpha except for music should be first 
+  createFortLinks(forts: Fort[]) {
+    const fortLinks = [];
+    for (let fort of forts) {
+      const link = {
+        name: fort.name,
+        id: fort.id,
+        external: false,
+        description: ''
+      };
+      fortLinks.push(link);
+    }
+
+    // manually add filmfort
+    fortLinks.push({
+      name: 'Filmfort',
+      id: '',
+      external: true,
+      description: 'Got a short? A feature? Submit your film via Film Freeway, click here!',
+      url: 'https://filmfreeway.com/filmfortfest'
+    });
+
+    // Sort forts alpha
+    this.fortLinks = fortLinks.sort((a, b) => a.name > b.name ? 1 : -1);
+
+    // Pull music out and put at beginning of array.
+    const musicIndex = this.fortLinks.findIndex(f => f.name === 'Music');
+    const musicLink = this.fortLinks.splice(musicIndex, 1);
+    this.fortLinks.unshift(musicLink[0]);
   }
 
 }

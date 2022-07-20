@@ -1,4 +1,4 @@
-<ion-card *ngIf="!showForm">
+<!-- <ion-card *ngIf="!showForm">
   <ion-card-header>
     <ion-card-title>
       <h2>Submit your music project for a chance to perform at Treefort Music Fest 2022!</h2>
@@ -15,9 +15,9 @@
       <ion-button (click)="showForm = true;" size="large" fill="solid" slot="end">Let's Do This! <ion-icon slot="end" name="chevron-forward"></ion-icon></ion-button>
     </div>
   </ion-card-content>
-</ion-card>
+</ion-card> -->
 
-<div *ngIf="showForm">
+<div>
   <div [formGroup]="submissionForm">
     <ion-card>
       <ion-card-header>

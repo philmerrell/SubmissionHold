@@ -9,17 +9,20 @@
     </ion-card-header>
 
     <ion-list *ngIf="fortsRequestComplete">
-      <ion-item *ngFor="let fort of forts" routerLink="/submission" [queryParams]="{ fort: fort.name }" button detail>
-        <!-- <ion-icon slot="start" color="secondary" name="musical-notes-outline"></ion-icon> -->
-        <ion-label>
-          <h1>{{ fort.name }}</h1>
-        </ion-label>
-      </ion-item>
-      <ion-item href="https://filmfreeway.com/filmfortfest" target="_blank" button detail>
-        <ion-label>
-          <h1>Filmfort</h1>
-        </ion-label>
-      </ion-item>
+      <div *ngFor="let fort of fortLinks">
+        <ion-item *ngIf="!fort.external" routerLink="/submission" [queryParams]="{ fort: fort.name }" button detail>
+          <!-- <ion-icon slot="start" color="secondary" name="musical-notes-outline"></ion-icon> -->
+          <ion-label>
+            <h1>{{ fort.name }}</h1>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="fort.external" [href]="fort.url" target="_blank" button detail>
+          <ion-label>
+            <h1>{{ fort.name }}</h1>
+            <p>{{ fort.description }}</p>
+          </ion-label>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-card>
 
