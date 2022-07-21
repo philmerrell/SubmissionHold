@@ -13,13 +13,14 @@ export class WelcomePage implements OnInit {
   festivalRequestComplete: boolean;
   festival: Festival;
   user$: Observable<User>;
+  user: User;
 
   constructor(
     private activeFestivalService: ActiveFestivalService,
     private userService: UserService) { }
 
   async ngOnInit() {
-    await this.getActiveFestival();
+    // await this.getActiveFestival();
     this.user$ = this.userService.getUserObservable();
   }
 

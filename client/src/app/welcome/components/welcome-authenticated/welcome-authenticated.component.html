@@ -1,5 +1,16 @@
+<div *ngIf="!festivalRequestComplete" class="ion-text-center">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>
 <div *ngIf="festival" class="ion-padding">
-  <p>{{ festival.guidelines }}</p>
+  <ion-header mode="ios" collapse="condense">
+    <ion-toolbar style="--background: transparent">
+      <ion-title size="large">{{ festival.name }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div style="margin-left: 20px;">
+    <p>{{ festival.guidelines }}</p>
+  </div>
 
   <ion-card>
     <ion-card-header>
