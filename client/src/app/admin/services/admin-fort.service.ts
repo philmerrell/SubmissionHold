@@ -36,8 +36,8 @@ export class AdminFortService {
     }
   }
 
-  async createFort(id: string, name: {name: string}) {
-    const response = await this.http.post<Fort>(`${environment.apiUrl}/festivals/${id}/forts`, name).toPromise();
+  async createFort(id: string, fort: {name: string, description: string }) {
+    const response = await this.http.post<Fort>(`${environment.apiUrl}/festivals/${id}/forts`, fort).toPromise();
     return response;
   }
 

@@ -35,7 +35,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
               switch (error.status) {
                 case 401:
-                  this.presentLoading();
+                  // this.presentLoading();
                   return this.handle401Error(request, next);
                 case 400:
                   console.log(error);
@@ -66,11 +66,11 @@ export class HttpTokenInterceptor implements HttpInterceptor {
             if (tokens !== null) {
               this.tokenSubject.next(tokens.access_token);
               this.authService.saveTokensToLocalStorage(tokens);
-              this.loadingController.dismiss();
+              // this.loadingController.dismiss();
               return next.handle(this.addTokenToRequest(request, tokens));
             } else {
               console.log('Tokens cleared: (tried refreshing tokens and failed)');
-              this.loadingController.dismiss();
+              // this.loadingController.dismiss();
               this.presentToast('Your session has expired');
               // this.authService.clearTokens();
               this.router.navigateByUrl('/home', { replaceUrl: true });

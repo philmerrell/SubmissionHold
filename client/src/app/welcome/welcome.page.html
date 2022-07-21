@@ -21,6 +21,10 @@
     </ion-toolbar>
   </ion-header>
 
+  <div *ngIf="!festivalRequestComplete" class="ion-text-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
   <div *ngIf="user$ | async as user">
     <div *ngIf="user.authenticated">
       <app-welcome-authenticated></app-welcome-authenticated>

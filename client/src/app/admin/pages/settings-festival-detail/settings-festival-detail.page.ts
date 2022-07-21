@@ -187,6 +187,11 @@ export class SettingsFestivalDetailPage implements OnInit {
           type: 'text',
           placeholder: 'Enter a fort name'
         },
+        {
+          name: 'description',
+          type: 'textarea',
+          placeholder: 'Enter fort description'
+        }
       ],
       buttons: [
         {
@@ -201,7 +206,7 @@ export class SettingsFestivalDetailPage implements OnInit {
           handler: async (values) => {
             if(values.fort) {
               this.fortCreateComplete = false;
-              const response = await this.fortService.createFort(this.festival.id, { name: values.fort})
+              const response = await this.fortService.createFort(this.festival.id, { name: values.fort, description: values.description })
               this.forts.push(response);
             }
             this.fortCreateComplete = true;
