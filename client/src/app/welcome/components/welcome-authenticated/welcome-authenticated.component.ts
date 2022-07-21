@@ -51,7 +51,7 @@ export class WelcomeAuthenticatedComponent implements OnInit {
         name: fort.name,
         id: fort.id,
         external: false,
-        description: ''
+        description: fort.description
       };
       fortLinks.push(link);
     }

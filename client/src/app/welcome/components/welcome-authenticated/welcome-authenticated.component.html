@@ -12,12 +12,13 @@
       <div *ngFor="let fort of fortLinks">
         <ion-item *ngIf="!fort.external" routerLink="/submission" [queryParams]="{ fort: fort.name }" button detail>
           <!-- <ion-icon slot="start" color="secondary" name="musical-notes-outline"></ion-icon> -->
-          <ion-label>
+          <ion-label class="ion-text-wrap">
             <h1>{{ fort.name }}</h1>
+            <p>{{ fort.description }}</p>
           </ion-label>
         </ion-item>
         <ion-item *ngIf="fort.external" [href]="fort.url" target="_blank" button detail>
-          <ion-label>
+          <ion-label class="ion-text-wrap">
             <h1>{{ fort.name }}</h1>
             <p>{{ fort.description }}</p>
           </ion-label>

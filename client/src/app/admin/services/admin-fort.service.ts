@@ -7,6 +7,7 @@ import { Festival } from './admin-festival.service';
 export interface Fort {
   id: string;
   name: string;
+  description: string;
 }
 
 interface FortsApiResponse {
