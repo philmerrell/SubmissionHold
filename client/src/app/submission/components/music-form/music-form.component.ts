@@ -49,21 +49,28 @@ export class MusicFormComponent implements OnInit, OnChanges {
   async addFile(event) {
     if (event) {
       const result = event.target.files[0];
-      const blob = await this.getBlobFromFile(result);
-      this.imageDataUrl = await this.getDataUrl(result);
-      this.imageFileName = result.name;
-      const uuid = uuidv4();
 
-      this.submissionService.uploadAsset(
-        {
-          uuid,
-          mimeType: result.type,
-          festivalId: this.festival.id,
-          file: blob,
-          fileName: result.name
-        }
-      )
-      this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
+      if (result.size > 2097152) { 
+        alert("File is too big! Must be 2MB or less.");
+      } else {
+
+        const blob = await this.getBlobFromFile(result);
+        this.imageDataUrl = await this.getDataUrl(result);
+        this.imageFileName = result.name;
+        const uuid = uuidv4();
+  
+        this.submissionService.uploadAsset(
+          {
+            uuid,
+            mimeType: result.type,
+            festivalId: this.festival.id,
+            file: blob,
+            fileName: result.name
+          }
+        )
+        this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
+      }
+
     }
   }
 
