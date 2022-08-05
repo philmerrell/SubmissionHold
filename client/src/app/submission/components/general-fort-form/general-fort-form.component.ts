@@ -1,19 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 import { Festival } from '../../../admin/services/admin-festival.service';
 import { validateAllFormFields } from '../../../form-utils';
 import { SubmissionService } from '../../submission.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Submission } from '../../../admin/services/submission.service';
 
 @Component({
   selector: 'app-general-fort-form',
   templateUrl: './general-fort-form.component.html',
   styleUrls: ['./general-fort-form.component.scss'],
 })
-export class GeneralFortFormComponent implements OnInit {
+export class GeneralFortFormComponent implements OnInit, OnChanges {
   @Input() submissionPending: boolean;
   @Input() festival: Festival;
+  @Input() value: Submission;
   @Output() submit = new EventEmitter<any>();
   genres: string[];
   imageDataUrl;
@@ -26,8 +28,18 @@ export class GeneralFortFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
   ngOnInit() {
-    this.createSubmissionForm();
     this.states = this.submissionService.getStates();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.createSubmissionForm();
+    if(changes.value?.currentValue) {
+      this.setFormValue();
+      this.imageDataUrl = null;
+      this.imageFileName = null;
+    } else {
+      this.submissionForm.reset()
+    }
   }
 
   private createSubmissionForm() {
@@ -46,6 +58,15 @@ export class GeneralFortFormComponent implements OnInit {
       type: ['music', Validators.required],
       website: ['']
     });
+  }
+
+  private setFormValue() {
+    this.removeVideosFormControl(0);
+    for (let video of this.value.links.videos) {
+      this.addVideosFormControl();
+    }
+    this.submissionForm.addControl('id', new FormControl(''));
+    this.submissionForm.patchValue(this.value);
   }
 
   private createContactInfoFormGroup(): FormGroup {

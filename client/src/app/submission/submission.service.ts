@@ -1,22 +1,35 @@
 import { HttpBackend, HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Festival } from '../admin/services/admin-festival.service';
 import { Fort } from '../admin/services/admin-fort.service';
+import { Submission } from '../admin/services/submission.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubmissionService {
   httpUpload: HttpClient;
+  reloadMySubmissionsSubject: Subject<{ reload: boolean }> = new BehaviorSubject({ reload: false });
 
   constructor(private http: HttpClient, private handler: HttpBackend) {
     this.httpUpload = new HttpClient(this.handler);
   }
 
-  createSubmission(submission: any, fort: Fort, festival: Festival) {
-    return this.http.post(`${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions`, submission).toPromise();
+  async createSubmission(submission: any, fort: Fort, festival: Festival) {
+    const response = await this.http.post(`${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions`, submission).toPromise();
+    this.reloadMySubmissionsSubject.next({ reload: true });
+    return response;
+  }
+
+  getReloadMySubmissionsObservable() {
+    return this.reloadMySubmissionsSubject.asObservable();
+  }
+
+  getSubmission(festivalId: string, fortId: string, submissionId: string): Promise<Submission> {
+    return this.http.get<Submission>(`${environment.apiUrl}/festivals/${festivalId}/forts/${fortId}/submissions/${submissionId}`).toPromise();
   }
 
   getHealthCheck() {

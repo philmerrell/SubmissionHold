@@ -1,4 +1,4 @@
-<ion-list style="background: var(--ion-color-secondary)">
+<ion-list *ngIf="mySubmissionsRequestComplete" style="background: var(--ion-color-secondary)">
   <ion-item lines="none">
     <ion-label>
       <h1 class="list-header">My Submissions</h1>
@@ -7,10 +7,30 @@
       Create
     </ion-button>
   </ion-item>
-  <ion-item>
-    Edit submissions coming soon.
+  <ion-item *ngFor="let submission of submissions" (click)="editSubmission(submission)" button detail lines="none">
+    <ion-icon slot="start" name="document"></ion-icon>
+    <ion-label>
+      {{ submission.name }}
+    </ion-label>
   </ion-item>
-  <!-- <ion-item>
+  <ion-item *ngIf="!submissions.length" lines="none">
     You don't have any submissions yet.
-  </ion-item> -->
+  </ion-item>
+</ion-list>
+
+<ion-list *ngIf="!mySubmissionsRequestComplete" style="background: var(--ion-color-secondary)">
+  <ion-item lines="none">
+    <ion-label>
+      <h1 class="list-header">My Submissions</h1>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ion-item>
+  <ion-item>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ion-item>
+  <ion-item>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </ion-item>
 </ion-list>

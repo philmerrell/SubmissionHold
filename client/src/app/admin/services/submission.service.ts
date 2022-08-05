@@ -10,7 +10,23 @@ export interface SubmissionsApiResponse {
   submissions: []
 }
 
-export interface Submission {}
+export interface Submission {
+  city: string;
+  contactInfo: any;
+  country: string;
+  festivalId: string;
+  fortId: string;
+  genres: string[];
+  id: string;
+  image: string;
+  labels: any[];
+  links: any;
+  name: string;
+  state: string;
+  statement: string;
+  submissionDate: string;
+  website: string;
+}
 
 @Injectable({
   providedIn: 'root'

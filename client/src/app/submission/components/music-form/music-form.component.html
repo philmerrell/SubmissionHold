@@ -89,6 +89,7 @@
             <ion-item (click)="fileInput.click()" button detail="false">
               <ion-thumbnail slot="end">
                 <ion-img *ngIf="imageDataUrl" [src]="imageDataUrl"></ion-img>
+                <ion-img *ngIf="!imageDataUrl && submissionForm.get('image').value" [src]="submissionForm.get('image').value"></ion-img>
               </ion-thumbnail>
               <!-- <ion-icon slot="start" color="tertiary" size="large"></ion-icon> -->
               <ion-label [color]="validateControl('image', 'required') ? 'danger' : 'secondary'" position="stacked">
