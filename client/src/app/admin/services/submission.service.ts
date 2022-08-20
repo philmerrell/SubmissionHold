@@ -23,6 +23,7 @@ export interface Submission {
     relationship: string;
   };
   country: string;
+  description: string;
   festivalId: string;
   fortId: string;
   genres: string[];

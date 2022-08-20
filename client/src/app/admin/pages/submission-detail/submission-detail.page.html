@@ -63,7 +63,7 @@
             <h3>Videos</h3>
             <div *ngFor="let video of submission.links.videos">
               <iframe *ngIf="videoLinkType(video) === 'youtube'" width="100%" height="315" [src]="sanitize('https://www.youtube.com/embed/' + getYoutubeVideoId(video))" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              <iframe *ngIf="videoLinkType(video) === 'vimeo'" [src]="sanitize('https://player.vimeo.com/video/' + getVimeoVideoId(video) + '?h=b84b178583&color=1d5a6d" width="100%" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+              <!-- <iframe *ngIf="videoLinkType(video) === 'vimeo'" [src]="sanitize('https://player.vimeo.com/video/' + getVimeoVideoId(video) + '?h=b84b178583&color=1d5a6d')" width="100%" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe> -->
             </div>
           </div>
         </ion-col>
