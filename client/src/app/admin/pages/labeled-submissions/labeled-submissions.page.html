@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Label: {{ selectedLabel?.name }}</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button fill="outline">
+        Filter
+        <ion-icon slot="end" size="small" name="caret-down-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollY]="false">
+
+  <cdk-virtual-scroll-viewport itemSize="56" minBufferPx="900" maxBufferPx="1350" class="ion-content-scroll-host">
+    <ion-header mode="ios" collapse="condense">
+      <ion-toolbar color="light">
+        <ion-title size="large">Label: {{ selectedLabel?.name }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+
+    <app-submissions-loading  *ngIf="!submissionsResponseComplete"></app-submissions-loading>
+
+    <ion-card *ngIf="submissionsResponseComplete">
+      <ion-list>
+        <!-- <ion-item>
+          <ion-label><h2 style="font-weight: 600;">Select a label</h2></ion-label>
+          <ion-select (ionChange)="handleLabelChange($event)" [value]="selectedLabel" interface="popover" placeholder="Select a fort">
+            <ion-select-option *ngFor="let label of labels" [value]="label">{{ label.name }}</ion-select-option>
+          </ion-select>
+        </ion-item> -->
+        <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="submission.image"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h1>{{ submission.name }}</h1>
+            <p>{{ submission.category }}</p>
+          </ion-label>
+          <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
+        </ion-item>
+        <ion-item *ngIf="!submissions.length">
+          <ion-label>
+            <h1>There are no submissions labeled "{{ selectedLabel?.name }}".</h1>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreLabeledSubmissions($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card>
+  </cdk-virtual-scroll-viewport>
+
+</ion-content>
