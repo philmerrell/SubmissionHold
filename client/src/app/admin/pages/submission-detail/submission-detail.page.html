@@ -20,7 +20,6 @@
   </div>
 
   <div *ngIf="submissionRequestComplete" class="ion-padding">
-
     <ion-grid>
       <ion-row>
         <ion-col sizeXs="12" sizeSm="12" sizeMd="7">
@@ -37,6 +36,9 @@
             <span *ngFor="let genre of submission.genres">
               <ion-badge>{{ genre }}</ion-badge>&nbsp;
             </span> 
+          </p>
+          <p>
+            Date Submitted: {{ submission.submissionDate | date }}
           </p>
              
           <h3>Statement</h3>
@@ -70,7 +72,7 @@
             <ion-img [src]="submission.image" class="ion-hide-md-down"></ion-img>
           </ion-card>
 
-          <ion-card *ngIf="labelsRequestComplete">
+          <!-- <ion-card *ngIf="labelsRequestComplete">
             <ion-list>
               <ion-item lines="none">
                 <ion-select
@@ -83,7 +85,7 @@
                 </ion-select>
               </ion-item>
             </ion-list>
-          </ion-card>
+          </ion-card> -->
 
           <ion-card>
             <ion-item>

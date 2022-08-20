@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Submission } from './submission.service';
 
 export interface LabelsResponse {
   festivalId: string;
@@ -21,12 +20,22 @@ export interface LabelRequest {
   submissionIds: string[];
 }
 
+export interface LabeledSubmissionsResponse {
+  pageSize: string;
+  paginationKey: string;
+  submissions: []
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class LabelService {
   private reloadLabelsBehaviorSubject: BehaviorSubject<{ reload: boolean }> = new BehaviorSubject({ reload: false });
   constructor(private http: HttpClient) { }
+
+  addSubmissionToLabel(festivalId: string, labelRequest: LabelRequest) {
+    return this.http.post<Label>(`${environment.apiUrl}/festivals/${festivalId}/labels`, labelRequest).toPromise();
+  }
 
   getLabels(festivalId: string): Promise<LabelsResponse> {
     return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=100`).toPromise();
@@ -36,9 +45,9 @@ export class LabelService {
     return this.http.post<Label>(`${environment.apiUrl}/festivals/${festivalId}/labels`, labelRequest).toPromise();
   }
 
-  getSubmissionsWithLabel(festivalId: string, labelId: string, paginationKey?: string): Promise<Submission[]> {
+  getSubmissionsWithLabel(festivalId: string, labelId: string, paginationKey?: string): Promise<LabeledSubmissionsResponse> {
     const url = paginationKey ? `${environment.apiUrl}/festivals/${festivalId}/labels/${labelId}?pageSize=100&paginationKey=${paginationKey}` : `${environment.apiUrl}/festivals/${festivalId}/labels/${labelId}?pageSize=100`
-    return this.http.get<Submission[]>(url).toPromise();
+    return this.http.get<LabeledSubmissionsResponse>(url).toPromise();
   }
 
   deleteLabel(festivalId: string, labelId: string): Promise<void> {

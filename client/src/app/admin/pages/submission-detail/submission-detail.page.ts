@@ -20,7 +20,7 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
   labels: Label[];
   labelsRequestComplete: boolean;
   labelSubscription: Subscription;
-  submission;
+  submission: Submission;
   submissionRequestComplete: boolean;
 
   constructor(
@@ -78,17 +78,36 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     return (match&&match[7].length==11)? match[7] : false;
   }
 
+  getVimeoVideoId(url: string) {
+    // Look for a string with 'vimeo', then whatever, then a
+    // forward slash and a group of digits.
+    var match = /vimeo.*\/(\d+)/i.exec( url );
+
+    // If the match isn't null (i.e. it matched)
+    if ( match ) {
+      // The grouped/matched digits from the regex
+      return match[1];
+    }
+  }
+
   handleLabelChange(event) {
     const labels = event.detail.value;
-    if (labels.length) {
-      // save for each label....
-      console.log(labels);
+    for(let label of labels) {
+      this.labelService.createLabel(this.festival.id, {
+        name: label.name,
+        submissionIds: [this.submission.id]
+      })
     }
   }
 
   videoLinkType(url: string) {
-    if (url.indexOf('youtube.com') !== -1 ) {
-      return 'youtube';
+    if (url) {
+      if (url.indexOf('youtube.com') !== -1 || url.indexOf('youtu.be') !== -1) {
+        return 'youtube';
+      }
+      if (url.indexOf('vimeo.com') !== -1) {
+        return 'vimeo'
+      }
     }
   }
 

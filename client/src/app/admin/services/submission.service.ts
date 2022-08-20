@@ -12,7 +12,16 @@ export interface SubmissionsApiResponse {
 
 export interface Submission {
   city: string;
-  contactInfo: any;
+  contactInfo: {
+    agentContact: string;
+    email: string;
+    labelContact: string;
+    managementContact: string;
+    name: string;
+    phoneNumber: string;
+    publicityContact: string;
+    relationship: string;
+  };
   country: string;
   festivalId: string;
   fortId: string;
@@ -20,7 +29,17 @@ export interface Submission {
   id: string;
   image: string;
   labels: any[];
-  links: any;
+  links: {
+    appleMusic: string;
+    bandcamp: string;
+    facebook: string;
+    instagram: string;
+    soundcloud: string;
+    spotify: string;
+    tikTok: string;
+    twitter: string;
+    videos: any[]
+  };
   name: string;
   state: string;
   statement: string;

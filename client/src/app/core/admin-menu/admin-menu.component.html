@@ -34,7 +34,7 @@
   <ion-button *ngIf="user.claims.isAdmin" (click)="presentCreateLabelAlert()" [disabled]="!labelsRequestComplete" slot="end" fill="solid">Create</ion-button>
 </ion-item>
 <ion-list *ngIf="labelsRequestComplete" id="labels-list">
-  <ion-item *ngFor="let label of labelResponse.labels" lines="none">
+  <ion-item *ngFor="let label of labelResponse.labels" [routerLink]="['admin', 'labeled-submissions']" [queryParams]="{label: label.id}" lines="none">
     <ion-icon slot="start" name="bookmark-outline"></ion-icon>
     <ion-label>{{ label.name }}</ion-label>
   </ion-item>

@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./admin/pages/submission-detail/submission-detail.module').then( m => m.SubmissionDetailPageModule)
   },
   {
+    path: 'admin/labeled-submissions',
+    loadChildren: () => import('./admin/pages/labeled-submissions/labeled-submissions.module').then( m => m.LabeledSubmissionsPageModule)
+  },
+  {
     path: 'admin/my-votes',
     loadChildren: () => import('./admin/pages/my-votes/my-votes.module').then( m => m.MyVotesPageModule)
   },
