@@ -24,6 +24,7 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
   showRequiredFieldsMissingWarning: boolean;
   states: { label: string, value: string }[];
   submissionForm: FormGroup;
+  isInternational: any;
   
   constructor(private formBuilder: FormBuilder, private submissionService: SubmissionService) { }
 
@@ -33,6 +34,7 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.createSubmissionForm();
+    this.subscribeToIsInternationalChanges();
     if(changes.value?.currentValue) {
       this.setFormValue();
       this.imageDataUrl = null;
@@ -55,7 +57,6 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
       links: this.createLinksFormGroup(),
       statement: ['', Validators.required],
       contactInfo: this.createContactInfoFormGroup(),
-      type: ['music', Validators.required],
       website: ['']
     });
   }
@@ -66,7 +67,11 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
       this.addVideosFormControl();
     }
     this.submissionForm.addControl('id', new FormControl(''));
-    this.submissionForm.patchValue(this.value);
+    if (this.value.country !== 'United States') {
+      this.submissionForm.controls.isInternational.setValue(true);
+    }
+    this.submissionForm.patchValue(this.value, { emitEvent: true });
+    console.log(this.value);
   }
 
   private createContactInfoFormGroup(): FormGroup {
@@ -138,7 +143,7 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
         this.imageFileName = result.name;
         const uuid = uuidv4();
 
-        this.submissionService.uploadAsset(
+        await this.submissionService.uploadAsset(
           {
             uuid,
             mimeType: result.type,
@@ -148,24 +153,8 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
           }
         )
         this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
+        this.imageDataUrl = false;
       }
-    }
-  }
-
-  getIsInternational() {
-    return this.submissionForm.get('isInternational').value
-  }
-
-  handleIsInternational(event) {
-    const isInternational = event.detail.checked;
-    if (isInternational) {
-      this.submissionForm.get('country').setValue('');
-      this.submissionForm.get('state').setValue('');
-      this.submissionForm.get('state').clearValidators();
-      this.submissionForm.get('state').updateValueAndValidity();
-    } else {
-      this.submissionForm.get('state').setValidators(Validators.required);
-      this.submissionForm.get('country').setValue('United States');
     }
   }
 
@@ -178,7 +167,6 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
   }
 
   async submitForm() {
-    console.log(this.submissionForm);
     if (this.submissionForm.valid) {
       const submission = this.submissionForm.value;
       this.removeEmptyVideoLinks(submission);
@@ -202,6 +190,26 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
   getVideosFormArray(form: FormGroup) {
     const control =  form.get('links.videos')['controls']
     return control;
+  }
+
+  private subscribeToIsInternationalChanges() {
+    this.submissionForm.controls.isInternational.valueChanges.subscribe(result => {
+      this.handleIsInternational(result);
+    });
+  }
+
+  handleIsInternational(isInternational) {
+    this.isInternational = isInternational;
+    if (isInternational) {
+      this.submissionForm.get('country').setValue('');
+      this.submissionForm.get('state').setValue('');
+      this.submissionForm.get('state').clearValidators();
+      this.submissionForm.get('state').updateValueAndValidity();
+    } else {
+      this.submissionForm.get('state').setValidators(Validators.required);
+      this.submissionForm.get('country').setValue('United States');
+      this.submissionForm.get('state').updateValueAndValidity();
+    }
   }
 
 }

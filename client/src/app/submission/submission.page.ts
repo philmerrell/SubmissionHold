@@ -45,7 +45,6 @@ export class SubmissionPage implements OnInit {
     this.submissionPending = true;
     const fort = await this.getFortIdFromName(this.fort);
     await this.submissionService.createSubmission(submission, fort, this.festival);
-    // TODO: observable to reload mySubmissions
     this.submissionPending = false;
     this.router.navigateByUrl('/submission-success');
   }

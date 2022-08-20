@@ -1,21 +1,3 @@
-<!-- <ion-card *ngIf="!showForm">
-  <ion-card-header>
-    <ion-card-title>
-      <h2>Submit your music project for a chance to perform at Treefort Music Fest 2022!</h2>
-    </ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <p>In this submission form, tell us about yourself/your band, send us links to your music, and upload your best song. Submissions for Treefort 2022 close on {{ festival.endDateTime | date }}</p>
-    <p>&nbsp;</p>
-    <p>All music artists accepted to perform at Treefort 2023 will be offered at least one 30-40 minute set at an official Treefort venue over the 5 day span of the festival (March 22 - 26, 2023). All accepted artists will receive a minimum of $100 cash (additional travel reimbursement negotiable), 5-day festival wristbands for each band member ($250 value per wristband), access to Treefort Artist Hospitality Lounge, 3 guest list spots to the specific show that you play, eternal glory, plus other Treefort good times and perks like drink tickets, bag of goodies and more!</p>
-    <p>&nbsp;</p>
-    <p><b>RADIUS CLAUSE: </b> All artists confirmed for Treefort Music Fest will be asked to not play any other Boise area (100 mile radius) shows in March 2023 and to not announce any other Boise area shows in April 2023 and beyond until after their set at the festival. We are open to exceptions to this request, but ask that they are discussed with us before confirming your appearance. <i>Please note that if accepted, the applicant will be notified and sent a new form to collect finalized assets.</i></p>
-
-    <div class="ion-padding ion-text-end">
-      <ion-button (click)="showForm = true;" size="large" fill="solid" slot="end">Let's Do This! <ion-icon slot="end" name="chevron-forward"></ion-icon></ion-button>
-    </div>
-  </ion-card-content>
-</ion-card> -->
 
 <div>
   <div [formGroup]="submissionForm">
@@ -111,7 +93,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-item *ngIf="!getIsInternational()" class="state-select">
+            <ion-item *ngIf="!isInternational" class="state-select">
               <ion-label position="stacked" [color]="validateLocationControl('state', 'required') ? 'danger' : 'secondary'">Select a State
               </ion-label>
               <ion-select formControlName="state">
@@ -124,7 +106,7 @@
               State is required.
             </ion-text>
   
-            <ion-item *ngIf="getIsInternational()">
+            <ion-item *ngIf="isInternational">
               <ion-label [color]="validateLocationControl('country', 'required') ? 'danger' : 'secondary'"
                 position="stacked">Country</ion-label>
               <ion-input formControlName="country"></ion-input>
@@ -138,7 +120,7 @@
           <ion-col>
             <ion-item>
               <ion-label>Is This a Non U.S. Based Artist?</ion-label>
-              <ion-checkbox formControlName="isInternational" (ionChange)="handleIsInternational($event)">
+              <ion-checkbox formControlName="isInternational">
               </ion-checkbox>
             </ion-item>
           </ion-col>
