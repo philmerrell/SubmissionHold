@@ -58,6 +58,7 @@ export class MusicFormComponent implements OnInit, OnChanges {
         this.imageDataUrl = await this.getDataUrl(result);
         this.imageFileName = result.name;
         const uuid = uuidv4();
+        const name = uuidv4();
   
         this.submissionService.uploadAsset(
           {
@@ -65,10 +66,10 @@ export class MusicFormComponent implements OnInit, OnChanges {
             mimeType: result.type,
             festivalId: this.festival.id,
             file: blob,
-            fileName: result.name
+            fileName: name
           }
         )
-        this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
+        this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${name}`);
       }
 
     }

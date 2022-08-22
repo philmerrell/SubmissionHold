@@ -142,6 +142,7 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
         this.imageDataUrl = await this.getDataUrl(result);
         this.imageFileName = result.name;
         const uuid = uuidv4();
+        const name = uuidv4();
 
         await this.submissionService.uploadAsset(
           {
@@ -149,11 +150,11 @@ export class GeneralFortFormComponent implements OnInit, OnChanges {
             mimeType: result.type,
             festivalId: this.festival.id,
             file: blob,
-            fileName: result.name
+            fileName: name
           }
         )
-        this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${this.imageFileName}`);
-        this.imageDataUrl = false;
+        this.submissionForm.get('image').setValue(`${environment.s3ImageBucketUrl}/${this.festival.id}/${uuid}/${name}`);
+        // this.imageDataUrl = false;
       }
     }
   }
