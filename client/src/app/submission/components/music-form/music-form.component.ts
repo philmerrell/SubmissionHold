@@ -49,7 +49,6 @@ export class MusicFormComponent implements OnInit, OnChanges {
   async addFile(event) {
     if (event) {
       const result = event.target.files[0];
-
       if (result.size > 2097152) { 
         alert("File is too big! Must be 2MB or less.");
       } else {

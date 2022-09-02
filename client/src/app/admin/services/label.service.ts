@@ -13,6 +13,7 @@ export interface LabelsResponse {
 export interface Label {
   id: string;
   name: string;
+  isChecked?: boolean;
 }
 
 export interface LabelRequest {
@@ -41,8 +42,12 @@ export class LabelService {
     return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=100`).toPromise();
   }
 
-  createLabel(festivalId: string, labelRequest: LabelRequest): Promise<Label> {
-    return this.http.post<Label>(`${environment.apiUrl}/festivals/${festivalId}/labels`, labelRequest).toPromise();
+  async createLabel(festivalId: string, labelRequest: LabelRequest): Promise<Label> {
+    const response = await this.http.post<Label>(`${environment.apiUrl}/festivals/${festivalId}/labels`, labelRequest).toPromise();
+    if (!labelRequest.submissionIds.length) {
+      this.setReloadLabels(true);
+    }
+    return response;
   }
 
   getSubmissionsWithLabel(festivalId: string, labelId: string, paginationKey?: string): Promise<LabeledSubmissionsResponse> {
@@ -50,8 +55,9 @@ export class LabelService {
     return this.http.get<LabeledSubmissionsResponse>(url).toPromise();
   }
 
-  deleteLabel(festivalId: string, labelId: string): Promise<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/festivals/${festivalId}/labels/${labelId}`).toPromise();
+  deleteLabel(festivalId: string, labelId: string, submissionId?: string): Promise<void> {
+    const queryParam = submissionId ? `?submissionId=${submissionId}` : '';
+    return this.http.delete<void>(`${environment.apiUrl}/festivals/${festivalId}/labels/${labelId}${queryParam}`).toPromise();
   }
 
   setReloadLabels(reload: boolean) {

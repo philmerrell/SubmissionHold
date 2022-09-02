@@ -73,20 +73,7 @@
             <ion-img [src]="submission.image" class="ion-hide-md-down"></ion-img>
           </ion-card>
 
-          <!-- <ion-card *ngIf="labelsRequestComplete">
-            <ion-list>
-              <ion-item lines="none">
-                <ion-select
-                  [value]="labels"
-                  [compareWith]="compareLabelWith"
-                  placeholder="Labels"
-                  (ionChange)="handleLabelChange($event)"
-                  [multiple]="true">
-                  <ion-select-option *ngFor="let label of labelResponse.labels" [value]="label">{{ label.name }}</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-list>
-          </ion-card> -->
+          
 
           <ion-card>
             <ion-item>
@@ -170,6 +157,30 @@
                 </ion-label>
               </ion-item>
             </ion-list>
+          </ion-card>
+
+          <ion-card *ngIf="labelsRequestComplete">
+            <ion-list>
+              <ion-item>
+                <h3>Labels</h3>
+              </ion-item>
+              <ion-item *ngFor="let label of labelResponse.labels">
+                <ion-label>{{ label.name }}</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="label.isChecked" (ionChange)="handleLabelChange($event, label)"></ion-checkbox>
+              </ion-item>
+            </ion-list>
+            <!-- <ion-list>
+              <ion-item lines="none">
+                <ion-select
+                  [value]="labels"
+                  [compareWith]="compareLabelWith"
+                  placeholder="Labels"
+                  (ionChange)="handleLabelChange($event)"
+                  [multiple]="true">
+                  <ion-select-option *ngFor="let label of labelResponse.labels" [value]="label">{{ label.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list> -->
           </ion-card>
           
         </ion-col>

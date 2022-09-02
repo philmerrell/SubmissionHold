@@ -63,7 +63,15 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
 
   async getLabels() {
     this.labelResponse = await this.labelService.getLabels(this.festival.id);
+    this.markLabelsAsChecked(this.labelResponse.labels);
     this.labelsRequestComplete = true;
+  }
+
+  markLabelsAsChecked(labels: Label[]) {
+    for (let label of labels) {
+      const found = this.submission.labels.findIndex(l => l.id == label.id);
+      label.isChecked = found >= 0;
+    }
   }
 
   getSpotifyArtistId(url: string) {
@@ -90,13 +98,15 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  handleLabelChange(event) {
-    const labels = event.detail.value;
-    for(let label of labels) {
+  handleLabelChange(event, label: Label ) {
+    const isChecked = event.detail.checked;
+    if (isChecked) {
       this.labelService.createLabel(this.festival.id, {
         name: label.name,
         submissionIds: [this.submission.id]
-      })
+      });
+    } else {
+      this.labelService.deleteLabel(this.festival.id, label.id, this.submission.id);
     }
   }
 

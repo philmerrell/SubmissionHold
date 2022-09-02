@@ -49,6 +49,7 @@ export class MySubmissionsComponent implements OnInit {
 
   async getForts(festival) {
     this.forts = await this.fortService.getForts(festival.id);
+    console.log(this.forts);
     this.fortsRequestComplete = true;
   }
 
@@ -59,7 +60,9 @@ export class MySubmissionsComponent implements OnInit {
   }
 
   editSubmission(submission) {
+    console.log(submission);
     const fort = this.forts.find(f => f.id === submission.fortId);
+    console.log(fort)
     this.router.navigate(['submission'], { queryParams: {'fort': fort.name, 'id': submission.id }})
   }
 
