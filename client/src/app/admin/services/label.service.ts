@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface LabelsResponse {
@@ -39,7 +40,14 @@ export class LabelService {
   }
 
   getLabels(festivalId: string): Promise<LabelsResponse> {
-    return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=100`).toPromise();
+    return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=100`)
+      .pipe(
+        map((response: LabelsResponse) => {
+          response.labels.sort((a, b) => a.name > b.name ? 1 : -1);
+          return response;
+        })
+      )
+      .toPromise();
   }
 
   async createLabel(festivalId: string, labelRequest: LabelRequest): Promise<Label> {
