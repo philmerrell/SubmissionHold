@@ -2,10 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from '../../../auth/user.service';
 import { AdminFestivalService, Festival } from '../../services/admin-festival.service';
 import { AdminFortService } from '../../services/admin-fort.service';
 import { Label, LabelService, LabelsResponse } from '../../services/label.service';
 import { Submission, SubmissionService } from '../../services/submission.service';
+import { UserService } from '../../../auth/user.service';
+import { VoteService } from '../../services/vote.service';
 
 @Component({
   selector: 'app-submission-detail',
@@ -22,6 +25,10 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
   labelSubscription: Subscription;
   submission: Submission;
   submissionRequestComplete: boolean;
+  user: User;
+  userSubscription: Subscription;
+  voteRequestComplete: true;
+  voteValue: number;
 
   constructor(
     private festivalService: AdminFestivalService,
@@ -29,19 +36,27 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     private labelService: LabelService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private submissionService: SubmissionService) { }
+    private submissionService: SubmissionService,
+    private userService: UserService,
+    private voteService: VoteService) { }
 
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.subscribeToLabelReload();
+    this.subscribeToUserObservable();
     await this.getActiveFestival();
     await this.getSubmission();
+    this.getVote();
     this.getLabels();
   }
 
   ngOnDestroy(): void {
     if(this.labelSubscription) {
       this.labelSubscription.unsubscribe();
+    }
+
+    if(this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 
@@ -65,6 +80,14 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     this.labelResponse = await this.labelService.getLabels(this.festival.id);
     this.markLabelsAsChecked(this.labelResponse.labels);
     this.labelsRequestComplete = true;
+  }
+
+  async getVote() {
+    const vote = await this.voteService.findVote(this.submission.id);
+    this.voteRequestComplete = true;
+    if (vote) {
+      this.voteValue = vote.value;
+    }
   }
 
   markLabelsAsChecked(labels: Label[]) {
@@ -110,6 +133,12 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     }
   }
 
+  handleVote(event) {
+    const vote = event.detail.value;
+    this.voteService.submitVote(this.submission.id, vote);
+    this.submission.voted = true;
+  }
+
   videoLinkType(url: string) {
     if (url) {
       if (url.indexOf('youtube.com') !== -1 || url.indexOf('youtu.be') !== -1) {
@@ -140,6 +169,10 @@ export class SubmissionDetailPage implements OnInit, OnDestroy {
     }
 
     return o1.id === o2.id;
+  }
+
+  private subscribeToUserObservable() {
+    this.userSubscription = this.userService.getUserObservable().subscribe((user: User ) => this.user = user);
   }
 
 }

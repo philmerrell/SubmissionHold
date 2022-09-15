@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Festival } from './admin-festival.service';
 import { Fort } from './admin-fort.service';
+import { VoteService } from './vote.service';
 
 export interface SubmissionsApiResponse {
   pageSize: string;
   paginationKey: string;
-  submissions: []
+  submissions: Submission[]
 }
 
 export interface Submission {
@@ -46,6 +48,7 @@ export interface Submission {
   statement: string;
   submissionDate: string;
   website: string;
+  voted?: boolean;
 }
 
 @Injectable({
@@ -55,8 +58,7 @@ export class SubmissionService {
   submissionsPaginationKey: string;
   constructor(private http: HttpClient) { }
 
-  getSubmissions(festival: Festival, fort: Fort, paginationKey?: string): Promise<SubmissionsApiResponse>{
-    // `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions?pageSize=100`
+  async getSubmissions(festival: Festival, fort: Fort, paginationKey?: string): Promise<SubmissionsApiResponse>{
     const url = paginationKey ? `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions?pageSize=100&paginationKey=${paginationKey}` : `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/submissions?pageSize=100`;
     return this.http.get<SubmissionsApiResponse>(url).toPromise();
   }

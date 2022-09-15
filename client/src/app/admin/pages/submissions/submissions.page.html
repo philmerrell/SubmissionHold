@@ -37,11 +37,11 @@
           <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>
           </ion-thumbnail>
-          <ion-label>
+          <ion-label [color]="submission.voted ? 'medium' : 'dark'">
             <h1>{{ submission.name }}</h1>
             <p>{{ submission.category }}</p>
           </ion-label>
-          <ion-badge slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
+          <ion-badge [color]="submission.voted ? 'medium' : 'primary'" slot="end">{{ submission.city }}, {{ submission.state }}</ion-badge>
         </ion-item>
         <ion-item *ngIf="!submissions.length">
           <ion-label>
