@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdminFestivalService, Festival } from '../../services/admin-festival.service';
 import { Label, LabeledSubmissionsResponse, LabelService, LabelsResponse } from '../../services/label.service';
 import { Submission } from '../../services/submission.service';
+import { VoteService } from '../../services/vote.service';
 
 @Component({
   selector: 'app-labeled-submissions',
@@ -22,15 +23,28 @@ export class LabeledSubmissionsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private festivalService: AdminFestivalService,
-    private labelService: LabelService) { }
+    private labelService: LabelService,
+    private voteService: VoteService) { }
 
   async ngOnInit() {
     await this.getActiveFestival();
-    this.route.queryParamMap.subscribe((query: any) => {
+    this.route.queryParamMap.subscribe(async (query: any) => {
       const labelId = query.params['label'];
+      await this.getVotes();
       this.setSelectedLabel(labelId);
       this.getSubmissions(labelId);
     });
+  }
+
+  async ionViewDidEnter() {
+    this.markVoted();
+  }
+
+  async markVoted() {
+    const votes = await this.getVotes();
+    for (let submission of this.submissions) {
+      submission.voted = votes.includes(submission.id);
+    }
   }
 
   async getActiveFestival() {
@@ -48,6 +62,12 @@ export class LabeledSubmissionsPage implements OnInit {
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
     this.submissionsResponseComplete = true;
+    this.markVoted();
+  }
+
+  async getVotes() {
+    const votes = await this.voteService.getVotes();
+    return votes.map(v => v.submissionId);
   }
 
   async getMoreSubmissions(event) {
@@ -59,6 +79,7 @@ export class LabeledSubmissionsPage implements OnInit {
       this.submissionsResponse = await this.labelService.getSubmissionsWithLabel(this.festival.id, this.selectedLabel.id, this.paginationKey);
       this.paginationKey = this.submissionsResponse.paginationKey;
       this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
+      this.markVoted();
       event.target.complete();
     }
 

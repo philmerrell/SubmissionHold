@@ -27,9 +27,10 @@ export class VoteService {
 
   getVotes(): Promise<Vote[]> {
     if (!this.votes) {
-      return this.http.get<Vote[]>(`${environment.apiUrl}/votes`).pipe(
+      const votes = this.http.get<Vote[]>(`${environment.apiUrl}/votes`).pipe(
         tap(response => this.votes = response)
       ).toPromise();
+      return votes;
     } else {
       return Promise.resolve(this.votes);
     }
