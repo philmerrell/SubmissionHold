@@ -15,7 +15,7 @@
 
 <ion-content [fullscreen]="true" [scrollY]="false">
 
-  <cdk-virtual-scroll-viewport #viewPort itemSize="56" minBufferPx="900" maxBufferPx="1350" class="ion-content-scroll-host">
+  <!-- <cdk-virtual-scroll-viewport #viewPort temSize="56" minBufferPx="900" maxBufferPx="1350" class="ion-content-scroll-host"> -->
     <ion-header mode="ios" collapse="condense">
       <ion-toolbar color="light">
         <ion-title size="large">Submissions</ion-title>
@@ -33,7 +33,7 @@
             <ion-select-option *ngFor="let fort of forts" [value]="fort">{{ fort.name }}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item *cdkVirtualFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
+        <ion-item *ngFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
           <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>
           </ion-thumbnail>
@@ -55,6 +55,6 @@
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-card>
-  </cdk-virtual-scroll-viewport>
+  <!-- </cdk-virtual-scroll-viewport> -->
 
 </ion-content>
