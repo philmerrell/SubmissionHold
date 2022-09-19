@@ -11,7 +11,7 @@ import { VoteService } from '../../services/vote.service';
   styleUrls: ['./submissions.page.scss'],
 })
 export class SubmissionsPage implements OnInit {
-  @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
+  // @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
   festival: Festival;
   forts = [];
   selectedFort: Fort;
@@ -32,7 +32,7 @@ export class SubmissionsPage implements OnInit {
     this.getSubmissions(this.forts[0]);
   }
 
-  updateViewport(): void { setTimeout(() => { this.viewPort.checkViewportSize(); }); }
+  // updateViewport(): void { setTimeout(() => { this.viewPort.checkViewportSize(); }); }
 
   async getActiveFestival() {
     this.festival = await this.festivalService.getActiveFestival();
@@ -46,7 +46,7 @@ export class SubmissionsPage implements OnInit {
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
     this.submissionsResponseComplete = true;
-    this.updateViewport();
+    // this.updateViewport();
   }
 
   async getVotes() {
