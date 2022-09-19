@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminFestivalService, Festival } from '../../services/admin-festival.service';
 import { AdminFortService, Fort } from '../../services/admin-fort.service';
 import { SubmissionsApiResponse, SubmissionService } from '../../services/submission.service';
@@ -10,6 +11,7 @@ import { VoteService } from '../../services/vote.service';
   styleUrls: ['./submissions.page.scss'],
 })
 export class SubmissionsPage implements OnInit {
+  @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
   festival: Festival;
   forts = [];
   selectedFort: Fort;
@@ -31,15 +33,10 @@ export class SubmissionsPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    // this.markVoted();
+    this.updateViewport();
   }
 
-  // async markVoted() {
-  //   const votes = await this.getVotes();
-  //   for (let submission of this.submissions) {
-  //     submission.voted = votes.includes(submission.id);
-  //   }
-  // }
+  updateViewport(): void { setTimeout(() => { this.viewPort.checkViewportSize(); }); }
 
   async getActiveFestival() {
     this.festival = await this.festivalService.getActiveFestival();
@@ -52,7 +49,6 @@ export class SubmissionsPage implements OnInit {
     this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, fort);
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
-    // this.markVoted();
     this.submissionsResponseComplete = true;
   }
 
@@ -70,7 +66,6 @@ export class SubmissionsPage implements OnInit {
       this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0], this.paginationKey);
       this.paginationKey = this.submissionsResponse.paginationKey;
       this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
-      // this.markVoted();
       event.target.complete();
     }
 
@@ -81,7 +76,6 @@ export class SubmissionsPage implements OnInit {
     if (fort) {
       this.selectedFort = fort;
       this.getSubmissions(fort);
-
     }
   }
 
