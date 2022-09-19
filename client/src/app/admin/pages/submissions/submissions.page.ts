@@ -31,15 +31,15 @@ export class SubmissionsPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    this.markVoted();
+    // this.markVoted();
   }
 
-  async markVoted() {
-    const votes = await this.getVotes();
-    for (let submission of this.submissions) {
-      submission.voted = votes.includes(submission.id);
-    }
-  }
+  // async markVoted() {
+  //   const votes = await this.getVotes();
+  //   for (let submission of this.submissions) {
+  //     submission.voted = votes.includes(submission.id);
+  //   }
+  // }
 
   async getActiveFestival() {
     this.festival = await this.festivalService.getActiveFestival();
@@ -52,7 +52,7 @@ export class SubmissionsPage implements OnInit {
     this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, fort);
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
-    this.markVoted();
+    // this.markVoted();
     this.submissionsResponseComplete = true;
   }
 
@@ -70,7 +70,7 @@ export class SubmissionsPage implements OnInit {
       this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0], this.paginationKey);
       this.paginationKey = this.submissionsResponse.paginationKey;
       this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
-      this.markVoted();
+      // this.markVoted();
       event.target.complete();
     }
 
