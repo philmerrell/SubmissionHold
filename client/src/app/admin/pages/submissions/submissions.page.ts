@@ -52,8 +52,8 @@ export class SubmissionsPage implements OnInit {
     this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, fort);
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
-    this.submissionsResponseComplete = true;
     this.markVoted();
+    this.submissionsResponseComplete = true;
   }
 
   async getVotes() {
@@ -81,6 +81,7 @@ export class SubmissionsPage implements OnInit {
     if (fort) {
       this.selectedFort = fort;
       this.getSubmissions(fort);
+
     }
   }
 
