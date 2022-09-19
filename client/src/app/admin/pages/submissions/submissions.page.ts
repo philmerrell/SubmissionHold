@@ -32,10 +32,6 @@ export class SubmissionsPage implements OnInit {
     this.getSubmissions(this.forts[0]);
   }
 
-  async ionViewDidEnter() {
-    this.updateViewport();
-  }
-
   updateViewport(): void { setTimeout(() => { this.viewPort.checkViewportSize(); }); }
 
   async getActiveFestival() {
@@ -50,6 +46,7 @@ export class SubmissionsPage implements OnInit {
     this.submissions = this.submissionsResponse.submissions;
     this.paginationKey = this.submissionsResponse.paginationKey;
     this.submissionsResponseComplete = true;
+    this.updateViewport();
   }
 
   async getVotes() {
