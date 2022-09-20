@@ -34,9 +34,9 @@
           </ion-select>
         </ion-item>
         <ion-item *ngFor="let submission of submissions" [routerLink]="'/admin/submissions/' + submission.id" button detail>
-          <ion-thumbnail slot="start">
+          <!-- <ion-thumbnail slot="start">
             <ion-img [src]="submission.image"></ion-img>
-          </ion-thumbnail>
+          </ion-thumbnail> -->
           <ion-label [color]="submission.voted ? 'medium' : 'dark'">
             <h1>{{ submission.name }}</h1>
             <p>{{ submission.category }}</p>
