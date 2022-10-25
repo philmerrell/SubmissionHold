@@ -40,7 +40,7 @@ export class LabelService {
   }
 
   getLabels(festivalId: string): Promise<LabelsResponse> {
-    return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=100`)
+    return this.http.get<LabelsResponse>(`${environment.apiUrl}/festivals/${festivalId}/labels?pageSize=200`)
       .pipe(
         map((response: LabelsResponse) => {
           response.labels.sort((a, b) => a.name > b.name ? 1 : -1);
