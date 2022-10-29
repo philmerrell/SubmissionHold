@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Vote Tally</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-header mode="ios" collapse="condense">
+      <ion-toolbar color="light">
+        <ion-title size="large">Vote Tally</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+
+    <app-submissions-loading  *ngIf="!voteTallyResponseComplete"></app-submissions-loading>
+
+    <ion-card *ngIf="voteTallyResponseComplete">
+      <ion-list>
+        <ion-item>
+          <ion-label><h2 style="font-weight: 600;">Select a fort</h2></ion-label>
+          <ion-select (ionChange)="handleFortChange($event)" [value]="selectedFort" interface="popover" placeholder="Select a fort">
+            <ion-select-option *ngFor="let fort of forts" [value]="fort">{{ fort.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngFor="let submission of tally">
+          <ion-label>
+            <h2>{{ submission.name }}</h2>
+            <h5>{{ submission.city }}, {{ submission.state }}</h5>
+            <p>Number of votes: {{ submission.numberOfVotes }}</p>
+          </ion-label>
+          <ion-badge slot="end">{{ submission.averageScore }}</ion-badge>
+        </ion-item>
+
+        <ion-item *ngIf="voteTallyResponseComplete && !tally.length">
+          <ion-label>
+            There are no results for {{ selectedFort.name }} yet.
+          </ion-label>
+        </ion-item>
+
+      </ion-list>
+      <ion-infinite-scroll threshold="200px" (ionInfinite)="getMoreVoteTally($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="crescent">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card>
+</ion-content>

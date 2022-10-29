@@ -37,6 +37,10 @@ const routes: Routes = [
     loadChildren: () => import('./admin/pages/my-votes/my-votes.module').then( m => m.MyVotesPageModule)
   },
   {
+    path: 'admin/vote-tally',
+    loadChildren: () => import('./admin/pages/vote-tally/vote-tally.module').then( m => m.VoteTallyPageModule)
+  },
+  {
     path: 'submission',
     loadChildren: () => import('./submission/submission.module').then( m => m.SubmissionPageModule),
     canLoad: [ AuthGuard ]

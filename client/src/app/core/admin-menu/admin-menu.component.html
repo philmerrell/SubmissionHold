@@ -17,6 +17,10 @@
     <ion-icon slot="start" name="archive-outline"></ion-icon>
     <ion-label>Archived</ion-label>
   </ion-item> -->
+  <ion-item *ngIf="user.claims.isAdmin" routerDirection="root" routerLink="/admin/vote-tally" lines="none" detail="false" routerLinkActive="selected">
+    <ion-icon slot="start" name="ticket-outline"></ion-icon>
+    <ion-label>Vote Tally</ion-label>
+  </ion-item>
   <ion-item *ngIf="user.claims.isAdmin" routerDirection="root" routerLink="/admin/users" lines="none" detail="false" routerLinkActive="selected">
     <ion-icon slot="start" name="people-outline"></ion-icon>
     <ion-label>Users</ion-label>

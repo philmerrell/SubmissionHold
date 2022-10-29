@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Festival } from './admin-festival.service';
+import { Fort } from './admin-fort.service';
 
 interface Vote {
   submissionId: string;
@@ -39,6 +41,11 @@ export class VoteService {
   async findVote(submissionId: string) {
     const votes = await this.getVotes();
     return votes.find(v => v.submissionId === submissionId);
+  }
+
+  getVoteTally(festival: Festival, fort: Fort, paginationKey?: string) {
+    const url = paginationKey ? `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100&paginationKey=${paginationKey}` : `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100`;
+    return this.http.get<any>(url).toPromise();
   }
 
 }
