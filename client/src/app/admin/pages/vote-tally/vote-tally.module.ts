@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VoteTallyPageRoutingModule } from './vote-tally-routing.module';
 
 import { VoteTallyPage } from './vote-tally.page';
+import { SubmissionsLoadingComponent } from './submissions-loading/submissions-loading.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { VoteTallyPage } from './vote-tally.page';
     IonicModule,
     VoteTallyPageRoutingModule
   ],
-  declarations: [VoteTallyPage]
+  declarations: [VoteTallyPage, SubmissionsLoadingComponent]
 })
 export class VoteTallyPageModule {}
