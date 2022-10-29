@@ -17,6 +17,7 @@ export class VoteTallyPage implements OnInit {
   voteTallyResponse: any;
   voteTallyResponseComplete: boolean;
   tally: any[] = [];
+  sort: 'HighToLow' | 'LowToHigh' = 'HighToLow';
   
   constructor(
     private festivalService: AdminFestivalService,
@@ -36,7 +37,7 @@ export class VoteTallyPage implements OnInit {
 
   async getVoteTally(fort: Fort) {
     this.voteTallyResponseComplete = false;
-    this.voteTallyResponse = await this.voteService.getVoteTally(this.festival, fort);
+    this.voteTallyResponse = await this.voteService.getVoteTally(this.festival, fort, this.sort);
     this.tally = this.voteTallyResponse.results;
     this.paginationKey = this.voteTallyResponse.paginationKey;
     this.voteTallyResponseComplete = true;
@@ -49,12 +50,19 @@ export class VoteTallyPage implements OnInit {
     }
 
     if (this.paginationKey) {
-      this.voteTallyResponse = await this.voteService.getVoteTally(this.festival, this.forts[0], this.paginationKey);
+      this.voteTallyResponse = await this.voteService.getVoteTally(this.festival, this.forts[0], this.sort, this.paginationKey);
       this.paginationKey = this.voteTallyResponse.paginationKey;
       this.tally = this.tally.concat(this.voteTallyResponse.results);
       event.target.complete();
     }
 
+  }
+
+  handleChangeSort() {
+    this.voteTallyResponseComplete = false;
+    this.sort = this.sort === 'HighToLow' ? 'LowToHigh' : 'HighToLow';
+    this.tally = [];
+    this.getVoteTally(this.selectedFort);
   }
 
   async handleFortChange(event) {

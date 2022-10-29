@@ -43,8 +43,8 @@ export class VoteService {
     return votes.find(v => v.submissionId === submissionId);
   }
 
-  getVoteTally(festival: Festival, fort: Fort, paginationKey?: string) {
-    const url = paginationKey ? `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100&paginationKey=${paginationKey}` : `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100`;
+  getVoteTally(festival: Festival, fort: Fort, sort: 'HighToLow' | 'LowToHigh', paginationKey?: string, ) {
+    const url = paginationKey ? `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100&paginationKey=${paginationKey}&sort=${sort}` : `${environment.apiUrl}/festivals/${festival.id}/forts/${fort.id}/vote-tally?pageSize=100&sort=${sort}`;
     return this.http.get<any>(url).toPromise();
   }
 

@@ -4,6 +4,8 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Vote Tally</ion-title>
+    <ion-buttons slot="end">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,7 +20,19 @@
 
     <app-submissions-loading  *ngIf="!voteTallyResponseComplete"></app-submissions-loading>
 
+
     <ion-card *ngIf="voteTallyResponseComplete">
+      <ion-item lines="none">
+        <ion-label>
+          <h2>Sort:</h2>
+        </ion-label>
+        <ion-button fill="clear" slot="end" (click)="handleChangeSort()">
+          <span *ngIf="sort === 'HighToLow'">Highest to Lowest</span>
+          <span *ngIf="sort === 'LowToHigh'">Lowest to Highest</span>
+          <ion-icon *ngIf="sort === 'HighToLow'" slot="end" name="caret-down-outline"></ion-icon>
+          <ion-icon *ngIf="sort === 'LowToHigh'" slot="end" name="caret-up-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
       <ion-list>
         <ion-item>
           <ion-label><h2 style="font-weight: 600;">Select a fort</h2></ion-label>
