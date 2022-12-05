@@ -25,13 +25,13 @@ export class AdminMenuComponent implements OnInit {
   }
 
   async createLabel(name: string) {
-    await this.labelService.createLabel(this.activeFestival.id, { name, submissionIds: []});
+    await this.labelService.createLabel('64bd0f67-34c2-48d0-a48b-9a46daabf4d6', { name, submissionIds: []});
     this.getLabels();
   }
 
   async getLabels() {
     this.labelsRequestComplete = false;
-    this.labelResponse = await this.labelService.getLabels(this.activeFestival.id);
+    this.labelResponse = await this.labelService.getLabels('64bd0f67-34c2-48d0-a48b-9a46daabf4d6');
     this.labelsRequestComplete = true;
   }
 

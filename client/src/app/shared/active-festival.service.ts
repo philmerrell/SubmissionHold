@@ -26,4 +26,19 @@ export class ActiveFestivalService {
       return Promise.resolve(this.activeFestival);
     }
   }
+
+  getLatestFestival(): Promise<Festival> {
+    if (!this.activeFestival) {
+      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?submissionsOpen=true&pageSize=1&activeOnly=true`)
+        .pipe(
+          map((response: FestivalsApiResponse) => {
+            this.activeFestival = response.festivals[0] || null;
+            return this.activeFestival;
+          })
+        )
+        .toPromise();
+    } else {
+      return Promise.resolve(this.activeFestival);
+    }
+  }
 }

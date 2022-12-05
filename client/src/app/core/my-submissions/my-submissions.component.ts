@@ -32,13 +32,13 @@ export class MySubmissionsComponent implements OnInit {
     if (this.user.authenticated) {
       this.festival = await this.getActiveFestival();
       await this.getForts(this.festival);
-      this.getMySubmissions(this.user.claims.username, this.festival.id);
+      this.getMySubmissions(this.user.claims.username, '64bd0f67-34c2-48d0-a48b-9a46daabf4d6');
       
     }
 
     this.submissionService.getReloadMySubmissionsObservable().subscribe(result => {
       if (result.reload) {
-        this.getMySubmissions(this.user.claims.username, this.festival.id);
+        this.getMySubmissions(this.user.claims.username, '64bd0f67-34c2-48d0-a48b-9a46daabf4d6');
       }
     })
   }
@@ -48,8 +48,7 @@ export class MySubmissionsComponent implements OnInit {
   }
 
   async getForts(festival) {
-    this.forts = await this.fortService.getForts(festival.id);
-    console.log(this.forts);
+    this.forts = await this.fortService.getForts('64bd0f67-34c2-48d0-a48b-9a46daabf4d6');
     this.fortsRequestComplete = true;
   }
 
