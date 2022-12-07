@@ -60,7 +60,7 @@ export class SubmissionsPage implements OnInit {
     }
 
     if (this.paginationKey) {
-      this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.forts[0], this.paginationKey);
+      this.submissionsResponse = await this.submissionService.getSubmissions(this.festival, this.selectedFort, this.paginationKey);
       this.paginationKey = this.submissionsResponse.paginationKey;
       this.submissions = this.submissions.concat(this.submissionsResponse.submissions);
       event.target.complete();

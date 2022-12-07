@@ -30,14 +30,24 @@ export class AdminFestivalService {
 
   getActiveFestival(): Promise<Festival> {
     if (!this.activeFestival) {
-      return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?pageSize=1&activeOnly=true`)
-        .pipe(
-          map((response: FestivalsApiResponse) => {
-            this.activeFestival = response.festivals[0] || null;
-            return this.activeFestival;
-          })
-        )
-        .toPromise();
+      // return this.http.get<FestivalsApiResponse>(`${environment.apiUrl}/festivals?pageSize=1&activeOnly=true`)
+      //   .pipe(
+      //     map((response: FestivalsApiResponse) => {
+      //       this.activeFestival = response.festivals[0] || null;
+      //       return this.activeFestival;
+      //     })
+      //   )
+      //   .toPromise();
+      this.activeFestival = {
+        id: '64bd0f67-34c2-48d0-a48b-9a46daabf4d6',
+        name: 'Treefort 2023',
+        guidelines: '',
+        startDateTime: '',
+        endDateTime: '',
+        submissionsOpen: false,
+        isActive: true
+      };
+      return Promise.resolve(this.activeFestival)
     } else {
       return Promise.resolve(this.activeFestival);
     }
